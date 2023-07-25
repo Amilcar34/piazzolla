@@ -29,7 +29,7 @@ public class CategoriaRepository implements ICategoriaRepository{
     }
 
     @Override
-    public void create(Categoria categoria) {
+    public void save(Categoria categoria) {
         this.categorias.add(categoria);
     }
 

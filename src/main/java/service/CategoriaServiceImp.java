@@ -23,7 +23,7 @@ public class CategoriaServiceImp implements ICategoriaService{
 
     @Override
     public void create(Categoria categoria) {
-        this.categoriaRepository.create(categoria);
+        this.categoriaRepository.save(categoria);
     }
 
     @Override
