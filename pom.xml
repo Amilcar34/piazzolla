@@ -53,6 +53,11 @@
       <version>1.18.28</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-junit5-mockito</artifactId>
+      <version>3.0.0.Alpha6</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

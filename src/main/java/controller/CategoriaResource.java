@@ -29,7 +29,7 @@ public class CategoriaResource {
     public Response update( Long id, Categoria categoria){
         try {
             this.categoriaServiceImp.update(id,categoria);
-            return Response.ok().build();
+            return Response.ok().entity(categoria).build();
         }catch (NotFoundException e){
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }

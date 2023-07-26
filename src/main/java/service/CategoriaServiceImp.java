@@ -6,7 +6,6 @@ import jakarta.ws.rs.NotFoundException;
 import model.Categoria;
 import repository.CategoriaRepository;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,12 +21,12 @@ public class CategoriaServiceImp implements ICategoriaService{
     }
 
     @Override
-    public void create(Categoria categoria) {
-        this.categoriaRepository.save(categoria);
+    public Categoria create(Categoria categoria) {
+      return this.categoriaRepository.save(categoria);
     }
 
     @Override
-    public void update(Long idCategoria, Categoria categoria) {
+    public Optional<Categoria> update(Long idCategoria, Categoria categoria) {
         Optional<Categoria> categoriaExist = Optional.ofNullable(this.categoriaRepository.findById(idCategoria)
                 .orElseThrow(() -> new NotFoundException("La categoría no fue encontrada.")));
 
@@ -35,5 +34,7 @@ public class CategoriaServiceImp implements ICategoriaService{
         categoriaExist.get().nombre = categoria.nombre;
         categoriaExist.get().pesoMax = categoria.pesoMax;
         categoriaExist.get().pesoMin = categoria.pesoMin;
+        
+        return categoriaExist;
     }
 }

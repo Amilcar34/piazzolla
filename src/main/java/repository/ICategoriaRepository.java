@@ -7,6 +7,6 @@ import java.util.Set;
 
 public interface ICategoriaRepository {
     Set<Categoria> getAllCategorias();
-    void save(Categoria categoria);
+    Categoria save(Categoria categoria);
     Optional<Categoria> findById(Long idCategoria);
 }

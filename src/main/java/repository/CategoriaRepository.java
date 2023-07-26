@@ -29,8 +29,9 @@ public class CategoriaRepository implements ICategoriaRepository{
     }
 
     @Override
-    public void save(Categoria categoria) {
+    public Categoria save(Categoria categoria) {
         this.categorias.add(categoria);
+        return categoria;
     }
 
     @Override
