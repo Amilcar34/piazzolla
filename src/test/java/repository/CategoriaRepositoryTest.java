@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import model.Categoria;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class CategoriaRepositoryTest {
     @Test
     public void obtenerCategoriasExistentes(){
 
-        Set<Categoria> categorias = this.categoriaRepository.getAllCategorias();
+        List<Categoria> categorias = this.categoriaRepository.getAllCategorias();
 
         assertNotNull(categorias);
         assertNotNull(categorias.isEmpty());
@@ -34,7 +35,7 @@ public class CategoriaRepositoryTest {
         //execute
         this.categoriaRepository.save(categoria);
 
-        Set<Categoria> categorias = this.categoriaRepository.getAllCategorias();
+        List<Categoria> categorias = this.categoriaRepository.getAllCategorias();
 
         //verify
         assertTrue(categorias.contains(categoria));

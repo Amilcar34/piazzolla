@@ -11,9 +11,7 @@ import io.quarkus.test.junit.mockito.InjectMock;
 import org.mockito.Mockito;
 import repository.CategoriaRepository;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,7 +44,7 @@ public class CategoriaServiceTest {
     public void listarCategorias(){
 
         //setup
-        Set<Categoria> categorias = new HashSet<>();
+        List<Categoria> categorias = new ArrayList<>();
 
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
         Categoria categoria1 = new Categoria(10L,"Nueva Categoria 1",13D,140D);
@@ -58,7 +56,7 @@ public class CategoriaServiceTest {
         Mockito.when(categoriaRepository.getAllCategorias()).thenReturn(categorias);
 
         //execute
-        Set<Categoria> categoriasObtenidas = this.categoriaServiceImp.getAllCategorias();
+        List<Categoria> categoriasObtenidas = this.categoriaServiceImp.getAllCategorias();
 
         //verify
         assertEquals(categorias,categoriasObtenidas);

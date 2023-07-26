@@ -11,9 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import service.CategoriaServiceImp;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -44,15 +42,15 @@ public class CategoriaControllerTest {
     public void queSeListenLasCategorias(){
 
         //setup
-        Set<Categoria> categoriasSet = new HashSet<>();
+        List<Categoria> categoriasList = new ArrayList<>();
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
         Categoria categoria1 = new Categoria(10L,"Nueva Categoria 1",130D,14D);
 
-        categoriasSet.add(categoria);
-        categoriasSet.add(categoria1);
+        categoriasList.add(categoria);
+        categoriasList.add(categoria1);
 
         //Config
-        Mockito.when(categoriaServiceImp.getAllCategorias()).thenReturn(categoriasSet);
+        Mockito.when(categoriaServiceImp.getAllCategorias()).thenReturn(categoriasList);
 
         given()
                 .contentType(ContentType.JSON)
