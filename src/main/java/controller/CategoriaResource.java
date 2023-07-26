@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.Response;
 import model.Categoria;
 import service.CategoriaServiceImp;
 
+import java.util.List;
 import java.util.Set;
 
 @Path("/categorias")
@@ -14,7 +15,7 @@ public class CategoriaResource {
     CategoriaServiceImp categoriaServiceImp;
 
     @GET
-    public Set<Categoria> list() {
+    public List<Categoria> list() {
         return this.categoriaServiceImp.getAllCategorias();
     }
 

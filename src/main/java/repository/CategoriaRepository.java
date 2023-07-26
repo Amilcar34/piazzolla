@@ -10,7 +10,7 @@ import java.util.*;
 @ApplicationScoped
 public class CategoriaRepository implements ICategoriaRepository{
 
-    Set<Categoria> categorias = new HashSet<>();
+    List<Categoria> categorias = new ArrayList<>();
 
     public CategoriaRepository() {
         categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
@@ -24,7 +24,7 @@ public class CategoriaRepository implements ICategoriaRepository{
     }
 
     @Override
-    public Set<Categoria> getAllCategorias() {
+    public List<Categoria> getAllCategorias() {
         return this.categorias;
     }
 
