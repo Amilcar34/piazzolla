@@ -10,4 +10,5 @@ public interface ICategoriaService {
     List<Categoria> getAllCategorias();
     Categoria create(Categoria categoria);
     Optional<Categoria> update(Long idCategoria, Categoria categoria);
+    Categoria obtenerCategoriaPorPeso(Double peso);
 }

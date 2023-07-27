@@ -42,6 +42,7 @@ public class CategoriaServiceImp implements ICategoriaService{
     }
 
     //todo simplificar esto y deja un solo metodo :c
+    @Override
     public Categoria obtenerCategoriaPorPeso(Double peso){
         List<Categoria> categorias = this.categoriaRepository.getAllCategorias();
 
@@ -49,23 +50,14 @@ public class CategoriaServiceImp implements ICategoriaService{
             return categorias.get(0);
         }
 
-        //lamda
         for (Categoria categoria: categorias) {
             if(peso >= categoria.pesoMin && peso <= categoria.pesoMax){
                 return categoria;
             }
-        }
 
-        return obtenerCategoriaFueraDeLimite(peso);
-        //return null;
-    }
-
-    public Categoria obtenerCategoriaFueraDeLimite(Double peso) {
-        List<Categoria> categorias = this.categoriaRepository.getAllCategorias();
-
-        for (int i=0; i <= categorias.size() -1; i++){
-            if(peso > categorias.get(i).pesoMax && peso < categorias.get(i+1).getPesoMax()){
-                return categorias.get(i);
+            Integer cat = categorias.indexOf(categoria)+1;
+            if (peso > categoria.pesoMax && peso < categorias.get(cat).pesoMin){
+                return categoria;
             }
         }
 
