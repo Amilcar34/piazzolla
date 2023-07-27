@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Response;
 import model.Boxeador;
 import repository.BoxeadorRepository;
 import service.BoxeadorServiceImp;
@@ -17,12 +18,19 @@ public class BoxeadorResource {
     @Inject
     BoxeadorServiceImp boxeadorServiceImp;
     @GET
-    public List<Boxeador> list(){
+    public List<BoxeadorDTO> list(){
         return this.boxeadorServiceImp.getAllBoxeadores();
     }
 
     @POST
-    public BoxeadorDTO create(BoxeadorDTO boxeadorDTO){
-        return this.boxeadorServiceImp.create(boxeadorDTO);
+    public Response create(BoxeadorDTO boxeadorDTO)  {
+        try {
+            BoxeadorDTO boxeador = this.boxeadorServiceImp.create(boxeadorDTO);
+            return Response.status(Response.Status.CREATED).entity(boxeador).build();
+        }
+        catch (Exception e){
+            return Response.status(402).entity(e.getMessage()).build();
+        }
+
     }
 }

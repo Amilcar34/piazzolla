@@ -14,6 +14,7 @@ import repository.BoxeadorRepository;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class BoxeadorServiceImp implements IBoxeadorService {
@@ -27,12 +28,15 @@ public class BoxeadorServiceImp implements IBoxeadorService {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public List<Boxeador> getAllBoxeadores() {
-        return this.boxeadorRepository.getAllBoxeadores();
+    public List<BoxeadorDTO> getAllBoxeadores() {
+        List<BoxeadorDTO> boxeadorDTOS = this.boxeadorRepository.getAllBoxeadores()
+                                        .stream().map(b -> modelMapper.map(b,BoxeadorDTO.class))
+                                        .collect(Collectors.toList());
+        return boxeadorDTOS;
     }
 
     @Override
-    public BoxeadorDTO create(BoxeadorDTO boxeadorDTO) {
+    public BoxeadorDTO create(BoxeadorDTO boxeadorDTO) throws Exception {
 
         Categoria categoria = this.categoriaServiceImp.obtenerCategoriaPorPeso(boxeadorDTO.getPeso());
         Entrenador entrenador = this.entrenadorServiceImp.obtenerEntrenadorPorCategoria(categoria);

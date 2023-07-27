@@ -6,7 +6,7 @@ import model.Boxeador;
 import java.util.List;
 
 public interface IBoxeadorService {
-    List<Boxeador> getAllBoxeadores();
+    List<BoxeadorDTO> getAllBoxeadores();
 
-    BoxeadorDTO create(BoxeadorDTO boxeador);
+    BoxeadorDTO create(BoxeadorDTO boxeador) throws Exception;
 }
