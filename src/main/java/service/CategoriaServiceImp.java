@@ -31,7 +31,7 @@ public class CategoriaServiceImp implements ICategoriaService{
     @Override
     public Optional<Categoria> update(Long idCategoria, Categoria categoria) {
         Optional<Categoria> categoriaExist = Optional.ofNullable(this.categoriaRepository.findById(idCategoria)
-                .orElseThrow(() -> new NotFoundException("La categoría no fue encontrada.")));
+                .orElseThrow(() -> new NotFoundException("La categoría " + idCategoria + " no fue encontrada.")));
 
         //TODO revisar si existe una forma optima de cargar
         categoriaExist.get().nombre = categoria.nombre;
@@ -41,7 +41,6 @@ public class CategoriaServiceImp implements ICategoriaService{
         return categoriaExist;
     }
 
-    //todo simplificar esto y deja un solo metodo :c
     @Override
     public Categoria obtenerCategoriaPorPeso(Double peso){
         List<Categoria> categorias = this.categoriaRepository.getAllCategorias();

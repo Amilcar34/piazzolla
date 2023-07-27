@@ -1,5 +1,6 @@
 package controller;
 
+import DTO.BoxeadorDTO;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -21,8 +22,7 @@ public class BoxeadorResource {
     }
 
     @POST
-    public Boxeador create(Boxeador boxeador){
-        boxeador.setFechaIngreso(new Date(System.currentTimeMillis()));
-        return this.boxeadorServiceImp.create(boxeador);
+    public BoxeadorDTO create(BoxeadorDTO boxeadorDTO){
+        return this.boxeadorServiceImp.create(boxeadorDTO);
     }
 }

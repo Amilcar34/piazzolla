@@ -1,18 +1,17 @@
-package model;
+package DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import model.Categoria;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Entrenador {
-
+public class EntrenadorDTO {
     String nombre;
     List<Categoria> categorias;
-    List<Boxeador> boxeadores;
+    List<BoxeadorInfoDTO> boxeadores;
 }

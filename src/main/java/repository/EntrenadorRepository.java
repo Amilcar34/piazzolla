@@ -7,6 +7,7 @@ import model.Entrenador;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class EntrenadorRepository implements IEntrenadorRepository{
@@ -46,6 +47,6 @@ public class EntrenadorRepository implements IEntrenadorRepository{
 
     @Override
     public List<Entrenador> getAllEntrenadores() {
-        return entrenadores;
+        return this.entrenadores;
     }
 }
