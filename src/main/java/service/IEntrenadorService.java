@@ -12,5 +12,5 @@ public interface IEntrenadorService {
 
     Entrenador obtenerEntrenadorPorCategoria(Categoria categoria);
 
-    Boolean addBoxeador(Entrenador entrenador, Boxeador boxeador);
+    Boolean addBoxeador(Entrenador entrenador, Boxeador boxeador) throws Exception;
 }

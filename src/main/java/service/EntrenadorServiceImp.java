@@ -40,12 +40,12 @@ public class EntrenadorServiceImp implements IEntrenadorService {
     }
 
     @Override
-    public Boolean addBoxeador(Entrenador entrenador, Boxeador boxeador) {
+    public Boolean addBoxeador(Entrenador entrenador, Boxeador boxeador) throws Exception {
 
         if(entrenador.getBoxeadores().size() < 5){
             entrenador.getBoxeadores().add(boxeador);
             return true;
         }
-        return false;
+        throw new Exception("El entrenador " + entrenador.getNombre() + " ha alcanzado el límite de boxeadores (5).");
     }
 }
