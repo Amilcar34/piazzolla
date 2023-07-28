@@ -2,6 +2,7 @@ package service;
 
 
 import DTO.BoxeadorDTO;
+import DTO.EntrenadorDTO;
 import DTO.EntrenadorInfoDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -39,16 +40,16 @@ public class BoxeadorServiceImp implements IBoxeadorService {
     public BoxeadorDTO create(BoxeadorDTO boxeadorDTO) throws Exception {
 
         Categoria categoria = this.categoriaServiceImp.obtenerCategoriaPorPeso(boxeadorDTO.getPeso());
-        Entrenador entrenador = this.entrenadorServiceImp.obtenerEntrenadorPorCategoria(categoria);
+        EntrenadorDTO entrenadorDTO = this.entrenadorServiceImp.obtenerEntrenadorPorCategoria(categoria);
 
 
-        boxeadorDTO.setEntrenador(modelMapper.map(entrenador, EntrenadorInfoDTO.class));
+        boxeadorDTO.setEntrenador(modelMapper.map(entrenadorDTO, EntrenadorInfoDTO.class));
         boxeadorDTO.setCategoria(categoria);
         boxeadorDTO.setFechaIngreso(new Date(System.currentTimeMillis()));
 
         Boxeador boxeador = modelMapper.map(boxeadorDTO,Boxeador.class);
         this.boxeadorRepository.create(boxeador);
-        this.entrenadorServiceImp.addBoxeador(entrenador,boxeador);
+        this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
 
         return boxeadorDTO;
     }

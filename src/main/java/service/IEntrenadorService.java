@@ -1,5 +1,6 @@
 package service;
 
+import DTO.BoxeadorDTO;
 import DTO.EntrenadorDTO;
 import model.Boxeador;
 import model.Categoria;
@@ -10,7 +11,7 @@ import java.util.List;
 public interface IEntrenadorService {
     List<EntrenadorDTO> getAllEntrenadores();
 
-    Entrenador obtenerEntrenadorPorCategoria(Categoria categoria);
+    EntrenadorDTO obtenerEntrenadorPorCategoria(Categoria categoria);
 
-    Boolean addBoxeador(Entrenador entrenador, Boxeador boxeador) throws Exception;
+    Boolean addBoxeador(EntrenadorDTO entrenador, BoxeadorDTO boxeador) throws Exception;
 }

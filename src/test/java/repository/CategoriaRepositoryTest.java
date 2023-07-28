@@ -23,7 +23,7 @@ public class CategoriaRepositoryTest {
         List<Categoria> categorias = this.categoriaRepository.getAllCategorias();
 
         assertNotNull(categorias);
-        assertNotNull(categorias.isEmpty());
+        assertEquals(8,categorias.size());
     }
 
     @Test
@@ -40,6 +40,7 @@ public class CategoriaRepositoryTest {
         //verify
         assertTrue(categorias.contains(categoria));
     }
+
 
     @Test
     public void obtenerCategoriaPorId(){

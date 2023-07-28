@@ -1,5 +1,6 @@
 package repository;
 
+import DTO.EntrenadorDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import model.Boxeador;
 import model.Categoria;
@@ -50,6 +51,22 @@ public class EntrenadorRepository implements IEntrenadorRepository{
     @Override
     public List<Entrenador> getAllEntrenadores() {
         return this.entrenadores;
+    }
+
+    @Override
+    public Entrenador obtenerEntrenadorPorCategoria(Categoria categoria) {
+        for (Entrenador entrenador: this.entrenadores) {
+            if(entrenador.getCategorias().contains(categoria)){
+                return entrenador;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean addBoxeador(Entrenador entrenador, Boxeador boxeador) {
+        entrenador.getBoxeadores().add(boxeador);
+        return true;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package service;
 
+import DTO.BoxeadorDTO;
 import DTO.EntrenadorDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -28,23 +29,17 @@ public class EntrenadorServiceImp implements IEntrenadorService {
     }
 
     @Override
-    public Entrenador obtenerEntrenadorPorCategoria(Categoria categoria) {
-        List<Entrenador> entrenadores = this.entrenadorRepository.getAllEntrenadores();
+    public EntrenadorDTO obtenerEntrenadorPorCategoria(Categoria categoria) {
+       Entrenador entrenador = this.entrenadorRepository.obtenerEntrenadorPorCategoria(categoria);
 
-        for (Entrenador entrenador: entrenadores) {
-            if(entrenador.getCategorias().contains(categoria)){
-                return entrenador;
-            }
-        }
-        return null;
+       return modelMapper.map(entrenador,EntrenadorDTO.class);
     }
 
     @Override
-    public Boolean addBoxeador(Entrenador entrenador, Boxeador boxeador) throws Exception {
+    public Boolean addBoxeador(EntrenadorDTO entrenador, BoxeadorDTO boxeador) throws Exception {
 
         if(entrenador.getBoxeadores().size() < 5){
-            entrenador.getBoxeadores().add(boxeador);
-            return true;
+           return this.entrenadorRepository.addBoxeador(modelMapper.map(entrenador,Entrenador.class),modelMapper.map(boxeador,Boxeador.class));
         }
         throw new Exception("El entrenador " + entrenador.getNombre() + " ha alcanzado el límite de boxeadores (5).");
     }
