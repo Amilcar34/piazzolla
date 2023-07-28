@@ -47,8 +47,8 @@ public class BoxeadorServiceImp implements IBoxeadorService {
         boxeadorDTO.setFechaIngreso(new Date(System.currentTimeMillis()));
 
         Boxeador boxeador = modelMapper.map(boxeadorDTO,Boxeador.class);
-        this.entrenadorServiceImp.addBoxeador(entrenador,boxeador);
         this.boxeadorRepository.create(boxeador);
+        this.entrenadorServiceImp.addBoxeador(entrenador,boxeador);
 
         return boxeadorDTO;
     }

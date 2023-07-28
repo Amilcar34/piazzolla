@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import model.Categoria;
-
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor

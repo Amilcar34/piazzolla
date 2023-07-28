@@ -5,9 +5,11 @@ import model.Boxeador;
 import model.Categoria;
 import model.Entrenador;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class EntrenadorRepository implements IEntrenadorRepository{
@@ -48,5 +50,14 @@ public class EntrenadorRepository implements IEntrenadorRepository{
     @Override
     public List<Entrenador> getAllEntrenadores() {
         return this.entrenadores;
+    }
+
+    @Override
+    public Integer obtenerBoxeadoresDelDia(Entrenador entrenador) {
+        List<Boxeador> boxeadores = entrenador.getBoxeadores()
+                                    .stream().filter(b -> b.getFechaIngreso().toLocalDate().equals(new Date(System.currentTimeMillis()).toLocalDate()))
+                                    .collect(Collectors.toList());
+
+        return boxeadores.size();
     }
 }

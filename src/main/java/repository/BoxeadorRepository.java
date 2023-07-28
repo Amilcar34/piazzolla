@@ -3,8 +3,11 @@ package repository;
 import jakarta.enterprise.context.ApplicationScoped;
 import model.Boxeador;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class BoxeadorRepository implements IBoxeadorRepository{
@@ -19,5 +22,15 @@ public class BoxeadorRepository implements IBoxeadorRepository{
     public Boxeador create(Boxeador boxeador) {
         this.boxeadores.add(boxeador);
         return boxeador;
+    }
+
+    @Override
+    public Integer cantBoxeadoresPorDia() {
+
+        List<Boxeador> boxeadores = this.boxeadores.stream().filter(b -> (
+                b.getFechaIngreso().toLocalDate().equals(new Date(System.currentTimeMillis()).toLocalDate())))
+                .collect(Collectors.toList());
+
+        return boxeadores.size();
     }
 }
