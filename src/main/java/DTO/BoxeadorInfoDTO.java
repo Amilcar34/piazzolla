@@ -9,7 +9,7 @@ import model.Categoria;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoxeadorInfoDTO {
-    String nombre;
-    Double peso;
-    Categoria categoria;
+   private String nombre;
+   private Double peso;
+   private Categoria categoria;
 }

@@ -36,7 +36,7 @@ public class CategoriaRepository implements ICategoriaRepository{
 
     @Override
     public Optional<Categoria> findById(Long idCategoria) {
-        Optional<Categoria> categoriaExist = this.categorias.stream().filter(c -> Objects.equals(c._id, idCategoria)).findFirst();
+        Optional<Categoria> categoriaExist = this.categorias.stream().filter(c -> Objects.equals(c.get_id(), idCategoria)).findFirst();
         return categoriaExist;
     }
 

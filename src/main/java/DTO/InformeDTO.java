@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class InformeDTO {
-    Date dia;
-    List<EntrenadorInformeDTO> entrenadores;
-    Integer totalBoxeadores;
+    private Date dia;
+    private List<EntrenadorInformeDTO> entrenadores;
+    private Integer totalBoxeadores;
 }

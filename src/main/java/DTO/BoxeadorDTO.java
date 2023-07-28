@@ -11,9 +11,9 @@ import java.sql.Date;
 @NoArgsConstructor
 public class BoxeadorDTO {
 
-    String nombre;
-    Double peso;
-    Categoria categoria;
-    EntrenadorInfoDTO entrenador;
-    Date fechaIngreso;
+   private String nombre;
+   private Double peso;
+   private Categoria categoria;
+   private EntrenadorInfoDTO entrenador;
+   private Date fechaIngreso;
 }

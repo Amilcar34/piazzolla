@@ -34,9 +34,9 @@ public class CategoriaServiceImp implements ICategoriaService{
                 .orElseThrow(() -> new NotFoundException("La categoría " + idCategoria + " no fue encontrada.")));
 
         //TODO revisar si existe una forma optima de cargar
-        categoriaExist.get().nombre = categoria.nombre;
-        categoriaExist.get().pesoMax = categoria.pesoMax;
-        categoriaExist.get().pesoMin = categoria.pesoMin;
+        categoriaExist.get().setNombre(categoria.getNombre());
+        categoriaExist.get().setPesoMax(categoria.getPesoMax());
+        categoriaExist.get().setPesoMin(categoria.getPesoMin());
         
         return categoriaExist;
     }
@@ -45,17 +45,17 @@ public class CategoriaServiceImp implements ICategoriaService{
     public Categoria obtenerCategoriaPorPeso(Double peso){
         List<Categoria> categorias = this.categoriaRepository.getAllCategorias();
 
-        if(peso < categorias.get(0).pesoMin){
+        if(peso < categorias.get(0).getPesoMin()){
             return categorias.get(0);
         }
 
         for (Categoria categoria: categorias) {
-            if(peso >= categoria.pesoMin && peso <= categoria.pesoMax){
+            if(peso >= categoria.getPesoMin() && peso <= categoria.getPesoMax()){
                 return categoria;
             }
 
             Integer cat = categorias.indexOf(categoria)+1;
-            if (peso > categoria.pesoMax && peso < categorias.get(cat).pesoMin){
+            if (peso > categoria.getPesoMax() && peso < categorias.get(cat).getPesoMin()){
                 return categoria;
             }
         }

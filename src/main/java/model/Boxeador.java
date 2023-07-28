@@ -11,10 +11,10 @@ import java.sql.Date;
 @NoArgsConstructor
 public class Boxeador {
 
-    String nombre;
-    Double peso;
-    Categoria categoria;
-    Entrenador entrenador;
-    Date fechaIngreso;
+    private String nombre;
+    private Double peso;
+    private Categoria categoria;
+    private Entrenador entrenador;
+    private Date fechaIngreso;
 
 }

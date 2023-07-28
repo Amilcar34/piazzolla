@@ -11,7 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EntrenadorDTO {
-    String nombre;
-    List<Categoria> categorias;
-    List<BoxeadorInfoDTO> boxeadores;
+
+    private String nombre;
+    private List<Categoria> categorias;
+    private List<BoxeadorInfoDTO> boxeadores;
+
 }

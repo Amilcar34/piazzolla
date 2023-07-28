@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Entrenador {
 
-    String nombre;
-    List<Categoria> categorias;
-    List<Boxeador> boxeadores;
+   private String nombre;
+   private List<Categoria> categorias;
+   private List<Boxeador> boxeadores;
 }

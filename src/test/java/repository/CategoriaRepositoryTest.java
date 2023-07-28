@@ -51,7 +51,7 @@ public class CategoriaRepositoryTest {
         //execute
         this.categoriaRepository.save(categoria);
 
-        Optional<Categoria> categoriaEncontrada = this.categoriaRepository.findById(categoria._id);
+        Optional<Categoria> categoriaEncontrada = this.categoriaRepository.findById(categoria.get_id());
 
         //verify
         assertEquals(categoria,categoriaEncontrada.get());

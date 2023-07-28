@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class EntrenadorInfoDTO {
 
-    String nombre;
-    List<Categoria> categorias;
+  private String nombre;
+  private List<Categoria> categorias;
 }

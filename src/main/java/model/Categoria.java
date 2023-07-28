@@ -13,9 +13,9 @@ public class Categoria {
 
     public static final Double SIN_LIMITE = 999D;
 
-    public Long _id;
-    public String nombre;
-    public Double pesoMin;
-    public Double pesoMax;
+    private Long _id;
+    private String nombre;
+    private Double pesoMin;
+    private Double pesoMax;
 
 }
