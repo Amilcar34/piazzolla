@@ -5,6 +5,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import model.Categoria;
 import service.CategoriaServiceImp;
+import service.LogErrorService;
 
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,9 @@ import java.util.Set;
 public class CategoriaResource {
     @Inject
     CategoriaServiceImp categoriaServiceImp;
+
+    @Inject
+    LogErrorService logErrorService;
 
     @GET
     public List<Categoria> list() {
@@ -32,6 +36,7 @@ public class CategoriaResource {
             this.categoriaServiceImp.update(id,categoria);
             return Response.ok().entity(categoria).build();
         }catch (NotFoundException e){
+            logErrorService.grabarError(e,this.getClass().getName());
             return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
 

@@ -9,6 +9,7 @@ import model.Entrenador;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -65,7 +66,11 @@ public class EntrenadorRepository implements IEntrenadorRepository{
 
     @Override
     public Boolean addBoxeador(Entrenador entrenador, Boxeador boxeador) {
-        entrenador.getBoxeadores().add(boxeador);
+        this.entrenadores.forEach(it ->{
+            if(it.getNombre() == entrenador.getNombre()){
+                it.getBoxeadores().add(boxeador);
+            }
+        });
         return true;
     }
 

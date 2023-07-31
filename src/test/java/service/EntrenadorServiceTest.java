@@ -88,9 +88,6 @@ public class EntrenadorServiceTest {
 
         Boxeador boxeador = new  Boxeador("Nahuel",77D,cat1,entrenador,new Date(System.currentTimeMillis()));
 
-        //config
-        Mockito.when(this.entrenadorRepository.addBoxeador(entrenador,boxeador)).thenReturn(true);
-
         EntrenadorDTO entrenadorDTO = modelMapper.map(entrenador,EntrenadorDTO.class);
         BoxeadorDTO boxeadorDTO = modelMapper.map(boxeador,BoxeadorDTO.class);
 

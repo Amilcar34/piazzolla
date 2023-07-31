@@ -1,6 +1,7 @@
 package service;
 
 import DTO.BoxeadorDTO;
+import DTO.BoxeadorInfoDTO;
 import DTO.EntrenadorDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

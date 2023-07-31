@@ -7,6 +7,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import service.BoxeadorServiceImp;
+import service.LogErrorService;
 
 import java.util.List;
 
@@ -14,6 +15,10 @@ import java.util.List;
 public class BoxeadorResource {
     @Inject
     BoxeadorServiceImp boxeadorServiceImp;
+
+    @Inject
+    LogErrorService logErrorService;
+
     @GET
     public List<BoxeadorDTO> list(){
         return this.boxeadorServiceImp.getAllBoxeadores();
@@ -26,6 +31,7 @@ public class BoxeadorResource {
             return Response.status(Response.Status.CREATED).entity(boxeador).build();
         }
         catch (Exception e){
+            this.logErrorService.grabarError(e,this.getClass().getName());
             return Response.status(402).entity(e.getMessage()).build();
         }
 
