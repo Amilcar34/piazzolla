@@ -64,6 +64,11 @@
       <artifactId>modelmapper</artifactId>
       <version>3.1.1</version>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jacoco</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
