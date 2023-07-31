@@ -10,6 +10,6 @@ import java.util.List;
 public interface IEntrenadorRepository {
     List<Entrenador> getAllEntrenadores();
     Entrenador obtenerEntrenadorPorCategoria(Categoria categoria);
-    Boolean addBoxeador(Entrenador entrenador, Boxeador boxeador);
+    Entrenador addBoxeador(Entrenador entrenador, Boxeador boxeador);
     Integer obtenerBoxeadoresDelDia(Entrenador entrenador);
 }

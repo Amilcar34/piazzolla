@@ -2,6 +2,7 @@ package service;
 
 
 import DTO.BoxeadorDTO;
+import DTO.BoxeadorInfoDTO;
 import DTO.EntrenadorDTO;
 import DTO.EntrenadorInfoDTO;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -49,7 +50,8 @@ public class BoxeadorServiceImp implements IBoxeadorService {
 
         Boxeador boxeador = modelMapper.map(boxeadorDTO,Boxeador.class);
         this.boxeadorRepository.create(boxeador);
-        this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
+        BoxeadorInfoDTO boxeadorInfoDTO = modelMapper.map(boxeador, BoxeadorInfoDTO.class);
+        this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorInfoDTO);
 
         return boxeadorDTO;
     }

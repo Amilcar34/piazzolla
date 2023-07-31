@@ -1,5 +1,6 @@
 package repository;
 
+import DTO.EntrenadorDTO;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import model.Boxeador;
@@ -50,6 +51,19 @@ public class EntrenadorRepositoryTest {
     }
 
     @Test
+    public void queNoSePuedaObtenerEntrenadorPorCategoriaInexistente(){
+
+        //setup
+        Categoria cat1 = new Categoria(9L,"categoria",76.205,79.378);
+
+        //execute
+        Entrenador entrenadorObtenido = this.entrenadorRepository.obtenerEntrenadorPorCategoria(cat1);
+
+        //verify
+        assertEquals(null,entrenadorObtenido);
+    }
+
+    @Test
     public void queSePuedaAgregarUnBoxeador(){
         //setup
         List<Categoria> categorias = new ArrayList<>();
@@ -64,9 +78,31 @@ public class EntrenadorRepositoryTest {
 
         Boxeador boxeador = new Boxeador("Nahuel",77D,cat1,entrenador,new Date(System.currentTimeMillis()));
 
-        Boolean valor = this.entrenadorRepository.addBoxeador(entrenador,boxeador);
+        Entrenador entrenadorObtenido = this.entrenadorRepository.addBoxeador(entrenador,boxeador);
 
-        assertTrue(valor);
+        assertEquals(1,entrenadorObtenido.getBoxeadores().size());
+    }
+
+    @Test
+    public void queNoSePuedaAgregarUnBoxeadorAEntrenadorInexistente(){
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(7L,"Mediopesado",76.205,79.378);
+        Categoria cat2 = new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE);
+
+        categorias.add(cat1);
+        categorias.add(cat2);
+
+        Entrenador entrenador = new Entrenador("Ignacio",categorias, new ArrayList<Boxeador>());
+
+        Boxeador boxeador = new Boxeador("Nahuel",77D,cat1,entrenador,new Date(System.currentTimeMillis()));
+
+        //execute
+        Entrenador entrenadorObtenido = this.entrenadorRepository.addBoxeador(entrenador,boxeador);
+
+        //verify
+        assertEquals(null,entrenadorObtenido);
     }
 
     @Test

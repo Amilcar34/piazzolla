@@ -37,11 +37,13 @@ public class EntrenadorServiceImp implements IEntrenadorService {
     }
 
     @Override
-    public Boolean addBoxeador(EntrenadorDTO entrenador, BoxeadorDTO boxeador) throws Exception {
+    public EntrenadorDTO addBoxeador(EntrenadorDTO entrenadorDTO, BoxeadorInfoDTO boxeadorDTO) throws Exception {
 
-        if(entrenador.getBoxeadores().size() < 5){
-           return this.entrenadorRepository.addBoxeador(modelMapper.map(entrenador,Entrenador.class),modelMapper.map(boxeador,Boxeador.class));
+        if(entrenadorDTO.getBoxeadores().size() < 5){
+            Entrenador entrenador = modelMapper.map(entrenadorDTO,Entrenador.class);
+            Boxeador boxeador = modelMapper.map(boxeadorDTO,Boxeador.class);
+            return modelMapper.map(this.entrenadorRepository.addBoxeador(entrenador,boxeador),EntrenadorDTO.class);
         }
-        throw new Exception("El entrenador " + entrenador.getNombre() + " ha alcanzado el límite de boxeadores (5).");
+        throw new Exception("El entrenador " + entrenadorDTO.getNombre() + " ha alcanzado el límite de boxeadores (5).");
     }
 }

@@ -1,6 +1,7 @@
 package service;
 
 import DTO.BoxeadorDTO;
+import DTO.BoxeadorInfoDTO;
 import DTO.EntrenadorDTO;
 import model.Boxeador;
 import model.Categoria;
@@ -13,5 +14,5 @@ public interface IEntrenadorService {
 
     EntrenadorDTO obtenerEntrenadorPorCategoria(Categoria categoria);
 
-    Boolean addBoxeador(EntrenadorDTO entrenador, BoxeadorDTO boxeador) throws Exception;
+    EntrenadorDTO addBoxeador(EntrenadorDTO entrenadorDTO, BoxeadorInfoDTO boxeadorDTO) throws Exception;
 }

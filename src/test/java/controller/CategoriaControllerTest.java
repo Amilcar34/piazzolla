@@ -62,6 +62,25 @@ public class CategoriaControllerTest {
     }
 
     @Test
+    public void queSePuedaActualizarUnaCategoria(){
+
+        Categoria categoria = new Categoria(1L,"Mosca",48.988,50.802);
+
+        Categoria modificada = new Categoria(1L,"MOSQUITA",49D,51D);
+
+        //Config
+        Mockito.when(categoriaServiceImp.update(categoria.get_id(),modificada)).thenReturn(Optional.of(modificada));
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(modificada)
+                .when().put("/categorias/{id}",categoria.get_id())
+                .then()
+                .statusCode(200)
+                .body(is("{\"_id\":1,\"nombre\":\"MOSQUITA\",\"pesoMin\":49.0,\"pesoMax\":51.0}"));
+    }
+
+    @Test
     public void queNoSePuedaActualizarUnaCategoriaInexistente(){
 
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);

@@ -65,13 +65,14 @@ public class EntrenadorRepository implements IEntrenadorRepository{
     }
 
     @Override
-    public Boolean addBoxeador(Entrenador entrenador, Boxeador boxeador) {
-        this.entrenadores.forEach(it ->{
-            if(it.getNombre() == entrenador.getNombre()){
-                it.getBoxeadores().add(boxeador);
+    public Entrenador addBoxeador(Entrenador entrenador, Boxeador boxeador) {
+        for (Entrenador en: this.entrenadores) {
+            if(entrenador.getNombre().equals(en.getNombre())){
+                en.getBoxeadores().add(boxeador);
+                return en;
             }
-        });
-        return true;
+        }
+        return null;
     }
 
     @Override
