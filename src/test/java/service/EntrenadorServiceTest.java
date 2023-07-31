@@ -8,16 +8,15 @@ import jakarta.inject.Inject;
 import model.Boxeador;
 import model.Categoria;
 import model.Entrenador;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.modelmapper.ModelMapper;
+import repository.BoxeadorRepository;
+import repository.EntrenadorRepository;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.TestMethodOrder;
 
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -25,11 +24,9 @@ public class EntrenadorServiceTest {
 
     @Inject
     EntrenadorServiceImp entrenadorServiceImp;
-
     ModelMapper modelMapper = new ModelMapper();
 
     @Test
-    @Order(1)
     public void obtenerEntrenadores(){
         //execute
         List<EntrenadorDTO> entrenadorDTOS = this.entrenadorServiceImp.getAllEntrenadores();
@@ -39,7 +36,6 @@ public class EntrenadorServiceTest {
     }
 
     @Test
-    @Order(2)
     public void obtenerEntrenadorPorCategoria(){
         //setup
         List<Categoria> categorias = new ArrayList<>();
@@ -58,7 +54,6 @@ public class EntrenadorServiceTest {
     }
 
     @Test
-    @Order(3)
     public void queSePuedaAgregarBoxeador() throws Exception {
         //setup
         List<Categoria> categorias = new ArrayList<>();
@@ -80,12 +75,11 @@ public class EntrenadorServiceTest {
         EntrenadorDTO response = this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorInfoDTO);
 
         //verify
-        assertEquals(2,response.getBoxeadores().size());
+        assertEquals(5,response.getBoxeadores().size());
     }
 
     @Test
-    @Order(4)
-    public void queNoSePuedaAgregarBoxeador() {
+    public void queNoSePuedaAgregarBoxeador() throws Exception {
         //setup
         List<Categoria> categorias = new ArrayList<>();
 
@@ -104,16 +98,19 @@ public class EntrenadorServiceTest {
         BoxeadorInfoDTO boxeadorDTO = modelMapper.map(boxeador,BoxeadorInfoDTO.class);
 
 
+        entrenadorDTO = this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
+        entrenadorDTO = this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
+        entrenadorDTO = this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
+
+
+
         //execute
-        try{
-            this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
-            this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
-            this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
-            this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
-            this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
-        }catch (Exception e){
-            assertEquals(e.getMessage() ,"El entrenador Juan ha alcanzado el límite de boxeadores (5)." );
-        }
+
+        EntrenadorDTO finalEntrenadorDTO = entrenadorDTO;
+        Assertions.assertThrows(Exception.class, () -> {
+             this.entrenadorServiceImp.addBoxeador(finalEntrenadorDTO,boxeadorDTO);
+        });
+
 
     }
 

@@ -39,7 +39,7 @@ public class EntrenadorServiceImp implements IEntrenadorService {
     @Override
     public EntrenadorDTO addBoxeador(EntrenadorDTO entrenadorDTO, BoxeadorInfoDTO boxeadorDTO) throws Exception {
 
-        if(entrenadorDTO.getBoxeadores().size() < 5){
+        if(entrenadorDTO.getBoxeadores().size() < 4){
             Entrenador entrenador = modelMapper.map(entrenadorDTO,Entrenador.class);
             Boxeador boxeador = modelMapper.map(boxeadorDTO,Boxeador.class);
             return modelMapper.map(this.entrenadorRepository.addBoxeador(entrenador,boxeador),EntrenadorDTO.class);

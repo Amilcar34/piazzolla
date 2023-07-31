@@ -5,6 +5,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 import model.Categoria;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.mockito.InjectMock;
 
@@ -87,15 +88,14 @@ public class CategoriaServiceTest {
         Categoria modificaciones = new Categoria(9L,"Categoria Modificada",100D,120D);
 
         //config
-        Mockito.when(categoriaRepository.findById(categoria.get_id())).thenThrow(new NotFoundException("La categoría " + categoria.get_id() + " no fue encontrada."));
+        Mockito.when(categoriaRepository.findById(categoria.get_id())).thenReturn(Optional.empty());
 
         //execute
-        try {
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
             Optional<Categoria> categoriActualizada = this.categoriaServiceImp.update(categoria.get_id(), modificaciones);
-        }catch (NotFoundException exception){
-            //verify
-            assertEquals("La categoría 9 no fue encontrada.",exception.getMessage());
-        }
+        });
+
 
     }
 
