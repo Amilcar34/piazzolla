@@ -11,6 +11,7 @@ import java.sql.Date;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
 public class BoxeadorRepositoryTest {
@@ -54,13 +55,13 @@ public class BoxeadorRepositoryTest {
         Boxeador boxeador = new Boxeador("Lautaro",40D,null,null,new Date(System.currentTimeMillis()));
         Boxeador boxeador1 = new Boxeador("Lautaro",40D,null,null,new Date(System.currentTimeMillis()));
 
-         this.boxeadorRepository.create(boxeador);
-         this.boxeadorRepository.create(boxeador1);
+        this.boxeadorRepository.create(boxeador);
+        this.boxeadorRepository.create(boxeador1);
 
-         //execute
-
+        //execute
         int cantidadBoxeadores = this.boxeadorRepository.cantBoxeadoresPorDia();
 
+        //verify
         assertEquals(2,cantidadBoxeadores);
 
     }
