@@ -9,8 +9,6 @@ import model.Entrenador;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @ApplicationScoped

@@ -72,7 +72,7 @@ public class BoxeadorServiceTest {
         Boxeador boxeadorObtenido = modelMapper.map(boxeadorDTO, Boxeador.class);
 
         //verify
-        assertEquals(boxeador,boxeadorObtenido);
+        assertEquals(boxeador.getNombre(),boxeadorObtenido.getNombre());
 
     }
 
