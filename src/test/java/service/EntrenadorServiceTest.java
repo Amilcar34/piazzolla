@@ -4,13 +4,14 @@ package service;
 import DTO.BoxeadorInfoDTO;
 import DTO.EntrenadorDTO;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.mockito.InjectMock;
 import jakarta.inject.Inject;
 import model.Boxeador;
 import model.Categoria;
 import model.Entrenador;
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
-import repository.BoxeadorRepository;
 import repository.EntrenadorRepository;
 
 import java.sql.Date;
@@ -24,15 +25,29 @@ public class EntrenadorServiceTest {
 
     @Inject
     EntrenadorServiceImp entrenadorServiceImp;
+
+    @InjectMock
+    EntrenadorRepository entrenadorRepository;
+
     ModelMapper modelMapper = new ModelMapper();
 
     @Test
     public void obtenerEntrenadores(){
+        //setup
+        List<Entrenador> entrenadors = new ArrayList<>();
+
+        Entrenador entrenador = new Entrenador("Agus",null,null);
+
+        entrenadors.add(entrenador);
+
+        //config
+        Mockito.when(this.entrenadorRepository.getAllEntrenadores()).thenReturn(entrenadors);
+
         //execute
         List<EntrenadorDTO> entrenadorDTOS = this.entrenadorServiceImp.getAllEntrenadores();
 
         //verify
-        assertEquals(4,entrenadorDTOS.size());
+        assertEquals(1,entrenadorDTOS.size());
     }
 
     @Test
@@ -44,6 +59,9 @@ public class EntrenadorServiceTest {
         categorias.add(categoria);
 
         Entrenador entrenador = new Entrenador("Agus",categorias,new ArrayList<Boxeador>());
+
+        //config
+        Mockito.when(this.entrenadorRepository.obtenerEntrenadorPorCategoria(categoria)).thenReturn(entrenador);
 
         //execute
         EntrenadorDTO entrenadorDTO = this.entrenadorServiceImp.obtenerEntrenadorPorCategoria(categoria);
@@ -64,48 +82,48 @@ public class EntrenadorServiceTest {
         categorias.add(cat1);
         categorias.add(cat2);
 
-        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<Boxeador>());
-
+        List<Boxeador> boxeadors = new ArrayList<>();
         Boxeador boxeador = new  Boxeador();
+
+        boxeadors.add(boxeador);
+
+        Entrenador entrenador = new Entrenador("Juan",categorias, boxeadors);
+
 
         EntrenadorDTO entrenadorDTO = modelMapper.map(entrenador,EntrenadorDTO.class);
         BoxeadorInfoDTO boxeadorInfoDTO = modelMapper.map(boxeador, BoxeadorInfoDTO.class);
+
+        //config
+        Mockito.when(this.entrenadorRepository.addBoxeador(entrenador,boxeador)).thenReturn(entrenador);
 
         //execute
         EntrenadorDTO response = this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorInfoDTO);
 
         //verify
-        assertEquals(5,response.getBoxeadores().size());
+        assertEquals(1,response.getBoxeadores().size());
     }
 
     @Test
     public void queNoSePuedaAgregarBoxeador() throws Exception {
         //setup
-        List<Categoria> categorias = new ArrayList<>();
+        List<Boxeador> boxeadors = new ArrayList<>();
+        Boxeador boxeador = new  Boxeador();
 
-        Categoria cat1 = new Categoria(7L,"Mediopesado",76.205,79.378);
-        Categoria cat2 = new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE);
+        boxeadors.add(boxeador);
+        boxeadors.add(boxeador);
+        boxeadors.add(boxeador);
+        boxeadors.add(boxeador);
+        boxeadors.add(boxeador);
 
-        categorias.add(cat1);
-        categorias.add(cat2);
+        Entrenador entrenador = new Entrenador("Juan",null, boxeadors);
 
-
-        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<Boxeador>());
-
-        Boxeador boxeador = new  Boxeador("Nahuel",77D,cat1,entrenador,new Date(System.currentTimeMillis()));
+        //config
+        Mockito.when(this.entrenadorRepository.addBoxeador(entrenador,boxeador)).thenReturn(entrenador);
 
         EntrenadorDTO entrenadorDTO = modelMapper.map(entrenador,EntrenadorDTO.class);
         BoxeadorInfoDTO boxeadorDTO = modelMapper.map(boxeador,BoxeadorInfoDTO.class);
 
-
-        entrenadorDTO = this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
-        entrenadorDTO = this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
-        entrenadorDTO = this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorDTO);
-
-
-
         //execute
-
         EntrenadorDTO finalEntrenadorDTO = entrenadorDTO;
         Assertions.assertThrows(Exception.class, () -> {
              this.entrenadorServiceImp.addBoxeador(finalEntrenadorDTO,boxeadorDTO);
