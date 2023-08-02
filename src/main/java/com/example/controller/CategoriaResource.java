@@ -19,12 +19,12 @@ public class CategoriaResource {
 
     @GET
     public List<Categoria> list() {
-        return this.categoriaServiceImp.getAllCategorias();
+        return this.categoriaServiceImp.obtenerCategorias();
     }
 
     @POST
     public Response create(Categoria categoria){
-        this.categoriaServiceImp.create(categoria);
+        this.categoriaServiceImp.crearCategoria(categoria);
         return Response.status(Response.Status.CREATED).entity(categoria).build();
     }
 
@@ -32,7 +32,7 @@ public class CategoriaResource {
     @Path("/{id}")
     public Response update( Long id, Categoria categoria){
         try {
-            this.categoriaServiceImp.update(id,categoria);
+            this.categoriaServiceImp.actualizarCategoria(id,categoria);
             return Response.ok().entity(categoria).build();
         }catch (NotFoundException e){
             logErrorService.grabarError(e,this.getClass().getName());

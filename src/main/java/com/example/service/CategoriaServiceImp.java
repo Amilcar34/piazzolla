@@ -16,17 +16,17 @@ public class CategoriaServiceImp implements ICategoriaService{
     CategoriaRepository categoriaRepository;
 
     @Override
-    public List<Categoria> getAllCategorias() {
+    public List<Categoria> obtenerCategorias() {
         return this.categoriaRepository.getAll();
     }
 
     @Override
-    public Categoria create(Categoria categoria) {
+    public Categoria crearCategoria(Categoria categoria) {
       return this.categoriaRepository.create(categoria);
     }
 
     @Override
-    public Optional<Categoria> update(Long idCategoria, Categoria categoria) {
+    public Optional<Categoria> actualizarCategoria(Long idCategoria, Categoria categoria) {
         Optional<Categoria> categoriaExist = Optional.ofNullable(this.categoriaRepository.find(idCategoria)
                 .orElseThrow(() -> new NotFoundException("La categoría " + idCategoria + " no fue encontrada.")));
 

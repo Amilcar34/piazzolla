@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import com.example.model.Boxeador;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +16,5 @@ import java.util.Optional;
 public interface IDAORepository<K,T>{
     List<K> getAll();
     K create(K k);
-
     Optional<K> find(T t);
-
-
 }

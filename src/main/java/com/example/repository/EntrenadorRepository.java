@@ -8,6 +8,7 @@ import com.example.model.Entrenador;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -60,10 +61,10 @@ public class EntrenadorRepository implements IDAORepository<Entrenador , String 
     }
 
     @Override
-    public Optional<Entrenador> find(String s) {
-        return Optional.empty();
+    public Optional<Entrenador> find(String nombre) {
+        Optional<Entrenador> entrenador = this.entrenadores.stream().filter(e -> Objects.equals(e.getNombre(), nombre)).findFirst();
+        return entrenador;
     }
-
 
     public Entrenador addBoxeador(Entrenador entrenador, Boxeador boxeador) {
         for (Entrenador en: this.entrenadores) {

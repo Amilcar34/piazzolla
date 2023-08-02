@@ -43,7 +43,7 @@ public class CategoriaServiceTest {
         Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
 
         //execute
-        List<Categoria> categoriasObtenidas = this.categoriaServiceImp.getAllCategorias();
+        List<Categoria> categoriasObtenidas = this.categoriaServiceImp.obtenerCategorias();
 
         //verify
         assertEquals(categorias,categoriasObtenidas);
@@ -59,7 +59,7 @@ public class CategoriaServiceTest {
         Mockito.when(categoriaRepository.create(categoria)).thenReturn(categoria);
 
         //execute
-        Categoria categoriaGuardada = categoriaServiceImp.create(categoria);
+        Categoria categoriaGuardada = categoriaServiceImp.crearCategoria(categoria);
 
         //verify
         assertNotNull(categoriaGuardada);
@@ -75,7 +75,7 @@ public class CategoriaServiceTest {
         Mockito.when(categoriaRepository.find(categoria.get_id())).thenReturn(Optional.of(categoria));
 
         //execute
-        Optional<Categoria> categoriActualizada = this.categoriaServiceImp.update(categoria.get_id(),modificaciones);
+        Optional<Categoria> categoriActualizada = this.categoriaServiceImp.actualizarCategoria(categoria.get_id(),modificaciones);
 
         //verify
         assertNotNull(categoriActualizada);
@@ -99,7 +99,7 @@ public class CategoriaServiceTest {
         //execute
 
         Assertions.assertThrows(NotFoundException.class, () -> {
-            Optional<Categoria> categoriActualizada = this.categoriaServiceImp.update(categoria.get_id(), modificaciones);
+            Optional<Categoria> categoriActualizada = this.categoriaServiceImp.actualizarCategoria(categoria.get_id(), modificaciones);
         });
 
     }

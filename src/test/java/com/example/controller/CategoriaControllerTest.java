@@ -7,9 +7,7 @@ import com.example.service.LogErrorService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.restassured.http.ContentType;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -19,7 +17,6 @@ import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 @QuarkusTest
@@ -59,7 +56,7 @@ public class CategoriaControllerTest {
         categoriasList.add(categoria1);
 
         //Config
-        Mockito.when(categoriaServiceImp.getAllCategorias()).thenReturn(categoriasList);
+        Mockito.when(categoriaServiceImp.obtenerCategorias()).thenReturn(categoriasList);
 
         given()
                 .contentType(ContentType.JSON)
@@ -78,7 +75,7 @@ public class CategoriaControllerTest {
         Categoria modificada = new Categoria(1L,"MOSQUITA",49D,51D);
 
         //Config
-        Mockito.when(categoriaServiceImp.update(categoria.get_id(),modificada)).thenReturn(Optional.of(modificada));
+        Mockito.when(categoriaServiceImp.actualizarCategoria(categoria.get_id(),modificada)).thenReturn(Optional.of(modificada));
 
         given()
                 .contentType(ContentType.JSON)
@@ -97,7 +94,7 @@ public class CategoriaControllerTest {
         Categoria modificada = new Categoria(9L,"Nueva Categoria Mosca",100D,120D);
 
         //Config
-        Mockito.when(categoriaServiceImp.update(categoria.get_id(),modificada)).thenThrow(new NotFoundException("La categoría no fue encontrada."));
+        Mockito.when(categoriaServiceImp.actualizarCategoria(categoria.get_id(),modificada)).thenThrow(new NotFoundException("La categoría no fue encontrada."));
         Mockito.when(logErrorService.grabarError(new NotFoundException("La categoría no fue encontrada."),this.getClass().getName())).thenReturn(true);
 
             given()

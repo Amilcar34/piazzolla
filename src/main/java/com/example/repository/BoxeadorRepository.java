@@ -1,6 +1,5 @@
 package com.example.repository;
 
-import com.example.model.Categoria;
 import jakarta.enterprise.context.ApplicationScoped;
 import com.example.model.Boxeador;
 
