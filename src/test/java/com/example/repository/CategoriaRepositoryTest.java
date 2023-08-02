@@ -19,7 +19,7 @@ public class CategoriaRepositoryTest {
     @Test
     public void obtenerCategoriasExistentes(){
 
-        List<Categoria> categorias = this.categoriaRepository.getAllCategorias();
+        List<Categoria> categorias = this.categoriaRepository.getAll();
 
         assertNotNull(categorias);
         assertEquals(8,categorias.size());
@@ -32,9 +32,9 @@ public class CategoriaRepositoryTest {
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
 
         //execute
-        Categoria categoriaGuardada = this.categoriaRepository.save(categoria);
+        Categoria categoriaGuardada = this.categoriaRepository.create(categoria);
 
-        List<Categoria> categorias = this.categoriaRepository.getAllCategorias();
+        List<Categoria> categorias = this.categoriaRepository.getAll();
 
         //verify
         assertNotNull(categoriaGuardada);
@@ -50,9 +50,9 @@ public class CategoriaRepositoryTest {
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
 
         //execute
-        this.categoriaRepository.save(categoria);
+        this.categoriaRepository.create(categoria);
 
-        Optional<Categoria> categoriaEncontrada = this.categoriaRepository.findById(categoria.get_id());
+        Optional<Categoria> categoriaEncontrada = this.categoriaRepository.find(categoria.get_id());
 
         //verify
         assertEquals(categoria,categoriaEncontrada.get());

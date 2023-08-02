@@ -17,17 +17,17 @@ public class CategoriaServiceImp implements ICategoriaService{
 
     @Override
     public List<Categoria> getAllCategorias() {
-        return this.categoriaRepository.getAllCategorias();
+        return this.categoriaRepository.getAll();
     }
 
     @Override
     public Categoria create(Categoria categoria) {
-      return this.categoriaRepository.save(categoria);
+      return this.categoriaRepository.create(categoria);
     }
 
     @Override
     public Optional<Categoria> update(Long idCategoria, Categoria categoria) {
-        Optional<Categoria> categoriaExist = Optional.ofNullable(this.categoriaRepository.findById(idCategoria)
+        Optional<Categoria> categoriaExist = Optional.ofNullable(this.categoriaRepository.find(idCategoria)
                 .orElseThrow(() -> new NotFoundException("La categoría " + idCategoria + " no fue encontrada.")));
 
         categoriaExist.get().setNombre(categoria.getNombre());
@@ -39,7 +39,7 @@ public class CategoriaServiceImp implements ICategoriaService{
 
     @Override
     public Categoria obtenerCategoriaPorPeso(Double peso){
-        List<Categoria> categorias = this.categoriaRepository.getAllCategorias();
+        List<Categoria> categorias = this.categoriaRepository.getAll();
 
         if(peso < categorias.get(0).getPesoMin()){
             return categorias.get(0);

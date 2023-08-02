@@ -40,7 +40,7 @@ public class CategoriaServiceTest {
         categorias.add(categoria1);
 
         //Config
-        Mockito.when(categoriaRepository.getAllCategorias()).thenReturn(categorias);
+        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
 
         //execute
         List<Categoria> categoriasObtenidas = this.categoriaServiceImp.getAllCategorias();
@@ -56,7 +56,7 @@ public class CategoriaServiceTest {
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
 
         //Config
-        Mockito.when(categoriaRepository.save(categoria)).thenReturn(categoria);
+        Mockito.when(categoriaRepository.create(categoria)).thenReturn(categoria);
 
         //execute
         Categoria categoriaGuardada = categoriaServiceImp.create(categoria);
@@ -72,7 +72,7 @@ public class CategoriaServiceTest {
         Categoria modificaciones = new Categoria(9L,"Categoria Modificada",130D,140D);
 
         //config
-        Mockito.when(categoriaRepository.findById(categoria.get_id())).thenReturn(Optional.of(categoria));
+        Mockito.when(categoriaRepository.find(categoria.get_id())).thenReturn(Optional.of(categoria));
 
         //execute
         Optional<Categoria> categoriActualizada = this.categoriaServiceImp.update(categoria.get_id(),modificaciones);
@@ -94,7 +94,7 @@ public class CategoriaServiceTest {
         Categoria modificaciones = new Categoria(9L,"Categoria Modificada",100D,120D);
 
         //config
-        Mockito.when(categoriaRepository.findById(categoria.get_id())).thenReturn(Optional.empty());
+        Mockito.when(categoriaRepository.find(categoria.get_id())).thenReturn(Optional.empty());
 
         //execute
 
@@ -122,7 +122,7 @@ public class CategoriaServiceTest {
         categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
         categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
 
-        Mockito.when(categoriaRepository.getAllCategorias()).thenReturn(categorias);
+        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
 
         //execute
         Categoria categoriaObtenida = this.categoriaServiceImp.obtenerCategoriaPorPeso(peso);
@@ -151,7 +151,7 @@ public class CategoriaServiceTest {
         categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
         categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
 
-        Mockito.when(categoriaRepository.getAllCategorias()).thenReturn(categorias);
+        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
 
         //execute
         Categoria categoriaObtenida = this.categoriaServiceImp.obtenerCategoriaPorPeso(peso);
@@ -179,7 +179,7 @@ public class CategoriaServiceTest {
         categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
         categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
 
-        Mockito.when(categoriaRepository.getAllCategorias()).thenReturn(categorias);
+        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
 
         //execute
         Categoria categoriaObtenida = this.categoriaServiceImp.obtenerCategoriaPorPeso(peso);

@@ -7,7 +7,7 @@ import java.util.*;
 
 
 @ApplicationScoped
-public class CategoriaRepository implements ICategoriaRepository{
+public class CategoriaRepository implements IDAORepository<Categoria, Long  , Date > {
 
     List<Categoria> categorias = new ArrayList<>();
 
@@ -23,20 +23,25 @@ public class CategoriaRepository implements ICategoriaRepository{
     }
 
     @Override
-    public List<Categoria> getAllCategorias() {
+    public List<Categoria> getAll() {
         return this.categorias;
     }
 
     @Override
-    public Categoria save(Categoria categoria) {
+    public Categoria create(Categoria categoria) {
         this.categorias.add(categoria);
         return categoria;
     }
 
-    @Override
-    public Optional<Categoria> findById(Long idCategoria) {
+
+    public Optional<Categoria> find(Long idCategoria) {
         Optional<Categoria> categoriaExist = this.categorias.stream().filter(c -> Objects.equals(c.get_id(), idCategoria)).findFirst();
         return categoriaExist;
     }
 
+
+    @Override
+    public Integer count(Date date) {
+        return null;
+    }
 }
