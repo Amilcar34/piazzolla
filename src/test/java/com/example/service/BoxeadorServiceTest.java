@@ -65,7 +65,7 @@ public class BoxeadorServiceTest {
         categorias.add(cat2);
 
         Entrenador entrenador = new Entrenador("Pablo", categorias, null);
-        Boxeador boxeador = new Boxeador("Nico", 57D, cat1, entrenador, new Date(System.currentTimeMillis()));
+        Boxeador boxeador = new Boxeador("Nico", 57D, null, null, null);
 
         //config
         Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(boxeador);
@@ -76,14 +76,12 @@ public class BoxeadorServiceTest {
         //assertions
         assertEquals(cat1, boxeadorDTO.getCategoria());
         assertEquals(entrenador.getNombre(), boxeadorDTO.getEntrenador().getNombre());
-        assertEquals(boxeador.getFechaIngreso().toLocalDate(), boxeadorDTO.getFechaIngreso().toLocalDate());
-
-        Mockito.verify(boxeadorRepository).create(boxeador);
+        assertEquals(new Date(System.currentTimeMillis()).toLocalDate(), boxeadorDTO.getFechaIngreso().toLocalDate());
 
 
     }
 
-   /* @Test
+    @Test
     public void queNoSePuedaCrearMasDe5BoxeadoresPorEntrenador() throws Exception {
 
         List<Categoria> categorias = new ArrayList<>();
@@ -106,12 +104,7 @@ public class BoxeadorServiceTest {
         boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
         boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
         boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
-
-        assertNotNull(boxeadorDTO.getEntrenador());
-        assertNotNull(boxeadorDTO.getCategoria());
-        assertNotNull(boxeadorDTO.getFechaIngreso());
-
-        assertEquals(boxeador.getEntrenador().getNombre() , boxeadorDTO.getEntrenador().getNombre());
+        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
 
 
 
@@ -119,5 +112,5 @@ public class BoxeadorServiceTest {
               this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
         });
 
-    }*/
+    }
 }
