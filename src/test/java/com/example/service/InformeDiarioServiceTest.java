@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class InformeDiarioServiceTest {
         //verify
        assertEquals(2,informeDTO.getTotalBoxeadores());
        assertEquals(entrenador.getNombre(),informeDTO.getEntrenadores().get(0).getNombre());
+       assertEquals(new Date(System.currentTimeMillis()).toLocalDate(),informeDTO.getDia().toLocalDate());
 
     }
 

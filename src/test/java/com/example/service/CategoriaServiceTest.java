@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 public class CategoriaServiceTest {
@@ -69,7 +69,7 @@ public class CategoriaServiceTest {
     public void modificarCategoria(){
         //setup
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
-        Categoria modificaciones = new Categoria(9L,"Categoria Modificada",100D,120D);
+        Categoria modificaciones = new Categoria(9L,"Categoria Modificada",130D,140D);
 
         //config
         Mockito.when(categoriaRepository.findById(categoria.get_id())).thenReturn(Optional.of(categoria));
@@ -78,8 +78,13 @@ public class CategoriaServiceTest {
         Optional<Categoria> categoriActualizada = this.categoriaServiceImp.update(categoria.get_id(),modificaciones);
 
         //verify
-        assertEquals(categoria,categoriActualizada.get());
-        assertEquals(categoria.getNombre(),categoriActualizada.get().getNombre());
+        assertNotNull(categoriActualizada);
+        assertTrue(categoriActualizada.isPresent()); // Ensure the Optional is not empty
+
+        Categoria categoriaActualizadaObj = categoriActualizada.get();
+        assertEquals(modificaciones.getNombre(), categoriaActualizadaObj.getNombre()); // Verify modified name
+        assertEquals(modificaciones.getPesoMin(), categoriaActualizadaObj.getPesoMin()); // Verify modified min weight
+        assertEquals(modificaciones.getPesoMax(), categoriaActualizadaObj.getPesoMax()); // Verify modified max weight
     }
 
     @Test
@@ -96,7 +101,6 @@ public class CategoriaServiceTest {
         Assertions.assertThrows(NotFoundException.class, () -> {
             Optional<Categoria> categoriActualizada = this.categoriaServiceImp.update(categoria.get_id(), modificaciones);
         });
-
 
     }
 

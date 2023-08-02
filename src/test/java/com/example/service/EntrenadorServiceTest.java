@@ -20,7 +20,7 @@ import org.modelmapper.ModelMapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -50,7 +50,9 @@ public class EntrenadorServiceTest {
         List<EntrenadorDTO> entrenadorDTOS = this.entrenadorServiceImp.getAllEntrenadores();
 
         //verify
+        assertNotNull(entrenadorDTOS);
         assertEquals(1,entrenadorDTOS.size());
+        assertEquals(entrenador.getNombre(), entrenadorDTOS.get(0).getNombre());
     }
 
     @Test
@@ -89,6 +91,9 @@ public class EntrenadorServiceTest {
         Boxeador boxeador = new  Boxeador();
 
         boxeadors.add(boxeador);
+        boxeadors.add(boxeador);
+        boxeadors.add(boxeador);
+        boxeadors.add(boxeador);
 
         Entrenador entrenador = new Entrenador("Juan",categorias, boxeadors);
 
@@ -102,8 +107,11 @@ public class EntrenadorServiceTest {
         //execute
         EntrenadorDTO response = this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorInfoDTO);
 
-        //verify
-        assertEquals(1,response.getBoxeadores().size());
+            //verify
+        assertEquals(4, response.getBoxeadores().size());
+        assertNotNull(response.getBoxeadores());
+        assertEquals(entrenadorDTO, response);
+
     }
 
     @Test

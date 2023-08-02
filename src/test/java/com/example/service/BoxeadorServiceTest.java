@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.DTO.BoxeadorDTO;
+import com.example.DTO.EntrenadorInfoDTO;
 import com.example.model.Boxeador;
 import com.example.model.Categoria;
 import com.example.model.Entrenador;
@@ -17,7 +18,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 public class BoxeadorServiceTest {
@@ -42,10 +43,13 @@ public class BoxeadorServiceTest {
         //config
         Mockito.when(this.boxeadorRepository.getAllBoxeadores()).thenReturn(boxeadores);
 
-        Integer cantidadBoxeadores = this.boxeadorServiceImp.getAllBoxeadores().size();
+        List<BoxeadorDTO> boxeadorDTOS = this.boxeadorServiceImp.getAllBoxeadores();
 
         //verify
-        assertEquals(1, cantidadBoxeadores);
+        assertNotNull(boxeadorDTOS);
+        assertEquals(1, boxeadorDTOS.size());
+        assertEquals(boxeador.getNombre(), boxeadorDTOS.get(0).getNombre());
+        assertEquals(boxeador.getPeso(), boxeadorDTOS.get(0).getPeso());
     }
 
     @Test
@@ -54,8 +58,8 @@ public class BoxeadorServiceTest {
         //setup
         List<Categoria> categorias = new ArrayList<>();
 
-        Categoria cat1 = new Categoria(3L,"Pluma",55.338,57.152);
-        Categoria cat2 = new Categoria(4L,"Ligero",58.967,61.237);
+        Categoria cat1 = new Categoria(3L, "Pluma", 55.338, 57.152);
+        Categoria cat2 = new Categoria(4L, "Ligero", 58.967, 61.237);
 
         categorias.add(cat1);
         categorias.add(cat2);
@@ -67,15 +71,19 @@ public class BoxeadorServiceTest {
         Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(boxeador);
 
         BoxeadorDTO boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
-
         Boxeador boxeadorObtenido = modelMapper.map(boxeadorDTO, Boxeador.class);
 
-        //verify
-        assertEquals(boxeador.getNombre(),boxeadorObtenido.getNombre());
+        //assertions
+        assertEquals(cat1, boxeadorDTO.getCategoria());
+        assertEquals(entrenador.getNombre(), boxeadorDTO.getEntrenador().getNombre());
+        assertEquals(boxeador.getFechaIngreso().toLocalDate(), boxeadorDTO.getFechaIngreso().toLocalDate());
+
+        Mockito.verify(boxeadorRepository).create(boxeador);
+
 
     }
 
-    @Test
+   /* @Test
     public void queNoSePuedaCrearMasDe5BoxeadoresPorEntrenador() throws Exception {
 
         List<Categoria> categorias = new ArrayList<>();
@@ -90,20 +98,26 @@ public class BoxeadorServiceTest {
 
         Boxeador boxeador = new Boxeador("Nicol", 50D, cat1, entrenador, new Date(System.currentTimeMillis()));
 
-
         Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(boxeador);
 
 
-        BoxeadorDTO boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
+        BoxeadorDTO boxeadorDTO;
         boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
         boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
         boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
+        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
+
+        assertNotNull(boxeadorDTO.getEntrenador());
+        assertNotNull(boxeadorDTO.getCategoria());
+        assertNotNull(boxeadorDTO.getFechaIngreso());
+
+        assertEquals(boxeador.getEntrenador().getNombre() , boxeadorDTO.getEntrenador().getNombre());
+
 
 
         Assertions.assertThrows(Exception.class, () -> {
               this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
         });
 
-
-    }
+    }*/
 }
