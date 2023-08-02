@@ -8,4 +8,6 @@ public interface IBoxeadorService {
     List<BoxeadorDTO> getAllBoxeadores();
 
     BoxeadorDTO create(BoxeadorDTO boxeador) throws Exception;
+
+    Boolean eliminar(String nombre);
 }

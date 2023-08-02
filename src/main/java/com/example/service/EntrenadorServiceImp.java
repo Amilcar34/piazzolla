@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.dto.BoxeadorDTO;
 import com.example.dto.BoxeadorInfoDTO;
 import com.example.dto.EntrenadorDTO;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -11,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import com.example.repository.EntrenadorRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -44,5 +46,14 @@ public class EntrenadorServiceImp implements IEntrenadorService {
             return modelMapper.map(this.entrenadorRepository.addBoxeador(entrenador,boxeador),EntrenadorDTO.class);
         }
         throw new Exception("El entrenador " + entrenadorDTO.getNombre() + " ha alcanzado el límite de boxeadores (5).");
+    }
+
+    @Override
+    public Boolean eliminarBoxeador(EntrenadorDTO entrenadorDTO, BoxeadorDTO boxeadorDTO) {
+
+        Entrenador entrenador = modelMapper.map(entrenadorDTO,Entrenador.class);
+        Boxeador boxeador = modelMapper.map(boxeadorDTO,Boxeador.class);
+
+        return this.entrenadorRepository.deleteBoxeador(entrenador,boxeador);
     }
 }

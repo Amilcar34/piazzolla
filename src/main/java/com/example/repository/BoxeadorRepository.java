@@ -41,4 +41,8 @@ public class BoxeadorRepository implements IDAORepository<Boxeador , String>{
 
         return boxeadores.size();
     }
+
+    public Boolean delete(Boxeador boxeador){
+       return this.boxeadores.remove(boxeador);
+    }
 }

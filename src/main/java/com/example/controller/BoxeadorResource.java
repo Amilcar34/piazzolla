@@ -3,9 +3,7 @@ package com.example.controller;
 import com.example.dto.BoxeadorDTO;
 import com.example.service.BoxeadorServiceImp;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import com.example.service.LogErrorService;
 
@@ -36,5 +34,11 @@ public class BoxeadorResource {
             return Response.status(402).entity(e.getMessage()).build();
         }
 
+    }
+
+    @DELETE
+    public Response eliminarPelicula(@QueryParam("nombre") String nombre){
+        this.boxeadorServiceImp.eliminar(nombre);
+        return Response.ok().entity("Boxeador eliminado con exito").build();
     }
 }

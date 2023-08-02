@@ -76,6 +76,16 @@ public class EntrenadorRepository implements IDAORepository<Entrenador , String 
         return null;
     }
 
+    public Boolean deleteBoxeador(Entrenador entrenador,Boxeador boxeador){
+        this.entrenadores.forEach(entre -> {
+            if(entre.getNombre().equals(entrenador.getNombre())){
+                entre.getBoxeadores().removeIf(b -> b.getNombre().equals(boxeador.getNombre()));
+            }
+        });
+
+        return true;
+    }
+
     //SI
     public Integer obtenerBoxeadoresDelDia(Entrenador entrenador) {
         List<Boxeador> boxeadores = entrenador.getBoxeadores()
