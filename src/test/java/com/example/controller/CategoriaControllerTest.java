@@ -3,10 +3,13 @@ package com.example.controller;
 
 import com.example.model.Categoria;
 import com.example.service.CategoriaServiceImp;
+import com.example.service.LogErrorService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.restassured.http.ContentType;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -15,14 +18,18 @@ import java.util.List;
 import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 
 @QuarkusTest
 public class CategoriaControllerTest {
 
     @InjectMock
     CategoriaServiceImp categoriaServiceImp;
+
+    @InjectMock
+    LogErrorService logErrorService;
 
     @Test
     public void queSeAgregueUnaCategoria(){
@@ -91,15 +98,16 @@ public class CategoriaControllerTest {
 
         //Config
         Mockito.when(categoriaServiceImp.update(categoria.get_id(),modificada)).thenThrow(new NotFoundException("La categoría no fue encontrada."));
+        Mockito.when(logErrorService.grabarError(new NotFoundException("La categoría no fue encontrada."),this.getClass().getName())).thenReturn(true);
 
-        given()
-                .contentType(ContentType.JSON)
-                .body(modificada)
-                .when().put("/categorias/{id}",categoria.get_id())
-                .then()
-                .statusCode(404)
-                .body(is("La categoría no fue encontrada."));
+            given()
+                    .contentType(ContentType.JSON)
+                    .body(modificada)
+                    .when().put("/categorias/{id}", categoria.get_id())
+                    .then()
+                    .statusCode(404)
+                    .body(is("La categoría no fue encontrada."));
+
     }
-
 
 }

@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 @ApplicationScoped
 public class LogErrorService {
 
-    public void grabarError(Exception exception, String className) {
+    public Boolean grabarError(Exception exception, String className) {
         BufferedWriter bw = null;
         FileWriter fw = null;
 
@@ -27,6 +27,7 @@ public class LogErrorService {
             bw = new BufferedWriter(fw);
             bw.write(data);
             System.out.println("información agregada!");
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -40,5 +41,6 @@ public class LogErrorService {
                 ex.printStackTrace();
             }
         }
+        return false;
     }
 }

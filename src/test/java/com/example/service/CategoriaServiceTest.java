@@ -34,7 +34,7 @@ public class CategoriaServiceTest {
         List<Categoria> categorias = new ArrayList<>();
 
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
-        Categoria categoria1 = new Categoria(10L,"Nueva Categoria 1",13D,140D);
+        Categoria categoria1 = new Categoria(10L,"Nueva Categoria 1",130D,140D);
 
         categorias.add(categoria);
         categorias.add(categoria1);
@@ -132,7 +132,7 @@ public class CategoriaServiceTest {
 
     }
 
-    @Test
+   @Test
     public void obtenerCategoriaPesoEntreLosLimites(){
         //setup
         Double peso= 68D;
@@ -161,7 +161,7 @@ public class CategoriaServiceTest {
 
     }
 
-    @Test
+   @Test
     public void obtenerCategoriaPesoInferirALaMenorCategoria(){
         //setup
         Double peso= 40D;
