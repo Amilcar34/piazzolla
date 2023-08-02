@@ -1,7 +1,6 @@
 package com.example.service;
 
-import com.example.DTO.BoxeadorDTO;
-import com.example.DTO.EntrenadorInfoDTO;
+import com.example.dto.BoxeadorDTO;
 import com.example.model.Boxeador;
 import com.example.model.Categoria;
 import com.example.model.Entrenador;

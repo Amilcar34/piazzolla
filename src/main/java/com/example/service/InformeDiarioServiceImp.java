@@ -1,8 +1,8 @@
 package com.example.service;
 
 
-import com.example.DTO.EntrenadorInformeDTO;
-import com.example.DTO.InformeDTO;
+import com.example.dto.EntrenadorInformeDTO;
+import com.example.dto.InformeDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import com.example.repository.BoxeadorRepository;

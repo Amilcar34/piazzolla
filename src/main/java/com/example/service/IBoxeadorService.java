@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.DTO.BoxeadorDTO;
+import com.example.dto.BoxeadorDTO;
 
 import java.util.List;
 

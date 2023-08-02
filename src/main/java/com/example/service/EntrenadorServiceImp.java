@@ -1,7 +1,7 @@
 package com.example.service;
 
-import com.example.DTO.BoxeadorInfoDTO;
-import com.example.DTO.EntrenadorDTO;
+import com.example.dto.BoxeadorInfoDTO;
+import com.example.dto.EntrenadorDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import com.example.model.Boxeador;

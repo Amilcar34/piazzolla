@@ -1,8 +1,8 @@
 package com.example.controller;
 
 
-import com.example.DTO.EntrenadorInformeDTO;
-import com.example.DTO.InformeDTO;
+import com.example.dto.EntrenadorInformeDTO;
+import com.example.dto.InformeDTO;
 import com.example.service.InformeDiarioServiceImp;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;

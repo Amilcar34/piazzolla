@@ -11,7 +11,7 @@ public class LogErrorServiceTest {
     LogErrorService logErrorService;
 
     @Test
-    public void test(){
+    public void queSePuedaGuardarUnError(){
         try{
             int a = (int) (5/0);
         }catch (ArithmeticException ex){

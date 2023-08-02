@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.DTO.BoxeadorDTO;
+import com.example.dto.BoxeadorDTO;
 import com.example.service.BoxeadorServiceImp;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -9,6 +9,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import com.example.service.LogErrorService;
 
+import java.io.IOException;
 import java.util.List;
 
 @Path("/boxeadores")

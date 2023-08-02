@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.DTO.InformeDTO;
+import com.example.dto.InformeDTO;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

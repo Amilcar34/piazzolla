@@ -1,4 +1,4 @@
-package com.example.DTO;
+package com.example.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +10,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntrenadorInfoDTO {
+public class EntrenadorDTO {
 
-  private String nombre;
-  private List<Categoria> categorias;
+    private String nombre;
+    private List<Categoria> categorias;
+    private List<BoxeadorInfoDTO> boxeadores;
+
 }

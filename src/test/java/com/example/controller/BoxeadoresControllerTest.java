@@ -1,7 +1,7 @@
 package com.example.controller;
 
 
-import com.example.DTO.BoxeadorDTO;
+import com.example.dto.BoxeadorDTO;
 import com.example.model.Boxeador;
 import com.example.service.BoxeadorServiceImp;
 import io.quarkus.test.junit.QuarkusTest;

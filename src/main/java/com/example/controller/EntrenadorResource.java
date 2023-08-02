@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.DTO.EntrenadorDTO;
+import com.example.dto.EntrenadorDTO;
 import com.example.service.EntrenadorServiceImp;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;

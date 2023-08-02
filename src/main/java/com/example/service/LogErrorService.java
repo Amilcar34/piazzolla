@@ -1,6 +1,7 @@
 package com.example.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import org.mockito.internal.stubbing.answers.ThrowsException;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 @ApplicationScoped
 public class LogErrorService {
 
-    public Boolean grabarError(Exception exception, String className) {
+    public Boolean grabarError(Exception exception, String className)  {
         BufferedWriter bw = null;
         FileWriter fw = null;
 
@@ -27,7 +28,6 @@ public class LogErrorService {
             bw = new BufferedWriter(fw);
             bw.write(data);
             System.out.println("información agregada!");
-            return true;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -37,10 +37,13 @@ public class LogErrorService {
                     bw.close();
                 if (fw != null)
                     fw.close();
+                return true;
+
             } catch (IOException ex) {
                 ex.printStackTrace();
+                return false;
+
             }
         }
-        return false;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.DTO.InformeDTO;
+import com.example.dto.InformeDTO;
 import com.example.model.Entrenador;
 import com.example.repository.BoxeadorRepository;
 import com.example.repository.EntrenadorRepository;

@@ -1,19 +1,18 @@
-package com.example.DTO;
+package com.example.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.example.model.Categoria;
+
 import java.sql.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoxeadorDTO {
-
+public class BoxeadorInfoDTO {
    private String nombre;
    private Double peso;
    private Categoria categoria;
-   private EntrenadorInfoDTO entrenador;
    private Date fechaIngreso;
 }
