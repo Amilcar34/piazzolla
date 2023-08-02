@@ -40,7 +40,7 @@ public class InformeDiarioServiceTest {
 
         //config
         Mockito.when(this.boxeadorRepository.cantBoxeadoresPorDia()).thenReturn(2);
-        Mockito.when(this.entrenadorRepository.getAllEntrenadores()).thenReturn(entrenadors);
+        Mockito.when(this.entrenadorRepository.getAll()).thenReturn(entrenadors);
         Mockito.when(this.entrenadorRepository.obtenerBoxeadoresDelDia(entrenador)).thenReturn(2);
 
         //execute

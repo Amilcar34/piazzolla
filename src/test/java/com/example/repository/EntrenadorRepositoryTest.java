@@ -23,7 +23,7 @@ public class EntrenadorRepositoryTest {
     @Test
     public void obtenerTodosLosEntrenadores(){
 
-        List<Entrenador> entrenadores = this.entrenadorRepository.getAllEntrenadores();
+        List<Entrenador> entrenadores = this.entrenadorRepository.getAll();
 
         assertNotNull(entrenadores);
         assertEquals(4,entrenadores.size());

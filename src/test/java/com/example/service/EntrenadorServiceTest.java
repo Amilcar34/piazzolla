@@ -44,7 +44,7 @@ public class EntrenadorServiceTest {
         entrenadors.add(entrenador);
 
         //config
-        Mockito.when(this.entrenadorRepository.getAllEntrenadores()).thenReturn(entrenadors);
+        Mockito.when(this.entrenadorRepository.getAll()).thenReturn(entrenadors);
 
         //execute
         List<EntrenadorDTO> entrenadorDTOS = this.entrenadorServiceImp.getAllEntrenadores();

@@ -7,7 +7,7 @@ import java.util.*;
 
 
 @ApplicationScoped
-public class CategoriaRepository implements IDAORepository<Categoria, Long  , Date > {
+public class CategoriaRepository implements IDAORepository<Categoria, Long   > {
 
     List<Categoria> categorias = new ArrayList<>();
 
@@ -40,8 +40,4 @@ public class CategoriaRepository implements IDAORepository<Categoria, Long  , Da
     }
 
 
-    @Override
-    public Integer count(Date date) {
-        return null;
-    }
 }

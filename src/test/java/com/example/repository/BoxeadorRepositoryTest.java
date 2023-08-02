@@ -30,7 +30,7 @@ public class BoxeadorRepositoryTest {
         this.boxeadorRepository.create(boxeador);
 
         //verify
-        assertEquals(1, this.boxeadorRepository.getAllBoxeadores().size());
+        assertEquals(1, this.boxeadorRepository.getAll().size());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class BoxeadorRepositoryTest {
         assertNotNull(boxeadorObtenido);
         assertNotNull(boxeador);
 
-        List<Boxeador> boxeadores = this.boxeadorRepository.getAllBoxeadores();
+        List<Boxeador> boxeadores = this.boxeadorRepository.getAll();
         assertTrue(boxeadores.contains(boxeador));
 
     }

@@ -11,13 +11,11 @@ import java.util.Optional;
  * @R variable_condition
  */
 
-public interface IDAORepository<K,T,R>{
+public interface IDAORepository<K,T>{
     List<K> getAll();
     K create(K k);
 
     Optional<K> find(T t);
 
-    Integer count(R r);
-    //Integer countEntity(K k, R r);
 
 }

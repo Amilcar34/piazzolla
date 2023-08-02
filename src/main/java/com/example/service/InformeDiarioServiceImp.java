@@ -38,7 +38,7 @@ public class InformeDiarioServiceImp {
     private List<EntrenadorInformeDTO> obtenerEntrenadoresInforme() {
         List<EntrenadorInformeDTO> entrenadorInformeDTOS = new ArrayList<>();
 
-        this.entrenadorRepository.getAllEntrenadores().forEach(entrenador -> {
+        this.entrenadorRepository.getAll().forEach(entrenador -> {
                     Integer cant = this.entrenadorRepository.obtenerBoxeadoresDelDia(entrenador);
                     entrenadorInformeDTOS.add(new EntrenadorInformeDTO(entrenador.getNombre(), cant));
                 }

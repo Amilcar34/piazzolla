@@ -30,7 +30,7 @@ public class BoxeadorServiceImp implements IBoxeadorService {
 
     @Override
     public List<BoxeadorDTO> getAllBoxeadores() {
-        List<BoxeadorDTO> boxeadorDTOS = this.boxeadorRepository.getAllBoxeadores()
+        List<BoxeadorDTO> boxeadorDTOS = this.boxeadorRepository.getAll()
                                         .stream().map(b -> modelMapper.map(b,BoxeadorDTO.class))
                                         .collect(Collectors.toList());
         return boxeadorDTOS;

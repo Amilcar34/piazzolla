@@ -40,7 +40,7 @@ public class BoxeadorServiceTest {
         boxeadores.add(boxeador);
 
         //config
-        Mockito.when(this.boxeadorRepository.getAllBoxeadores()).thenReturn(boxeadores);
+        Mockito.when(this.boxeadorRepository.getAll()).thenReturn(boxeadores);
 
         List<BoxeadorDTO> boxeadorDTOS = this.boxeadorServiceImp.getAllBoxeadores();
 

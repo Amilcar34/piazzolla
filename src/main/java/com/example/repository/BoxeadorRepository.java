@@ -1,21 +1,25 @@
 package com.example.repository;
 
+import com.example.model.Categoria;
 import jakarta.enterprise.context.ApplicationScoped;
 import com.example.model.Boxeador;
 
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
-public class BoxeadorRepository implements IBoxeadorRepository{
+public class BoxeadorRepository implements IDAORepository<Boxeador , String>{
 
     List<Boxeador> boxeadores = new ArrayList<>();
     @Override
-    public List<Boxeador> getAllBoxeadores() {
+    public List<Boxeador> getAll() {
         return boxeadores;
     }
+
 
     @Override
     public Boxeador create(Boxeador boxeador) {
@@ -24,6 +28,12 @@ public class BoxeadorRepository implements IBoxeadorRepository{
     }
 
     @Override
+    public Optional<Boxeador> find(String nombre) {
+        Optional<Boxeador> boxExiste = this.boxeadores.stream().filter(b -> Objects.equals(b.getNombre(), nombre)).findFirst();
+        return boxExiste;
+    }
+
+
     public Integer cantBoxeadoresPorDia() {
 
         List<Boxeador> boxeadores = this.boxeadores.stream().filter(b -> (
