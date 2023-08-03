@@ -86,7 +86,7 @@ public class EntrenadorRepository implements IDAORepository<Entrenador , String 
         return true;
     }
 
-    //SI
+
     public Integer obtenerBoxeadoresDelDia(Entrenador entrenador) {
         List<Boxeador> boxeadores = entrenador.getBoxeadores()
                                     .stream().filter(b -> b.getFechaIngreso().toLocalDate().equals(new Date(System.currentTimeMillis()).toLocalDate()))

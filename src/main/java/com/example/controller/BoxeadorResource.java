@@ -37,7 +37,7 @@ public class BoxeadorResource {
     }
 
     @DELETE
-    public Response eliminarPelicula(@QueryParam("nombre") String nombre){
+    public Response eliminarBoxeador(@QueryParam("nombre") String nombre){
         this.boxeadorServiceImp.eliminar(nombre);
         return Response.ok().entity("Boxeador eliminado con exito").build();
     }
