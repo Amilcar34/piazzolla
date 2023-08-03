@@ -1,6 +1,7 @@
 package com.example.service;
 
 
+import com.example.dto.BoxeadorDTO;
 import com.example.dto.BoxeadorInfoDTO;
 import com.example.dto.EntrenadorDTO;
 import com.example.model.Boxeador;
@@ -141,6 +142,38 @@ public class EntrenadorServiceTest {
         });
 
 
+    }
+
+    @Test
+    public void queSePuedaEliminarBoxeador(){
+        Boxeador boxeador = new  Boxeador();
+
+        Entrenador entrenador = new Entrenador();
+
+        Mockito.when(this.entrenadorRepository.deleteBoxeador(entrenador,boxeador)).thenReturn(true);
+
+        EntrenadorDTO entrenadorDTO = modelMapper.map(entrenador,EntrenadorDTO.class);
+        BoxeadorDTO boxeadorInfoDTO = modelMapper.map(boxeador, BoxeadorDTO.class);
+
+        var result = this.entrenadorServiceImp.eliminarBoxeador(entrenadorDTO,boxeadorInfoDTO);
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void queNoSePuedaEliminarBoxeador(){
+        Boxeador boxeador = new  Boxeador();
+
+        Entrenador entrenador = new Entrenador();
+
+        Mockito.when(this.entrenadorRepository.deleteBoxeador(entrenador,boxeador)).thenReturn(false);
+
+        EntrenadorDTO entrenadorDTO = modelMapper.map(entrenador,EntrenadorDTO.class);
+        BoxeadorDTO boxeadorInfoDTO = modelMapper.map(boxeador, BoxeadorDTO.class);
+
+        var result = this.entrenadorServiceImp.eliminarBoxeador(entrenadorDTO,boxeadorInfoDTO);
+
+        assertFalse(result);
     }
 
 }

@@ -109,7 +109,6 @@ public class CategoriaServiceTest {
         //setup
         Double peso= 49D;
         Categoria categoria = new Categoria(1L,"Mosca",48.988,50.802);
-
         //config
         List<Categoria> categorias = new ArrayList<>();
 
@@ -128,6 +127,8 @@ public class CategoriaServiceTest {
         Categoria categoriaObtenida = this.categoriaServiceImp.obtenerCategoriaPorPeso(peso);
 
         //verify
+        assertNotNull(categorias);
+        assertNotNull(categoriaObtenida);
         assertEquals(categoria,categoriaObtenida);
 
     }
@@ -162,7 +163,7 @@ public class CategoriaServiceTest {
     }
 
    @Test
-    public void obtenerCategoriaPesoInferirALaMenorCategoria(){
+    public void obtenerCategoriaPesoInferiorALaMenorCategoria(){
         //setup
         Double peso= 40D;
         Categoria categoria = new Categoria(1L,"Mosca",48.988,50.802);
@@ -171,7 +172,6 @@ public class CategoriaServiceTest {
         List<Categoria> categorias = new ArrayList<>();
 
         categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
-        categorias.add(new Categoria(2L,"Gallo",52.163 ,53.525));
         categorias.add(new Categoria(3L,"Pluma",55.338,57.152));
         categorias.add(new Categoria(4L,"Ligero",58.967,61.237));
         categorias.add(new Categoria(5L,"Welter",63.503,66.678));
@@ -186,7 +186,6 @@ public class CategoriaServiceTest {
 
         //verify
         assertEquals(categoria,categoriaObtenida);
-
     }
 
 }

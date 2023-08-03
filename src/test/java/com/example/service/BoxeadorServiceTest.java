@@ -97,10 +97,31 @@ public class BoxeadorServiceTest {
         Mockito.when(this.boxeadorRepository.delete(boxeador)).thenReturn(true);
 
         //execute
-        Boolean valor = this.boxeadorServiceImp.eliminar(boxeador.getNombre());
+        var valor = this.boxeadorServiceImp.eliminar(boxeador.getNombre());
 
         //verify
         assertTrue(valor);
+    }
+
+    @Test
+    public void queNoSePuedaEliminarBoxeador(){
+        //setup
+        List<Boxeador> boxeadores = new ArrayList<>();
+
+        Entrenador entrenador = new Entrenador("Agus", null, null);
+        Boxeador boxeador = new Boxeador("Nicol", 50D, null, entrenador, null);
+
+        boxeadores.add(boxeador);
+        //config
+        Mockito.when(this.boxeadorRepository.getAll()).thenReturn(boxeadores);
+        Mockito.when(this.boxeadorRepository.find(boxeador.getNombre())).thenReturn(Optional.ofNullable(boxeador));
+        Mockito.when(this.boxeadorRepository.delete(boxeador)).thenReturn(false);
+
+        //execute
+        var valor = this.boxeadorServiceImp.eliminar(boxeador.getNombre());
+
+        //verify
+        assertFalse(valor);
     }
 
     @Test
@@ -114,6 +135,7 @@ public class BoxeadorServiceTest {
         Boxeador boxeadorInex = new Boxeador("Nicol", 50D, null, entrenador, null);
 
         boxeadores.add(boxeador);
+
         //config
         Mockito.when(this.boxeadorRepository.getAll()).thenReturn(boxeadores);
         Mockito.when(this.boxeadorRepository.find(boxeadorInex.getNombre())).thenReturn(Optional.empty());

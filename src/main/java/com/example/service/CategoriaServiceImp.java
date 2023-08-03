@@ -41,21 +41,19 @@ public class CategoriaServiceImp implements ICategoriaService{
     public Categoria obtenerCategoriaPorPeso(Double peso){
         List<Categoria> categorias = this.categoriaRepository.getAll();
 
-        if(peso < categorias.get(0).getPesoMin()){
-            return categorias.get(0);
-        }
+            for (Categoria categoria : categorias) {
 
-        for (Categoria categoria: categorias) {
-            if(peso >= categoria.getPesoMin() && peso <= categoria.getPesoMax()){
-                return categoria;
+                if (peso >= categoria.getPesoMin() && peso <= categoria.getPesoMax()) {
+                    return categoria;
+                }
+
+                Integer cat = categorias.indexOf(categoria) + 1;
+                if (peso > categoria.getPesoMax() && peso < categorias.get(cat).getPesoMin()) {
+                    return categoria;
+                }
+
             }
 
-            Integer cat = categorias.indexOf(categoria)+1;
-            if (peso > categoria.getPesoMax() && peso < categorias.get(cat).getPesoMin()){
-                return categoria;
-            }
-        }
-
-        return null;
+        return categorias.get(0);
     }
 }
