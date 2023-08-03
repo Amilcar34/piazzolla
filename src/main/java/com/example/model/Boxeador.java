@@ -11,7 +11,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Boxeador {
-
     private String nombre;
     private Double peso;
     private Categoria categoria;

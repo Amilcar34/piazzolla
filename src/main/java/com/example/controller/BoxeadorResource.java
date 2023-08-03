@@ -3,11 +3,11 @@ package com.example.controller;
 import com.example.dto.BoxeadorDTO;
 import com.example.service.BoxeadorServiceImp;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import com.example.service.LogErrorService;
 
-import java.io.IOException;
 import java.util.List;
 
 @Path("/boxeadores")
@@ -24,7 +24,7 @@ public class BoxeadorResource {
     }
 
     @POST
-    public Response create(BoxeadorDTO boxeadorDTO)  {
+    public Response create(@Valid BoxeadorDTO boxeadorDTO)  {
         try {
             BoxeadorDTO boxeador = this.boxeadorServiceImp.create(boxeadorDTO);
             return Response.status(Response.Status.CREATED).entity(boxeador).build();
