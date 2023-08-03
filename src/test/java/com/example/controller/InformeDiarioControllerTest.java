@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 @QuarkusTest
 public class InformeDiarioControllerTest {
@@ -39,7 +39,7 @@ public class InformeDiarioControllerTest {
                 .when().get("/informe")
                 .then()
                 .statusCode(200)
-                .body(is("{\"dia\":\"2023-08-02\",\"entrenadores\":[{\"nombre\":\"Agus\",\"boxeadoresAsignadosHoy\":2}],\"totalBoxeadores\":2}"));
+                .body("totalBoxeadores",equalTo(2));
 
     }
 }

@@ -77,13 +77,14 @@ public class EntrenadorRepository implements IDAORepository<Entrenador , String 
     }
 
     public Boolean deleteBoxeador(Entrenador entrenador,Boxeador boxeador){
-        this.entrenadores.forEach(entre -> {
-            if(entre.getNombre().equals(entrenador.getNombre())){
-                entre.getBoxeadores().removeIf(b -> b.getNombre().equals(boxeador.getNombre()));
-            }
-        });
 
-        return true;
+        for (Entrenador e: this.entrenadores) {
+            if(e.getNombre().equals(entrenador.getNombre())) {
+               return e.getBoxeadores().removeIf(b -> b.getNombre().equals(boxeador.getNombre()));
+            }
+        }
+
+        return false;
     }
 
 

@@ -8,6 +8,7 @@ import com.example.repository.BoxeadorRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -16,6 +17,7 @@ import org.modelmapper.ModelMapper;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -77,6 +79,49 @@ public class BoxeadorServiceTest {
         assertEquals(entrenador.getNombre(), boxeadorDTO.getEntrenador().getNombre());
         assertEquals(new Date(System.currentTimeMillis()).toLocalDate(), boxeadorDTO.getFechaIngreso().toLocalDate());
 
+
+    }
+
+    @Test
+    public void queSePuedaEliminarBoxeador(){
+        //setup
+        List<Boxeador> boxeadores = new ArrayList<>();
+
+        Entrenador entrenador = new Entrenador("Agus", null, null);
+        Boxeador boxeador = new Boxeador("Nicol", 50D, null, entrenador, null);
+
+        boxeadores.add(boxeador);
+        //config
+        Mockito.when(this.boxeadorRepository.getAll()).thenReturn(boxeadores);
+        Mockito.when(this.boxeadorRepository.find(boxeador.getNombre())).thenReturn(Optional.of(boxeador));
+        Mockito.when(this.boxeadorRepository.delete(boxeador)).thenReturn(true);
+
+        //execute
+        Boolean valor = this.boxeadorServiceImp.eliminar(boxeador.getNombre());
+
+        //verify
+        assertTrue(valor);
+    }
+
+    @Test
+    public void queNoSePuedaEliminarBoxeadorInexistente(){
+        //setup
+        List<Boxeador> boxeadores = new ArrayList<>();
+
+        Entrenador entrenador = new Entrenador("Agus", null, null);
+
+        Boxeador boxeador = new Boxeador("Nico", 57D, null, null, null);
+        Boxeador boxeadorInex = new Boxeador("Nicol", 50D, null, entrenador, null);
+
+        boxeadores.add(boxeador);
+        //config
+        Mockito.when(this.boxeadorRepository.getAll()).thenReturn(boxeadores);
+        Mockito.when(this.boxeadorRepository.find(boxeadorInex.getNombre())).thenReturn(Optional.empty());
+
+
+        assertThrows(NotFoundException.class, () -> {
+            this.boxeadorServiceImp.eliminar(boxeadorInex.getNombre());
+        });
 
     }
 

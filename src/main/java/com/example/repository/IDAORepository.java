@@ -10,7 +10,7 @@ import java.util.Optional;
  * params
  * @K entity
  * @T id
- * @R variable_condition
+ *
  */
 
 public interface IDAORepository<K,T>{

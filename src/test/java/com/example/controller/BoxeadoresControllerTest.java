@@ -86,4 +86,21 @@ public class BoxeadoresControllerTest {
                 .statusCode(402) // Verifica que la respuesta sea un código 402 (u otro código de error que esperes)
                 .body(is("El entrenador ha alcanzado el límite de boxeadores (5)."));// Verifica el mensaje de error esperado
     }
+
+    @Test
+    public void queSePuedaEliminarBoxeador(){
+
+        Boxeador boxeador = new Boxeador("Lautaro",40D,null,null,null);
+
+        Mockito.when(this.boxeadorServiceImp.eliminar(boxeador.getNombre())).thenReturn(true);
+
+        given()
+                .contentType(ContentType.JSON)
+                .queryParam("nombre", boxeador.getNombre())
+                .when()
+                .delete("/boxeadores")
+                .then()
+                .statusCode(200)
+                .body(is("Boxeador eliminado con exito"));
+    }
 }
