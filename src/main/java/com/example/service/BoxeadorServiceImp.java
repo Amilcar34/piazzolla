@@ -1,11 +1,7 @@
 package com.example.service;
 
 
-import com.example.dto.BoxeadorDTO;
-import com.example.dto.BoxeadorInfoDTO;
-import com.example.dto.EntrenadorDTO;
-import com.example.dto.EntrenadorInfoDTO;
-import com.example.model.Entrenador;
+import com.example.dto.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import com.example.model.Boxeador;
@@ -32,31 +28,32 @@ public class BoxeadorServiceImp implements IBoxeadorService {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public List<BoxeadorDTO> getAllBoxeadores() {
-        List<BoxeadorDTO> boxeadorDTOS = this.boxeadorRepository.getAll()
-                .stream().map(b -> modelMapper.map(b, BoxeadorDTO.class))
+    public List<BoxeadorDto> getAllBoxeadores() {
+        List<BoxeadorDto> boxeadorDtos = this.boxeadorRepository.getAll()
+                .stream().map(b -> modelMapper.map(b, BoxeadorDto.class))
                 .collect(Collectors.toList());
-        return boxeadorDTOS;
+        return boxeadorDtos;
     }
 
     /** create
      *
      **/
     @Override
-    public BoxeadorDTO create(BoxeadorDTO boxeadorDTO) throws Exception {
+    public BoxeadorDto create(BoxeadorCreateDto boxeadorCreateDto) throws Exception {
 
-        Categoria categoria = this.categoriaServiceImp.obtenerCategoriaPorPeso(boxeadorDTO.getPeso());
-        EntrenadorDTO entrenadorDTO = this.entrenadorServiceImp.obtenerEntrenadorPorCategoria(categoria);
+        Categoria categoria = this.categoriaServiceImp.obtenerCategoriaPorPeso(boxeadorCreateDto.getPeso());
+        EntrenadorDto entrenadorDTO = this.entrenadorServiceImp.obtenerEntrenadorPorCategoria(categoria);
 
+        BoxeadorDto boxeadorDTO = modelMapper.map(boxeadorCreateDto,BoxeadorDto.class);
 
-        boxeadorDTO.setEntrenador(modelMapper.map(entrenadorDTO, EntrenadorInfoDTO.class));
+        boxeadorDTO.setEntrenador(modelMapper.map(entrenadorDTO, EntrenadorSinBoxDto.class));
         boxeadorDTO.setCategoria(categoria);
         boxeadorDTO.setFechaIngreso(new Date(System.currentTimeMillis()));
 
         Boxeador boxeador = modelMapper.map(boxeadorDTO, Boxeador.class);
         this.boxeadorRepository.create(boxeador);
-        BoxeadorInfoDTO boxeadorInfoDTO = modelMapper.map(boxeador, BoxeadorInfoDTO.class);
-        this.entrenadorServiceImp.addBoxeador(entrenadorDTO, boxeadorInfoDTO);
+        BoxeadorSinEntreDto boxeadorSinEntreDTO = modelMapper.map(boxeador, BoxeadorSinEntreDto.class);
+        this.entrenadorServiceImp.addBoxeador(entrenadorDTO, boxeadorSinEntreDTO);
 
         return boxeadorDTO;
     }
@@ -66,8 +63,8 @@ public class BoxeadorServiceImp implements IBoxeadorService {
         Optional<Boxeador> boxeador = Optional.ofNullable(this.boxeadorRepository.find(nombre)
                 .orElseThrow(() -> new NotFoundException("El boxeador " + nombre + " no fue encontrado.")));
 
-        BoxeadorDTO boxeadorDTO = modelMapper.map(boxeador,BoxeadorDTO.class);
-        EntrenadorDTO entrenadorDTO = modelMapper.map(boxeador.get().getEntrenador(),EntrenadorDTO.class);
+        BoxeadorDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorDto.class);
+        EntrenadorDto entrenadorDTO = modelMapper.map(boxeador.get().getEntrenador(), EntrenadorDto.class);
 
         this.entrenadorServiceImp.eliminarBoxeador(entrenadorDTO,boxeadorDTO);
 

@@ -1,20 +1,18 @@
 package com.example.service;
 
-import com.example.dto.BoxeadorDTO;
-import com.example.dto.BoxeadorInfoDTO;
-import com.example.dto.EntrenadorDTO;
-import com.example.model.Boxeador;
+import com.example.dto.BoxeadorDto;
+import com.example.dto.BoxeadorSinEntreDto;
+import com.example.dto.EntrenadorDto;
 import com.example.model.Categoria;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IEntrenadorService {
-    List<EntrenadorDTO> getAllEntrenadores();
+    List<EntrenadorDto> getAllEntrenadores();
 
-    EntrenadorDTO obtenerEntrenadorPorCategoria(Categoria categoria);
+    EntrenadorDto obtenerEntrenadorPorCategoria(Categoria categoria);
 
-    EntrenadorDTO addBoxeador(EntrenadorDTO entrenadorDTO, BoxeadorInfoDTO boxeadorDTO) throws Exception;
+    EntrenadorDto addBoxeador(EntrenadorDto entrenadorDTO, BoxeadorSinEntreDto boxeadorDTO) throws Exception;
 
-    Boolean eliminarBoxeador(EntrenadorDTO entrenadorDTO, BoxeadorDTO boxeadorDTO);
+    Boolean eliminarBoxeador(EntrenadorDto entrenadorDTO, BoxeadorDto boxeadorDTO);
 }

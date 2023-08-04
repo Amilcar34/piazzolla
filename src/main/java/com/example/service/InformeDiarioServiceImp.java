@@ -1,8 +1,8 @@
 package com.example.service;
 
 
-import com.example.dto.EntrenadorInformeDTO;
-import com.example.dto.InformeDTO;
+import com.example.dto.informe.EntrenadorInformeDto;
+import com.example.dto.informe.InformeDto;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import com.example.repository.BoxeadorRepository;
@@ -21,12 +21,12 @@ public class InformeDiarioServiceImp {
     @Inject
     EntrenadorRepository entrenadorRepository;
 
-    public InformeDTO informeDiario() {
+    public InformeDto informeDiario() {
 
         Integer totalBoxeadores = this.boxeadorRepository.cantBoxeadoresPorDia();
 
 
-        InformeDTO informeDTO = new InformeDTO();
+        InformeDto informeDTO = new InformeDto();
         informeDTO.setDia(new Date(System.currentTimeMillis()));
         informeDTO.setTotalBoxeadores(totalBoxeadores);
         informeDTO.setEntrenadores(this.obtenerEntrenadoresInforme());
@@ -35,15 +35,15 @@ public class InformeDiarioServiceImp {
     }
 
 
-    private List<EntrenadorInformeDTO> obtenerEntrenadoresInforme() {
-        List<EntrenadorInformeDTO> entrenadorInformeDTOS = new ArrayList<>();
+    private List<EntrenadorInformeDto> obtenerEntrenadoresInforme() {
+        List<EntrenadorInformeDto> entrenadorInformeDtos = new ArrayList<>();
 
         this.entrenadorRepository.getAll().forEach(entrenador -> {
                     Integer cant = this.entrenadorRepository.obtenerBoxeadoresDelDia(entrenador);
-                    entrenadorInformeDTOS.add(new EntrenadorInformeDTO(entrenador.getNombre(), cant));
+                    entrenadorInformeDtos.add(new EntrenadorInformeDto(entrenador.getNombre(), cant));
                 }
         );
 
-        return entrenadorInformeDTOS;
+        return entrenadorInformeDtos;
     }
 }

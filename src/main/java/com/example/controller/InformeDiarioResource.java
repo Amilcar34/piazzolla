@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.InformeDTO;
+import com.example.dto.informe.InformeDto;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -13,7 +13,7 @@ public class InformeDiarioResource {
     InformeDiarioServiceImp informeDiarioServiceImp;
 
     @GET
-    public InformeDTO imprimir(){
+    public InformeDto imprimir(){
        return this.informeDiarioServiceImp.informeDiario();
     }
 }

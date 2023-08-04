@@ -5,15 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.example.model.Categoria;
 
-import java.util.List;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntrenadorDTO {
-
-    private String nombre;
-    private List<Categoria> categorias;
-    private List<BoxeadorInfoDTO> boxeadores;
-
+public class BoxeadorSinEntreDto {
+   private String nombre;
+   private Double peso;
+   private Categoria categoria;
+   private Date fechaIngreso;
 }

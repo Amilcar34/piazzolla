@@ -1,8 +1,8 @@
 package com.example.service;
 
-import com.example.dto.BoxeadorDTO;
-import com.example.dto.BoxeadorInfoDTO;
-import com.example.dto.EntrenadorDTO;
+import com.example.dto.BoxeadorDto;
+import com.example.dto.BoxeadorSinEntreDto;
+import com.example.dto.EntrenadorDto;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import com.example.model.Boxeador;
@@ -12,7 +12,6 @@ import org.modelmapper.ModelMapper;
 import com.example.repository.EntrenadorRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -23,33 +22,33 @@ public class EntrenadorServiceImp implements IEntrenadorService {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public List<EntrenadorDTO> getAllEntrenadores() {
-        List<EntrenadorDTO> entrenadorDTOS = this.entrenadorRepository.getAll()
-                                          .stream().map(e -> modelMapper.map(e, EntrenadorDTO.class))
+    public List<EntrenadorDto> getAllEntrenadores() {
+        List<EntrenadorDto> entrenadorDtos = this.entrenadorRepository.getAll()
+                                          .stream().map(e -> modelMapper.map(e, EntrenadorDto.class))
                                           .collect(Collectors.toList());
-        return entrenadorDTOS;
+        return entrenadorDtos;
     }
 
     @Override
-    public EntrenadorDTO obtenerEntrenadorPorCategoria(Categoria categoria) {
+    public EntrenadorDto obtenerEntrenadorPorCategoria(Categoria categoria) {
        Entrenador entrenador = this.entrenadorRepository.obtenerEntrenadorPorCategoria(categoria);
 
-       return modelMapper.map(entrenador,EntrenadorDTO.class);
+       return modelMapper.map(entrenador, EntrenadorDto.class);
     }
 
     @Override
-    public EntrenadorDTO addBoxeador(EntrenadorDTO entrenadorDTO, BoxeadorInfoDTO boxeadorDTO) throws Exception {
+    public EntrenadorDto addBoxeador(EntrenadorDto entrenadorDTO, BoxeadorSinEntreDto boxeadorDTO) throws Exception {
 
         if(entrenadorDTO.getBoxeadores().size() < 5){
             Entrenador entrenador = modelMapper.map(entrenadorDTO,Entrenador.class);
             Boxeador boxeador = modelMapper.map(boxeadorDTO,Boxeador.class);
-            return modelMapper.map(this.entrenadorRepository.addBoxeador(entrenador,boxeador),EntrenadorDTO.class);
+            return modelMapper.map(this.entrenadorRepository.addBoxeador(entrenador,boxeador), EntrenadorDto.class);
         }
         throw new Exception("El entrenador " + entrenadorDTO.getNombre() + " ha alcanzado el límite de boxeadores (5).");
     }
 
     @Override
-    public Boolean eliminarBoxeador(EntrenadorDTO entrenadorDTO, BoxeadorDTO boxeadorDTO) {
+    public Boolean eliminarBoxeador(EntrenadorDto entrenadorDTO, BoxeadorDto boxeadorDTO) {
 
         Entrenador entrenador = modelMapper.map(entrenadorDTO,Entrenador.class);
         Boxeador boxeador = modelMapper.map(boxeadorDTO,Boxeador.class);

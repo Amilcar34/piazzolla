@@ -1,8 +1,8 @@
 package com.example.controller;
 
 
-import com.example.dto.EntrenadorInformeDTO;
-import com.example.dto.InformeDTO;
+import com.example.dto.informe.EntrenadorInformeDto;
+import com.example.dto.informe.InformeDto;
 import com.example.service.InformeDiarioServiceImp;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
@@ -25,10 +25,10 @@ public class InformeDiarioControllerTest {
     @Test
     public void mostrarInforme(){
         //setup
-        List<EntrenadorInformeDTO> entrenadores = new ArrayList<>();
-        EntrenadorInformeDTO entrenadorInformeDTO = new EntrenadorInformeDTO("Agus",2);
+        List<EntrenadorInformeDto> entrenadores = new ArrayList<>();
+        EntrenadorInformeDto entrenadorInformeDTO = new EntrenadorInformeDto("Agus",2);
         entrenadores.add(entrenadorInformeDTO);
-        InformeDTO informeDTO = new InformeDTO(new Date(System.currentTimeMillis()),entrenadores,2);
+        InformeDto informeDTO = new InformeDto(new Date(System.currentTimeMillis()),entrenadores,2);
 
         //config
         Mockito.when(this.informeDiarioServiceImp.informeDiario()).thenReturn(informeDTO);

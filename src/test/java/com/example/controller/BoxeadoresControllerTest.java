@@ -1,7 +1,8 @@
 package com.example.controller;
 
 
-import com.example.dto.BoxeadorDTO;
+import com.example.dto.BoxeadorCreateDto;
+import com.example.dto.BoxeadorDto;
 import com.example.model.Boxeador;
 import com.example.service.BoxeadorServiceImp;
 import io.quarkus.test.junit.QuarkusTest;
@@ -34,14 +35,14 @@ public class BoxeadoresControllerTest {
 
         boxeadors.add(boxeador);
 
-        List<BoxeadorDTO> boxeadorDTOS = boxeadors.stream().map(b -> modelMapper.map( b, BoxeadorDTO.class))
+        List<BoxeadorDto> boxeadorDtos = boxeadors.stream().map(b -> modelMapper.map( b, BoxeadorDto.class))
                 .collect(Collectors.toList());
 
-        Mockito.when(this.boxeadorServiceImp.getAllBoxeadores()).thenReturn(boxeadorDTOS);
+        Mockito.when(this.boxeadorServiceImp.getAllBoxeadores()).thenReturn(boxeadorDtos);
 
         given()
                 .contentType(ContentType.JSON)
-                .body(boxeadorDTOS)
+                .body(boxeadorDtos)
                 .when().get("/boxeadores")
                 .then()
                 .statusCode(200)
@@ -53,9 +54,9 @@ public class BoxeadoresControllerTest {
 
         Boxeador boxeador = new Boxeador("Lautaro",40D,null,null,null);
 
-        BoxeadorDTO boxeadorDTO = modelMapper.map(boxeador,BoxeadorDTO.class);
+        BoxeadorDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorDto.class);
 
-        Mockito.when(this.boxeadorServiceImp.create(Mockito.any(BoxeadorDTO.class))).thenReturn(boxeadorDTO);
+        Mockito.when(this.boxeadorServiceImp.create(Mockito.any(BoxeadorCreateDto.class))).thenReturn(boxeadorDTO);
 
         given()
                 .contentType(ContentType.JSON)
@@ -71,9 +72,9 @@ public class BoxeadoresControllerTest {
 
         Boxeador boxeador = new Boxeador("Lautaro",40D,null,null,null);
 
-        BoxeadorDTO boxeadorDTO = modelMapper.map(boxeador,BoxeadorDTO.class);
+        BoxeadorDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorDto.class);
 
-        Mockito.when(this.boxeadorServiceImp.create(Mockito.any(BoxeadorDTO.class))).thenThrow(new Exception("El entrenador ha alcanzado el límite de boxeadores (5)."));
+        Mockito.when(this.boxeadorServiceImp.create(Mockito.any(BoxeadorCreateDto.class))).thenThrow(new Exception("El entrenador ha alcanzado el límite de boxeadores (5)."));
 
 
 

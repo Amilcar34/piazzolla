@@ -1,6 +1,7 @@
 package com.example.controller;
 
-import com.example.dto.BoxeadorDTO;
+import com.example.dto.BoxeadorCreateDto;
+import com.example.dto.BoxeadorDto;
 import com.example.service.BoxeadorServiceImp;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -19,14 +20,14 @@ public class BoxeadorResource {
     LogErrorService logErrorService;
 
     @GET
-    public List<BoxeadorDTO> list(){
+    public List<BoxeadorDto> list(){
         return this.boxeadorServiceImp.getAllBoxeadores();
     }
 
     @POST
-    public Response create(@Valid BoxeadorDTO boxeadorDTO)  {
+    public Response create(@Valid BoxeadorCreateDto boxeadorCreateDto)  {
         try {
-            BoxeadorDTO boxeador = this.boxeadorServiceImp.create(boxeadorDTO);
+            BoxeadorDto boxeador = this.boxeadorServiceImp.create(boxeadorCreateDto);
             return Response.status(Response.Status.CREATED).entity(boxeador).build();
         }
         catch (Exception e){

@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.dto.InformeDTO;
+import com.example.dto.informe.InformeDto;
 import com.example.model.Entrenador;
 import com.example.repository.BoxeadorRepository;
 import com.example.repository.EntrenadorRepository;
@@ -44,7 +44,7 @@ public class InformeDiarioServiceTest {
         Mockito.when(this.entrenadorRepository.obtenerBoxeadoresDelDia(entrenador)).thenReturn(2);
 
         //execute
-        InformeDTO informeDTO = this.informeDiarioServiceImp.informeDiario();
+        InformeDto informeDTO = this.informeDiarioServiceImp.informeDiario();
 
         //verify
        assertEquals(2,informeDTO.getTotalBoxeadores());

@@ -1,13 +1,14 @@
 package com.example.service;
 
-import com.example.dto.BoxeadorDTO;
+import com.example.dto.BoxeadorCreateDto;
+import com.example.dto.BoxeadorDto;
 
 import java.util.List;
 
 public interface IBoxeadorService {
-    List<BoxeadorDTO> getAllBoxeadores();
+    List<BoxeadorDto> getAllBoxeadores();
 
-    BoxeadorDTO create(BoxeadorDTO boxeador) throws Exception;
+    BoxeadorDto create(BoxeadorCreateDto boxeador) throws Exception;
 
     Boolean eliminar(String nombre);
 }

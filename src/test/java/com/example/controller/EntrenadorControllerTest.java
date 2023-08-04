@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.EntrenadorDTO;
+import com.example.dto.EntrenadorDto;
 import com.example.model.Boxeador;
 import com.example.model.Categoria;
 import com.example.model.Entrenador;
@@ -39,15 +39,15 @@ public class EntrenadorControllerTest {
         cat1.add(new Categoria(2L,"Gallo",52.163 ,53.525));
         entrenadores.add(new Entrenador("Agus",cat1,new ArrayList<Boxeador>()));
 
-        List<EntrenadorDTO> entrenadorDTOS = entrenadores.stream().map(e -> modelMapper.map(e,EntrenadorDTO.class))
+        List<EntrenadorDto> entrenadorDtos = entrenadores.stream().map(e -> modelMapper.map(e, EntrenadorDto.class))
                                             .collect(Collectors.toList());
 
         //Config
-        Mockito.when(entrenadorServiceImp.getAllEntrenadores()).thenReturn(entrenadorDTOS);
+        Mockito.when(entrenadorServiceImp.getAllEntrenadores()).thenReturn(entrenadorDtos);
 
         given()
                 .contentType(ContentType.JSON)
-                .body(entrenadorDTOS)
+                .body(entrenadorDtos)
                 .when().get("/entrenadores")
                 .then()
                 .statusCode(200)

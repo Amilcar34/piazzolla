@@ -1,9 +1,9 @@
 package com.example.service;
 
 
-import com.example.dto.BoxeadorDTO;
-import com.example.dto.BoxeadorInfoDTO;
-import com.example.dto.EntrenadorDTO;
+import com.example.dto.BoxeadorDto;
+import com.example.dto.BoxeadorSinEntreDto;
+import com.example.dto.EntrenadorDto;
 import com.example.model.Boxeador;
 import com.example.model.Categoria;
 import com.example.model.Entrenador;
@@ -48,12 +48,12 @@ public class EntrenadorServiceTest {
         Mockito.when(this.entrenadorRepository.getAll()).thenReturn(entrenadors);
 
         //execute
-        List<EntrenadorDTO> entrenadorDTOS = this.entrenadorServiceImp.getAllEntrenadores();
+        List<EntrenadorDto> entrenadorDtos = this.entrenadorServiceImp.getAllEntrenadores();
 
         //verify
-        assertNotNull(entrenadorDTOS);
-        assertEquals(1,entrenadorDTOS.size());
-        assertEquals(entrenador.getNombre(), entrenadorDTOS.get(0).getNombre());
+        assertNotNull(entrenadorDtos);
+        assertEquals(1, entrenadorDtos.size());
+        assertEquals(entrenador.getNombre(), entrenadorDtos.get(0).getNombre());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class EntrenadorServiceTest {
         Mockito.when(this.entrenadorRepository.obtenerEntrenadorPorCategoria(categoria)).thenReturn(entrenador);
 
         //execute
-        EntrenadorDTO entrenadorDTO = this.entrenadorServiceImp.obtenerEntrenadorPorCategoria(categoria);
+        EntrenadorDto entrenadorDTO = this.entrenadorServiceImp.obtenerEntrenadorPorCategoria(categoria);
 
         //verify
         assertEquals(entrenador.getNombre(), entrenadorDTO.getNombre());
@@ -99,14 +99,14 @@ public class EntrenadorServiceTest {
         Entrenador entrenador = new Entrenador("Juan",categorias, boxeadors);
 
 
-        EntrenadorDTO entrenadorDTO = modelMapper.map(entrenador,EntrenadorDTO.class);
-        BoxeadorInfoDTO boxeadorInfoDTO = modelMapper.map(boxeador, BoxeadorInfoDTO.class);
+        EntrenadorDto entrenadorDTO = modelMapper.map(entrenador, EntrenadorDto.class);
+        BoxeadorSinEntreDto boxeadorSinEntreDTO = modelMapper.map(boxeador, BoxeadorSinEntreDto.class);
 
         //config
         Mockito.when(this.entrenadorRepository.addBoxeador(entrenador,boxeador)).thenReturn(entrenador);
 
         //execute
-        EntrenadorDTO response = this.entrenadorServiceImp.addBoxeador(entrenadorDTO,boxeadorInfoDTO);
+        EntrenadorDto response = this.entrenadorServiceImp.addBoxeador(entrenadorDTO, boxeadorSinEntreDTO);
 
             //verify
         assertEquals(4, response.getBoxeadores().size());
@@ -132,13 +132,13 @@ public class EntrenadorServiceTest {
         //config
         Mockito.when(this.entrenadorRepository.addBoxeador(entrenador,boxeador)).thenReturn(entrenador);
 
-        EntrenadorDTO entrenadorDTO = modelMapper.map(entrenador,EntrenadorDTO.class);
-        BoxeadorInfoDTO boxeadorDTO = modelMapper.map(boxeador,BoxeadorInfoDTO.class);
+        EntrenadorDto entrenadorDTO = modelMapper.map(entrenador, EntrenadorDto.class);
+        BoxeadorSinEntreDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorSinEntreDto.class);
 
         //execute
-        EntrenadorDTO finalEntrenadorDTO = entrenadorDTO;
+        EntrenadorDto finalEntrenadorDto = entrenadorDTO;
         Assertions.assertThrows(Exception.class, () -> {
-             this.entrenadorServiceImp.addBoxeador(finalEntrenadorDTO,boxeadorDTO);
+             this.entrenadorServiceImp.addBoxeador(finalEntrenadorDto,boxeadorDTO);
         });
 
 
@@ -152,8 +152,8 @@ public class EntrenadorServiceTest {
 
         Mockito.when(this.entrenadorRepository.deleteBoxeador(entrenador,boxeador)).thenReturn(true);
 
-        EntrenadorDTO entrenadorDTO = modelMapper.map(entrenador,EntrenadorDTO.class);
-        BoxeadorDTO boxeadorInfoDTO = modelMapper.map(boxeador, BoxeadorDTO.class);
+        EntrenadorDto entrenadorDTO = modelMapper.map(entrenador, EntrenadorDto.class);
+        BoxeadorDto boxeadorInfoDTO = modelMapper.map(boxeador, BoxeadorDto.class);
 
         var result = this.entrenadorServiceImp.eliminarBoxeador(entrenadorDTO,boxeadorInfoDTO);
 
@@ -168,8 +168,8 @@ public class EntrenadorServiceTest {
 
         Mockito.when(this.entrenadorRepository.deleteBoxeador(entrenador,boxeador)).thenReturn(false);
 
-        EntrenadorDTO entrenadorDTO = modelMapper.map(entrenador,EntrenadorDTO.class);
-        BoxeadorDTO boxeadorInfoDTO = modelMapper.map(boxeador, BoxeadorDTO.class);
+        EntrenadorDto entrenadorDTO = modelMapper.map(entrenador, EntrenadorDto.class);
+        BoxeadorDto boxeadorInfoDTO = modelMapper.map(boxeador, BoxeadorDto.class);
 
         var result = this.entrenadorServiceImp.eliminarBoxeador(entrenadorDTO,boxeadorInfoDTO);
 

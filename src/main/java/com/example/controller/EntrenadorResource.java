@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.EntrenadorDTO;
+import com.example.dto.EntrenadorDto;
 import com.example.service.EntrenadorServiceImp;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -15,7 +15,7 @@ public class EntrenadorResource {
     EntrenadorServiceImp entrenadorServiceImp;
 
     @GET
-    public List<EntrenadorDTO> list() {
+    public List<EntrenadorDto> list() {
         return this.entrenadorServiceImp.getAllEntrenadores();
     }
 }

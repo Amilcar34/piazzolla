@@ -10,8 +10,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntrenadorInfoDTO {
+public class EntrenadorDto {
 
-  private String nombre;
-  private List<Categoria> categorias;
+    private String nombre;
+    private List<Categoria> categorias;
+    private List<BoxeadorSinEntreDto> boxeadores;
+
 }

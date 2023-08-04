@@ -1,6 +1,7 @@
 package com.example.service;
 
-import com.example.dto.BoxeadorDTO;
+import com.example.dto.BoxeadorCreateDto;
+import com.example.dto.BoxeadorDto;
 import com.example.model.Boxeador;
 import com.example.model.Categoria;
 import com.example.model.Entrenador;
@@ -44,13 +45,13 @@ public class BoxeadorServiceTest {
         //config
         Mockito.when(this.boxeadorRepository.getAll()).thenReturn(boxeadores);
 
-        List<BoxeadorDTO> boxeadorDTOS = this.boxeadorServiceImp.getAllBoxeadores();
+        List<BoxeadorDto> boxeadorDtos = this.boxeadorServiceImp.getAllBoxeadores();
 
         //verify
-        assertNotNull(boxeadorDTOS);
-        assertEquals(1, boxeadorDTOS.size());
-        assertEquals(boxeador.getNombre(), boxeadorDTOS.get(0).getNombre());
-        assertEquals(boxeador.getPeso(), boxeadorDTOS.get(0).getPeso());
+        assertNotNull(boxeadorDtos);
+        assertEquals(1, boxeadorDtos.size());
+        assertEquals(boxeador.getNombre(), boxeadorDtos.get(0).getNombre());
+        assertEquals(boxeador.getPeso(), boxeadorDtos.get(0).getPeso());
     }
 
     @Test
@@ -71,7 +72,7 @@ public class BoxeadorServiceTest {
         //config
         Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(boxeador);
 
-        BoxeadorDTO boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
+        BoxeadorDto boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
 
         //assertions
         assertEquals(cat1, boxeadorDTO.getCategoria());
@@ -164,17 +165,17 @@ public class BoxeadorServiceTest {
         Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(boxeador);
 
 
-        BoxeadorDTO boxeadorDTO;
-        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
-        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
-        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
-        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
-        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
+        BoxeadorDto boxeadorDTO;
+        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
+        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
+        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
+        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
+        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
 
 
 
         Assertions.assertThrows(Exception.class, () -> {
-              this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
+              this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
         });
 
     }
