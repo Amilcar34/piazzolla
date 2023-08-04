@@ -1,8 +1,17 @@
 package com.example.service;
 
+
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
 public class LogErrorServiceTest {
@@ -12,11 +21,12 @@ public class LogErrorServiceTest {
 
     @Test
     public void queSePuedaGuardarUnError(){
-        try{
-            int a = (int) (5/0);
-        }catch (ArithmeticException ex){
-            //abrir archivo de error
-            logErrorService.grabarError(ex, this.getClass().getName());
-        }
+
+        Exception exception = new NullPointerException("Null pointer exception");
+        String className = "TestClass";
+
+        boolean result = logErrorService.grabarError(exception, className);
+
+        assertTrue(result);
     }
 }

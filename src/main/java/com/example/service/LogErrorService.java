@@ -1,7 +1,6 @@
 package com.example.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import org.mockito.internal.stubbing.answers.ThrowsException;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -27,7 +26,6 @@ public class LogErrorService {
             // Escribir en el archivo usando Files.write
             Files.write(filePath, data.getBytes(), java.nio.file.StandardOpenOption.APPEND);
 
-            System.out.println("información agregada!");
             return true;
         } catch (IOException e) {
             e.printStackTrace();

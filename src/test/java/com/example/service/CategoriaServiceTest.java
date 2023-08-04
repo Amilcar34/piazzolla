@@ -133,6 +133,60 @@ public class CategoriaServiceTest {
 
     }
 
+    @Test
+    public void obtenerCategoriaPesoMinimoLimite(){
+        //setup
+        Double pesoMin= 48.988;
+        Categoria categoria = new Categoria(1L,"Mosca",48.988,50.802);
+        //config
+        List<Categoria> categorias = new ArrayList<>();
+
+        categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
+        categorias.add(new Categoria(2L,"Gallo",52.163 ,53.525));
+        categorias.add(new Categoria(3L,"Pluma",55.338,57.152));
+        categorias.add(new Categoria(4L,"Ligero",58.967,61.237));
+        categorias.add(new Categoria(5L,"Welter",63.503,66.678));
+        categorias.add(new Categoria(6L,"Mediano",69.853,72.562));
+        categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
+        categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
+
+        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
+
+        //execute
+        Categoria categoriaObtenidaMin = this.categoriaServiceImp.obtenerCategoriaPorPeso(pesoMin);
+
+        //verify
+        assertNotNull(categoriaObtenidaMin);
+        assertEquals(categorias.get(0).getPesoMin(), categoriaObtenidaMin.getPesoMin());
+    }
+
+    @Test
+    public void obtenerCategoriaPesoMaximoLimite(){
+        //setup
+        Double pesoMax= 50.802;
+        Categoria categoria = new Categoria(1L,"Mosca",48.988,50.802);
+        //config
+        List<Categoria> categorias = new ArrayList<>();
+
+        categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
+        categorias.add(new Categoria(2L,"Gallo",52.163 ,53.525));
+        categorias.add(new Categoria(3L,"Pluma",55.338,57.152));
+        categorias.add(new Categoria(4L,"Ligero",58.967,61.237));
+        categorias.add(new Categoria(5L,"Welter",63.503,66.678));
+        categorias.add(new Categoria(6L,"Mediano",69.853,72.562));
+        categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
+        categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
+
+        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
+
+        //execute
+        Categoria categoriaObtenidaMax = this.categoriaServiceImp.obtenerCategoriaPorPeso(pesoMax);
+
+        //verify
+        assertNotNull(categoriaObtenidaMax);
+        assertEquals(categorias.get(0).getPesoMax(), categoriaObtenidaMax.getPesoMax());
+    }
+
    @Test
     public void obtenerCategoriaPesoEntreLosLimites(){
         //setup
@@ -158,6 +212,7 @@ public class CategoriaServiceTest {
         Categoria categoriaObtenida = this.categoriaServiceImp.obtenerCategoriaPorPeso(peso);
 
         //verify
+       assertNotNull(categoriaObtenida);
         assertEquals(categoria,categoriaObtenida);
 
     }
@@ -185,6 +240,8 @@ public class CategoriaServiceTest {
         Categoria categoriaObtenida = this.categoriaServiceImp.obtenerCategoriaPorPeso(peso);
 
         //verify
+        assertNotNull(categorias);
+        assertNotNull(categoriaObtenida);
         assertEquals(categoria,categoriaObtenida);
     }
 
