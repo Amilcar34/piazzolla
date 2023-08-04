@@ -40,8 +40,10 @@ public class EntrenadorRepositoryTest {
 
         Entrenador entrenador = new Entrenador("nuevo",categorias, new ArrayList<Boxeador>());
 
+        //execute
         Entrenador entrenadorCreado = this.entrenadorRepository.create(entrenador);
 
+        //verify
         assertNotNull(entrenadorCreado);
         assertEquals(entrenador,entrenadorCreado);
     }
@@ -95,8 +97,10 @@ public class EntrenadorRepositoryTest {
 
         Boxeador boxeador = new Boxeador("Nahuel",77D,cat1,entrenador,new Date(System.currentTimeMillis()));
 
+        //execute
         Entrenador entrenadorObtenido = this.entrenadorRepository.addBoxeador(entrenador,boxeador);
 
+        //verify
         assertTrue(entrenadorObtenido.getBoxeadores().contains(boxeador));
     }
 
@@ -197,17 +201,9 @@ public class EntrenadorRepositoryTest {
     @Test
     public void queNoSePuedaAgregarUnBoxeadorAEntrenadorInexistente(){
         //setup
-        List<Categoria> categorias = new ArrayList<>();
+        Entrenador entrenador = new Entrenador("Ignacio",null, new ArrayList<Boxeador>());
 
-        Categoria cat1 = new Categoria(7L,"Mediopesado",76.205,79.378);
-        Categoria cat2 = new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE);
-
-        categorias.add(cat1);
-        categorias.add(cat2);
-
-        Entrenador entrenador = new Entrenador("Ignacio",categorias, new ArrayList<Boxeador>());
-
-        Boxeador boxeador = new Boxeador("Nahuel",77D,cat1,entrenador,new Date(System.currentTimeMillis()));
+        Boxeador boxeador = new Boxeador("Nahuel",77D,null,null,new Date(System.currentTimeMillis()));
 
         //execute
         Entrenador entrenadorObtenido = this.entrenadorRepository.addBoxeador(entrenador,boxeador);
@@ -233,7 +229,7 @@ public class EntrenadorRepositoryTest {
         Entrenador entrenador = new Entrenador("Juan",categorias, boxeadores);
 
         boxeadores.add(new Boxeador("Nahuel",77D,cat1,entrenador,new Date(System.currentTimeMillis())));
-        boxeadores.add(new Boxeador("Milo",77D,cat1,entrenador,new Date(2023-05-20)));
+        boxeadores.add(new Boxeador("Milo",77D,cat1,entrenador,new Date(123,5,3)));
 
         //execute
         int cantidad = this.entrenadorRepository.obtenerBoxeadoresDelDia(entrenador);

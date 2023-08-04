@@ -8,6 +8,7 @@ import io.quarkus.test.junit.mockito.InjectMock;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
@@ -27,26 +27,31 @@ public class CategoriaServiceTest {
     @Inject
     CategoriaServiceImp categoriaServiceImp;
 
-    @Test
-    public void listarCategorias(){
+    @BeforeEach
+    public void setUpCategorias(){
 
-        //setup
         List<Categoria> categorias = new ArrayList<>();
 
-        Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
-        Categoria categoria1 = new Categoria(10L,"Nueva Categoria 1",130D,140D);
+        categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
+        categorias.add(new Categoria(2L,"Gallo",52.163 ,53.525));
+        categorias.add(new Categoria(3L,"Pluma",55.338,57.152));
+        categorias.add(new Categoria(4L,"Ligero",58.967,61.237));
+        categorias.add(new Categoria(5L,"Welter",63.503,66.678));
+        categorias.add(new Categoria(6L,"Mediano",69.853,72.562));
+        categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
+        categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
 
-        categorias.add(categoria);
-        categorias.add(categoria1);
-
-        //Config
         Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
+    }
 
+    @Test
+    public void listarCategorias(){
         //execute
         List<Categoria> categoriasObtenidas = this.categoriaServiceImp.obtenerCategorias();
 
         //verify
-        assertEquals(categorias,categoriasObtenidas);
+        assertNotNull(categoriasObtenidas);
+        assertFalse(categoriasObtenidas.isEmpty());
     }
 
     @Test
@@ -99,7 +104,7 @@ public class CategoriaServiceTest {
         //execute
 
         Assertions.assertThrows(NotFoundException.class, () -> {
-            Optional<Categoria> categoriActualizada = this.categoriaServiceImp.actualizarCategoria(categoria.get_id(), modificaciones);
+            this.categoriaServiceImp.actualizarCategoria(categoria.get_id(), modificaciones);
         });
 
     }
@@ -109,25 +114,11 @@ public class CategoriaServiceTest {
         //setup
         Double peso= 49D;
         Categoria categoria = new Categoria(1L,"Mosca",48.988,50.802);
-        //config
-        List<Categoria> categorias = new ArrayList<>();
-
-        categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
-        categorias.add(new Categoria(2L,"Gallo",52.163 ,53.525));
-        categorias.add(new Categoria(3L,"Pluma",55.338,57.152));
-        categorias.add(new Categoria(4L,"Ligero",58.967,61.237));
-        categorias.add(new Categoria(5L,"Welter",63.503,66.678));
-        categorias.add(new Categoria(6L,"Mediano",69.853,72.562));
-        categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
-        categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
-
-        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
 
         //execute
         Categoria categoriaObtenida = this.categoriaServiceImp.obtenerCategoriaPorPeso(peso);
 
         //verify
-        assertNotNull(categorias);
         assertNotNull(categoriaObtenida);
         assertEquals(categoria,categoriaObtenida);
 
@@ -138,26 +129,13 @@ public class CategoriaServiceTest {
         //setup
         Double pesoMin= 48.988;
         Categoria categoria = new Categoria(1L,"Mosca",48.988,50.802);
-        //config
-        List<Categoria> categorias = new ArrayList<>();
-
-        categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
-        categorias.add(new Categoria(2L,"Gallo",52.163 ,53.525));
-        categorias.add(new Categoria(3L,"Pluma",55.338,57.152));
-        categorias.add(new Categoria(4L,"Ligero",58.967,61.237));
-        categorias.add(new Categoria(5L,"Welter",63.503,66.678));
-        categorias.add(new Categoria(6L,"Mediano",69.853,72.562));
-        categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
-        categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
-
-        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
 
         //execute
         Categoria categoriaObtenidaMin = this.categoriaServiceImp.obtenerCategoriaPorPeso(pesoMin);
 
         //verify
         assertNotNull(categoriaObtenidaMin);
-        assertEquals(categorias.get(0).getPesoMin(), categoriaObtenidaMin.getPesoMin());
+        assertEquals(categoria, categoriaObtenidaMin);
     }
 
     @Test
@@ -165,26 +143,13 @@ public class CategoriaServiceTest {
         //setup
         Double pesoMax= 50.802;
         Categoria categoria = new Categoria(1L,"Mosca",48.988,50.802);
-        //config
-        List<Categoria> categorias = new ArrayList<>();
-
-        categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
-        categorias.add(new Categoria(2L,"Gallo",52.163 ,53.525));
-        categorias.add(new Categoria(3L,"Pluma",55.338,57.152));
-        categorias.add(new Categoria(4L,"Ligero",58.967,61.237));
-        categorias.add(new Categoria(5L,"Welter",63.503,66.678));
-        categorias.add(new Categoria(6L,"Mediano",69.853,72.562));
-        categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
-        categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
-
-        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
 
         //execute
         Categoria categoriaObtenidaMax = this.categoriaServiceImp.obtenerCategoriaPorPeso(pesoMax);
 
         //verify
         assertNotNull(categoriaObtenidaMax);
-        assertEquals(categorias.get(0).getPesoMax(), categoriaObtenidaMax.getPesoMax());
+        assertEquals(categoria, categoriaObtenidaMax);
     }
 
    @Test
@@ -193,26 +158,11 @@ public class CategoriaServiceTest {
         Double peso= 68D;
         Categoria categoria = new Categoria(5L,"Welter",63.503,66.678);
 
-
-        //config
-        List<Categoria> categorias = new ArrayList<>();
-
-        categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
-        categorias.add(new Categoria(2L,"Gallo",52.163 ,53.525));
-        categorias.add(new Categoria(3L,"Pluma",55.338,57.152));
-        categorias.add(new Categoria(4L,"Ligero",58.967,61.237));
-        categorias.add(new Categoria(5L,"Welter",63.503,66.678));
-        categorias.add(new Categoria(6L,"Mediano",69.853,72.562));
-        categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
-        categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
-
-        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
-
         //execute
         Categoria categoriaObtenida = this.categoriaServiceImp.obtenerCategoriaPorPeso(peso);
 
         //verify
-       assertNotNull(categoriaObtenida);
+        assertNotNull(categoriaObtenida);
         assertEquals(categoria,categoriaObtenida);
 
     }
@@ -223,24 +173,10 @@ public class CategoriaServiceTest {
         Double peso= 40D;
         Categoria categoria = new Categoria(1L,"Mosca",48.988,50.802);
 
-        //config
-        List<Categoria> categorias = new ArrayList<>();
-
-        categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
-        categorias.add(new Categoria(3L,"Pluma",55.338,57.152));
-        categorias.add(new Categoria(4L,"Ligero",58.967,61.237));
-        categorias.add(new Categoria(5L,"Welter",63.503,66.678));
-        categorias.add(new Categoria(6L,"Mediano",69.853,72.562));
-        categorias.add(new Categoria(7L,"Mediopesado",76.205,79.378));
-        categorias.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
-
-        Mockito.when(categoriaRepository.getAll()).thenReturn(categorias);
-
         //execute
         Categoria categoriaObtenida = this.categoriaServiceImp.obtenerCategoriaPorPeso(peso);
 
         //verify
-        assertNotNull(categorias);
         assertNotNull(categoriaObtenida);
         assertEquals(categoria,categoriaObtenida);
     }

@@ -72,7 +72,6 @@ public class BoxeadorServiceTest {
         Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(boxeador);
 
         BoxeadorDTO boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorDTO.class));
-        Boxeador boxeadorObtenido = modelMapper.map(boxeadorDTO, Boxeador.class);
 
         //assertions
         assertEquals(cat1, boxeadorDTO.getCategoria());
