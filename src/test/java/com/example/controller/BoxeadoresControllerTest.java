@@ -5,10 +5,13 @@ import com.example.dto.BoxeadorCreateDto;
 import com.example.dto.BoxeadorDto;
 import com.example.model.Boxeador;
 import com.example.service.BoxeadorServiceImp;
+import io.quarkus.hibernate.validator.runtime.jaxrs.JaxrsEndPointValidated;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 
