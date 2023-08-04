@@ -4,6 +4,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import org.mockito.internal.stubbing.answers.ThrowsException;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -11,39 +14,25 @@ import java.time.format.DateTimeFormatter;
 public class LogErrorService {
 
     public Boolean grabarError(Exception exception, String className)  {
-        BufferedWriter bw = null;
-        FileWriter fw = null;
-
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
             String data = LocalDateTime.now().format(formatter) + "\n"
-                    + "Excepcion name: " + exception.getClass().getName() + " message: " +exception.getMessage() + " Class error: " + className + "\n";
-            File file = new File("errors.txt");
-            // Si el archivo no existe, se crea!
-            if (!file.exists()) {
-                file.createNewFile();
+                    + "Excepcion name: " + exception.getClass().getName() + " message: " + exception.getMessage() + " Class error: " + className + "\n";
+
+            Path filePath = Paths.get("errors.txt");
+            // Si el archivo no existe, se crea
+            if (!Files.exists(filePath)) {
+                Files.createFile(filePath);
             }
-            // flag true, indica adjuntar información al archivo.
-            fw = new FileWriter(file.getAbsoluteFile(), true);
-            bw = new BufferedWriter(fw);
-            bw.write(data);
+            // Escribir en el archivo usando Files.write
+            Files.write(filePath, data.getBytes(), java.nio.file.StandardOpenOption.APPEND);
+
             System.out.println("información agregada!");
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                //Cierra instancias de FileWriter y BufferedWriter
-                if (bw != null)
-                    bw.close();
-                if (fw != null)
-                    fw.close();
-                return true;
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                return false;
-
-            }
+            return false;
         }
     }
+
 }
