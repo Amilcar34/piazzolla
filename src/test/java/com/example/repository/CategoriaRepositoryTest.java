@@ -32,13 +32,12 @@ public class CategoriaRepositoryTest {
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
 
         //execute
-        Categoria categoriaGuardada = this.categoriaRepository.create(categoria);
+        Boolean valor = this.categoriaRepository.create(categoria);
 
         List<Categoria> categorias = this.categoriaRepository.getAll();
 
         //verify
-        assertNotNull(categoriaGuardada);
-        assertEquals(categoria, categoriaGuardada);
+        assertNotNull(valor);
         assertTrue(categorias.contains(categoria));
     }
 

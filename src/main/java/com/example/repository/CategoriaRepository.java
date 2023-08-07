@@ -28,9 +28,8 @@ public class CategoriaRepository implements IDAORepository<Categoria, Long> {
     }
 
     @Override
-    public Categoria create(Categoria categoria) {
-        this.categorias.add(categoria);
-        return categoria;
+    public Boolean create(Categoria categoria) {
+       return this.categorias.add(categoria);
     }
 
     @Override

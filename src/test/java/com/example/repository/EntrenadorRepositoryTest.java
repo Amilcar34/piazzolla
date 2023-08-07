@@ -41,11 +41,10 @@ public class EntrenadorRepositoryTest {
         Entrenador entrenador = new Entrenador("nuevo",categorias, new ArrayList<Boxeador>());
 
         //execute
-        Entrenador entrenadorCreado = this.entrenadorRepository.create(entrenador);
+        Boolean valor = this.entrenadorRepository.create(entrenador);
 
         //verify
-        assertNotNull(entrenadorCreado);
-        assertEquals(entrenador,entrenadorCreado);
+        assertTrue(valor);
     }
 
     @Test

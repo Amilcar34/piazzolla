@@ -29,7 +29,6 @@ public class CategoriaServiceTest {
 
     @BeforeEach
     public void setUpCategorias(){
-
         List<Categoria> categorias = new ArrayList<>();
 
         categorias.add(new Categoria(1L,"Mosca",48.988,50.802));
@@ -58,16 +57,30 @@ public class CategoriaServiceTest {
     public void guardarCategoria(){
 
         //setup
+        List<Categoria> categorias = new ArrayList<>();
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
+        categorias.add(categoria);
 
         //Config
-        Mockito.when(categoriaRepository.create(categoria)).thenReturn(categoria);
-
+        Mockito.when(categoriaRepository.create(categoria)).thenReturn(true);
         //execute
-        Categoria categoriaGuardada = categoriaServiceImp.crearCategoria(categoria);
+        Boolean valor = categoriaServiceImp.crearCategoria(categoria);
 
         //verify
-        assertNotNull(categoriaGuardada);
+        assertTrue(valor);
+    }
+
+    @Test
+    public void queNoSePuedaGuardarCategoria() {
+        // setup
+        Categoria categoria = new Categoria(9L, "Nueva Categoria", 100D, 120D);
+
+        Mockito.when(categoriaRepository.create(categoria)).thenReturn(false);
+
+        // execute
+        Boolean valor = categoriaServiceImp.crearCategoria(categoria);
+
+        assertFalse(valor);
     }
 
     @Test
@@ -121,6 +134,10 @@ public class CategoriaServiceTest {
         //verify
         assertNotNull(categoriaObtenida);
         assertEquals(categoria,categoriaObtenida);
+        assertFalse(peso < categoriaObtenida.getPesoMin());
+        assertFalse(peso > categoriaObtenida.getPesoMax());
+        assertNotEquals(peso,categoriaObtenida.getPesoMin());
+        assertNotEquals(peso,categoriaObtenida.getPesoMax());
 
     }
 
@@ -136,8 +153,8 @@ public class CategoriaServiceTest {
         //verify
         assertNotNull(categoriaObtenidaMin);
         assertEquals(categoria, categoriaObtenidaMin);
-        assertTrue(pesoMin >= categoriaObtenidaMin.getPesoMin());
-        assertTrue(pesoMin <= categoriaObtenidaMin.getPesoMax());
+        assertEquals(pesoMin, categoriaObtenidaMin.getPesoMin());
+
     }
 
     @Test
@@ -152,6 +169,7 @@ public class CategoriaServiceTest {
         //verify
         assertNotNull(categoriaObtenidaMax);
         assertEquals(categoria, categoriaObtenidaMax);
+        assertEquals(pesoMax,categoriaObtenidaMax.getPesoMax());
     }
 
    @Test

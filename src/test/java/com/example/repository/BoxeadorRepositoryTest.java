@@ -41,15 +41,13 @@ public class BoxeadorRepositoryTest {
         Boxeador boxeador = new Boxeador("Lautaro", 40D, null, null, null);
 
         // Execute
-        Boxeador boxeadorObtenido = this.boxeadorRepository.create(boxeador);
+        Boolean valor = this.boxeadorRepository.create(boxeador);
 
         // Verify
-        assertNotNull(boxeadorObtenido);
-        assertNotNull(boxeador);
+        assertTrue(valor);
 
         List<Boxeador> boxeadores = this.boxeadorRepository.getAll();
         assertTrue(boxeadores.contains(boxeador));
-        assertEquals(boxeador, boxeadorObtenido);
 
     }
 

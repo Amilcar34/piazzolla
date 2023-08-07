@@ -70,7 +70,7 @@ public class BoxeadorServiceTest {
         Boxeador boxeador = new Boxeador("Nico", 57D, null, null, null);
 
         //config
-        Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(boxeador);
+        Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(true);
 
         BoxeadorDto boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
 
@@ -162,7 +162,7 @@ public class BoxeadorServiceTest {
 
         Boxeador boxeador = new Boxeador("Nicol", 50D, cat1, entrenador, new Date(System.currentTimeMillis()));
 
-        Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(boxeador);
+        Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(true);
 
 
         BoxeadorDto boxeadorDTO;
