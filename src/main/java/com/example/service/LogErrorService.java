@@ -12,8 +12,8 @@ import java.time.format.DateTimeFormatter;
 @ApplicationScoped
 public class LogErrorService {
 
-    public Boolean grabarError(Exception exception, String className)  {
-        try {
+    public Boolean grabarError(Exception exception, String className) throws IOException {
+
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
             String data = LocalDateTime.now().format(formatter) + "\n"
                     + "Excepcion name: " + exception.getClass().getName() + " message: " + exception.getMessage() + " Class error: " + className + "\n";
@@ -27,10 +27,6 @@ public class LogErrorService {
             Files.write(filePath, data.getBytes(), java.nio.file.StandardOpenOption.APPEND);
 
             return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
 }

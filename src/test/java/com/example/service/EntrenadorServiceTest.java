@@ -77,6 +77,29 @@ public class EntrenadorServiceTest {
     }
 
     @Test
+    public void queSePuedaCrearEntrenadorCon2Categorias() throws Exception {
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+        Categoria categoria = new Categoria(11L,"Junior",30.0,35.0);
+        Categoria categoria2 = new Categoria(11L,"Mini",36.0,37.0);
+
+        categorias.add(categoria);
+        categorias.add(categoria2);
+
+        Entrenador entrenador = new Entrenador("Pedro",categorias,new ArrayList<Boxeador>());
+
+        //config
+        Mockito.when(this.entrenadorRepository.create(entrenador)).thenReturn(true);
+
+        EntrenadorDto entrenadorDto = modelMapper.map(entrenador,EntrenadorDto.class);
+
+        var result = this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
+
+        assertTrue(result);
+        assertEquals(2,categorias.size());
+    }
+
+    @Test
     public void queNoSePuedaCrearEntrenadorConCategoriaRepetida()  {
         //setup
         List<Categoria> categorias = new ArrayList<>();
@@ -118,7 +141,9 @@ public class EntrenadorServiceTest {
         EntrenadorDto entrenadorDto = modelMapper.map(entrenador,EntrenadorDto.class);
 
         assertThrows(Exception.class, () ->{
-            this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
+            var result = this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
+            assertFalse(result);
+            assertNotEquals(2,categorias.size());
         });
     }
 

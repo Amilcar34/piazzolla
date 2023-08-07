@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
+import java.io.IOException;
 import java.util.List;
 
 @Path("/categorias")
@@ -30,7 +31,7 @@ public class CategoriaResource {
 
     @PUT
     @Path("/{id}")
-    public Response update( Long id, Categoria categoria){
+    public Response update( Long id, Categoria categoria) throws IOException {
         try {
             this.categoriaServiceImp.actualizarCategoria(id,categoria);
             return Response.ok().entity(categoria).build();

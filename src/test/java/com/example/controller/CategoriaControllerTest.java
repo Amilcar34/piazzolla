@@ -11,6 +11,7 @@ import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -87,7 +88,7 @@ public class CategoriaControllerTest {
     }
 
     @Test
-    public void queNoSePuedaActualizarUnaCategoriaInexistente(){
+    public void queNoSePuedaActualizarUnaCategoriaInexistente() throws IOException {
 
         Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
 

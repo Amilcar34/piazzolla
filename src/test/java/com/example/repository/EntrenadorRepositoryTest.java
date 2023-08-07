@@ -6,6 +6,7 @@ import com.example.model.Entrenador;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class EntrenadorRepositoryTest {
 
         //verify
         assertTrue(valor);
+        assertTrue(this.entrenadorRepository.getAll().contains(entrenador));
+        assertEquals(entrenador,this.entrenadorRepository.obtenerEntrenadorPorCategoria(cat1));
     }
 
     @Test

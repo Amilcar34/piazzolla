@@ -37,6 +37,7 @@ public class CategoriaRepositoryTest {
         List<Categoria> categorias = this.categoriaRepository.getAll();
 
         //verify
+        assertTrue(valor);
         assertNotNull(valor);
         assertTrue(categorias.contains(categoria));
     }

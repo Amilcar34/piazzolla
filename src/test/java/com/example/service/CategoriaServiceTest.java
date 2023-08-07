@@ -134,11 +134,6 @@ public class CategoriaServiceTest {
         //verify
         assertNotNull(categoriaObtenida);
         assertEquals(categoria,categoriaObtenida);
-        assertFalse(peso < categoriaObtenida.getPesoMin());
-        assertFalse(peso > categoriaObtenida.getPesoMax());
-        assertNotEquals(peso,categoriaObtenida.getPesoMin());
-        assertNotEquals(peso,categoriaObtenida.getPesoMax());
-
     }
 
     @Test

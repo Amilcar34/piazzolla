@@ -9,6 +9,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import com.example.service.LogErrorService;
 
+import java.io.IOException;
 import java.util.List;
 
 @Path("/boxeadores")
@@ -25,7 +26,7 @@ public class BoxeadorResource {
     }
 
     @POST
-    public Response create(@Valid BoxeadorCreateDto boxeadorCreateDto)  {
+    public Response create(@Valid BoxeadorCreateDto boxeadorCreateDto) throws IOException {
         try {
             BoxeadorDto boxeador = this.boxeadorServiceImp.create(boxeadorCreateDto);
             return Response.status(Response.Status.CREATED).entity(boxeador).build();
