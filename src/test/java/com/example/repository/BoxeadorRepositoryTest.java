@@ -49,6 +49,7 @@ public class BoxeadorRepositoryTest {
 
         List<Boxeador> boxeadores = this.boxeadorRepository.getAll();
         assertTrue(boxeadores.contains(boxeador));
+        assertEquals(boxeador, boxeadorObtenido);
 
     }
 

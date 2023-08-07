@@ -55,7 +55,7 @@ public class BoxeadoresControllerTest {
     @Test
     public void crearBoxeador() throws Exception {
 
-        Boxeador boxeador = new Boxeador("Lautaro",40D,null,null,null);
+        BoxeadorCreateDto boxeador = new BoxeadorCreateDto("Lautaro",40D);
 
         BoxeadorDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorDto.class);
 
@@ -63,7 +63,7 @@ public class BoxeadoresControllerTest {
 
         given()
                 .contentType(ContentType.JSON)
-                .body(boxeadorDTO)
+                .body(boxeador)
                 .when().post("/boxeadores")
                 .then()
                 .statusCode(201)
@@ -73,7 +73,7 @@ public class BoxeadoresControllerTest {
     @Test
     public void queNosePuedaCrearBoxeador() throws Exception {
 
-        Boxeador boxeador = new Boxeador("Lautaro",40D,null,null,null);
+        BoxeadorCreateDto boxeador = new BoxeadorCreateDto("Lautaro",40D);
 
         BoxeadorDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorDto.class);
 

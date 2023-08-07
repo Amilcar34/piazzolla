@@ -25,7 +25,7 @@ public class BoxeadorResource {
     }
 
     @POST
-    public Response create(BoxeadorCreateDto boxeadorCreateDto)  {
+    public Response create(@Valid BoxeadorCreateDto boxeadorCreateDto)  {
         try {
             BoxeadorDto boxeador = this.boxeadorServiceImp.create(boxeadorCreateDto);
             return Response.status(Response.Status.CREATED).entity(boxeador).build();
