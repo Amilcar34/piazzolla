@@ -39,7 +39,11 @@ public class BoxeadorResource {
 
     @DELETE
     public Response eliminarBoxeador(@QueryParam("nombre") String nombre){
-        this.boxeadorServiceImp.eliminar(nombre);
-        return Response.ok().entity("Boxeador eliminado con exito").build();
+        try {
+            this.boxeadorServiceImp.eliminar(nombre);
+            return Response.ok().entity("Boxeador eliminado con exito").build();
+        }catch (NotFoundException e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 }

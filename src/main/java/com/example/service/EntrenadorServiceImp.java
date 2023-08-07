@@ -30,10 +30,34 @@ public class EntrenadorServiceImp implements IEntrenadorService {
     }
 
     @Override
+    public Boolean crearEntrenador(EntrenadorDto entrenadorDto) throws Exception {
+        if(entrenadorDto.getCategorias().size() <= 2) {
+            if (!this.existEntrenadorConCategoria(entrenadorDto.getCategorias())) {
+                return this.entrenadorRepository.create(modelMapper.map(entrenadorDto, Entrenador.class));
+            }
+
+            throw new Exception("No puede haber 2 entrenadores con la misma categoria");
+        }
+
+        throw new Exception("El entrenador no puede tener más de 2 categorias");
+    }
+
+    public Boolean existEntrenadorConCategoria(List<Categoria> categorias){
+        for (Categoria c: categorias) {
+            if(this.obtenerEntrenadorPorCategoria(c) != null){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public EntrenadorDto obtenerEntrenadorPorCategoria(Categoria categoria) {
        Entrenador entrenador = this.entrenadorRepository.obtenerEntrenadorPorCategoria(categoria);
-
-       return modelMapper.map(entrenador, EntrenadorDto.class);
+       if(entrenador != null) {
+           return modelMapper.map(entrenador, EntrenadorDto.class);
+       }
+       return null;
     }
 
     @Override

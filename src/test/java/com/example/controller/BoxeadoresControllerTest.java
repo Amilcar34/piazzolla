@@ -107,4 +107,6 @@ public class BoxeadoresControllerTest {
                 .statusCode(200)
                 .body(is("Boxeador eliminado con exito"));
     }
+
+
 }
