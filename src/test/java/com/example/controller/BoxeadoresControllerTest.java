@@ -9,6 +9,7 @@ import io.quarkus.hibernate.validator.runtime.jaxrs.JaxrsEndPointValidated;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.restassured.http.ContentType;
+import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -106,6 +107,23 @@ public class BoxeadoresControllerTest {
                 .then()
                 .statusCode(200)
                 .body(is("Boxeador eliminado con exito"));
+    }
+
+    @Test
+    public void queNoSePuedaEliminarBoxeadorInexistente(){
+
+        Boxeador boxeador = new Boxeador("Camila",50D,null,null,null);
+
+        Mockito.when(this.boxeadorServiceImp.eliminar(boxeador.getNombre())).thenThrow(new NotFoundException("El boxeador " + boxeador.getNombre() + " no fue encontrado."));
+
+        given()
+                .contentType(ContentType.JSON)
+                .queryParam("nombre", boxeador.getNombre())
+                .when()
+                .delete("/boxeadores")
+                .then()
+                .statusCode(400)
+                .body(is("El boxeador Camila no fue encontrado."));
     }
 
 

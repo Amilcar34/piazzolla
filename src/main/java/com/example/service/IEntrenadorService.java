@@ -12,9 +12,6 @@ public interface IEntrenadorService {
     List<EntrenadorDto> getAllEntrenadores();
 
     Boolean crearEntrenador(EntrenadorDto entrenadorDto) throws Exception;
-
-    Boolean existEntrenadorConCategoria(List<Categoria> categorias);
-
     EntrenadorDto obtenerEntrenadorPorCategoria(Categoria categoria);
 
     EntrenadorDto addBoxeador(EntrenadorDto entrenadorDTO, BoxeadorSinEntreDto boxeadorDTO) throws Exception;

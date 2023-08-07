@@ -57,6 +57,26 @@ public class EntrenadorServiceTest {
     }
 
     @Test
+    public void crearEntrenador() throws Exception {
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+        Categoria categoria = new Categoria(11L,"Junior",30.0,35.0);
+
+        categorias.add(categoria);
+
+        Entrenador entrenador = new Entrenador("Pedro",categorias,new ArrayList<Boxeador>());
+
+        //config
+        Mockito.when(this.entrenadorRepository.create(entrenador)).thenReturn(true);
+
+        EntrenadorDto entrenadorDto = modelMapper.map(entrenador,EntrenadorDto.class);
+
+        var result = this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
+
+        assertTrue(result);
+    }
+
+    @Test
     public void obtenerEntrenadorPorCategoria(){
         //setup
         List<Categoria> categorias = new ArrayList<>();
@@ -74,6 +94,22 @@ public class EntrenadorServiceTest {
 
         //verify
         assertEquals(entrenador.getNombre(), entrenadorDTO.getNombre());
+
+    }
+
+    @Test
+    public void queNoSePuedaObtenerEntrenadorPorCategoriaInexistente(){
+        //setup
+        Categoria categoria = new Categoria(9L,"Nueva",48.988,50.802);
+
+        //config
+        Mockito.when(this.entrenadorRepository.obtenerEntrenadorPorCategoria(categoria)).thenReturn(null);
+
+        //execute
+        EntrenadorDto entrenadorDTO = this.entrenadorServiceImp.obtenerEntrenadorPorCategoria(categoria);
+
+        //verify
+        assertNull(entrenadorDTO);
 
     }
 
@@ -116,7 +152,7 @@ public class EntrenadorServiceTest {
     }
 
     @Test
-    public void queNoSePuedaAgregarBoxeador() throws Exception {
+    public void queNoSePuedaAgregarMasDe5Boxeador() {
         //setup
         List<Boxeador> boxeadors = new ArrayList<>();
         Boxeador boxeador = new  Boxeador();
