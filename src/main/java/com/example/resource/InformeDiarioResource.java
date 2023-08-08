@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.resource;
 
 import com.example.dto.informe.InformeDto;
 import jakarta.inject.Inject;

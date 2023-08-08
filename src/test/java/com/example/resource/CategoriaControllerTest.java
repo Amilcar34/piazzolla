@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.resource;
 
 
 import com.example.model.Categoria;
@@ -65,7 +65,7 @@ public class CategoriaControllerTest {
                 .when().get("/categorias")
                 .then()
                 .statusCode(200)
-                .body(is("[{\"_id\":9,\"nombre\":\"Nueva Categoria\",\"pesoMin\":100.0,\"pesoMax\":120.0},{\"_id\":10,\"nombre\":\"Nueva Categoria 1\",\"pesoMin\":130.0,\"pesoMax\":14.0}]"));
+                .body(is("[{\"id\":9,\"nombre\":\"Nueva Categoria\",\"pesoMin\":100.0,\"pesoMax\":120.0},{\"id\":10,\"nombre\":\"Nueva Categoria 1\",\"pesoMin\":130.0,\"pesoMax\":14.0}]"));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class CategoriaControllerTest {
                 .when().put("/categorias/{id}",categoria.getId())
                 .then()
                 .statusCode(200)
-                .body(is("{\"_id\":1,\"nombre\":\"MOSQUITA\",\"pesoMin\":49.0,\"pesoMax\":51.0}"));
+                .body(is("{\"id\":1,\"nombre\":\"MOSQUITA\",\"pesoMin\":49.0,\"pesoMax\":51.0}"));
     }
 
     @Test

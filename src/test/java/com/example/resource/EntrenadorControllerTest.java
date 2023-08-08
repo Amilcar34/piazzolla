@@ -1,9 +1,6 @@
-package com.example.controller;
+package com.example.resource;
 
-import com.example.dto.BoxeadorDto;
-import com.example.dto.BoxeadorSinEntreDto;
 import com.example.dto.EntrenadorDto;
-import com.example.dto.EntrenadorSinBoxDto;
 import com.example.model.Boxeador;
 import com.example.model.Categoria;
 import com.example.model.Entrenador;
@@ -18,7 +15,6 @@ import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,7 +58,7 @@ public class EntrenadorControllerTest {
                 .when().get("/entrenadores")
                 .then()
                 .statusCode(200)
-                .body(is("[{\"nombre\":\"Agus\",\"categorias\":[{\"_id\":1,\"nombre\":\"Mosca\",\"pesoMin\":48.988,\"pesoMax\":50.802},{\"_id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}],\"boxeadores\":[]}]"));
+                .body(is("[{\"nombre\":\"Agus\",\"categorias\":[{\"id\":1,\"nombre\":\"Mosca\",\"pesoMin\":48.988,\"pesoMax\":50.802},{\"id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}],\"boxeadores\":[]}]"));
     }
 
     @Test
@@ -86,7 +82,7 @@ public class EntrenadorControllerTest {
                 .when().post("/entrenadores")
                 .then()
                 .statusCode(201)
-                .body(is("{\"nombre\":\"Nuevo entrenador\",\"categorias\":[{\"_id\":9,\"nombre\":\"Nueva\",\"pesoMin\":51.0,\"pesoMax\":52.0}],\"boxeadores\":null}"));
+                .body(is("{\"nombre\":\"Nuevo entrenador\",\"categorias\":[{\"id\":9,\"nombre\":\"Nueva\",\"pesoMin\":51.0,\"pesoMax\":52.0}],\"boxeadores\":null}"));
     }
 
     @Test
@@ -151,7 +147,7 @@ public class EntrenadorControllerTest {
                 .put("/entrenadores")
                 .then()
                 .statusCode(200)
-                .body(is("{\"nombre\":\"Agustina\",\"categorias\":[{\"_id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}],\"boxeadores\":[{\"nombre\":\"Nicol\",\"peso\":50.0,\"categoria\":null,\"fechaIngreso\":null}]}"));
+                .body(is("{\"nombre\":\"Agustina\",\"categorias\":[{\"id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}],\"boxeadores\":[{\"nombre\":\"Nicol\",\"peso\":50.0,\"categoria\":null,\"fechaIngreso\":null}]}"));
     }
 
     @Test

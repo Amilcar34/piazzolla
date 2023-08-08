@@ -39,7 +39,7 @@ public class EntrenadorRepositoryTest {
 
         categorias.add(cat1);
 
-        Entrenador entrenador = new Entrenador("nuevo",categorias, new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("nuevo",categorias, new ArrayList<>());
 
         //execute
         Boolean valor = this.entrenadorRepository.create(entrenador);
@@ -59,7 +59,7 @@ public class EntrenadorRepositoryTest {
 
         categorias.add(cat1);
 
-        Entrenador entrenador = new Entrenador("nuevo",categorias, new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("nuevo",categorias, new ArrayList<>());
 
         this.entrenadorRepository.create(entrenador);
 
@@ -81,7 +81,7 @@ public class EntrenadorRepositoryTest {
 
         categorias.add(cat1);
 
-        Entrenador entrenador = new Entrenador("inex",categorias, new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("inex",categorias, new ArrayList<>());
 
         //execute
         Boolean valor = this.entrenadorRepository.delete(entrenador);
@@ -134,7 +134,7 @@ public class EntrenadorRepositoryTest {
         categorias.add(cat1);
         categorias.add(cat2);
 
-        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<>());
 
         Boxeador boxeador = new Boxeador("Nahuel",77D,cat1,entrenador,new Date(System.currentTimeMillis()));
 
@@ -156,7 +156,7 @@ public class EntrenadorRepositoryTest {
         categorias.add(cat1);
         categorias.add(cat2);
 
-        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<>());
 
         Boxeador boxeador1 = new Boxeador("Laura",92D,cat1,entrenador,new Date(System.currentTimeMillis()));
         Boxeador boxeador2 = new Boxeador("Lautaro",77D,cat1,entrenador,new Date(System.currentTimeMillis()));
@@ -185,7 +185,7 @@ public class EntrenadorRepositoryTest {
         categorias.add(cat1);
         categorias.add(cat2);
 
-        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<>());
 
         Boxeador boxeador1 = new Boxeador("Laura",92D,cat1,entrenador,new Date(System.currentTimeMillis()));
         Boxeador boxeador2 = new Boxeador("Nuevo",77D,cat1,null,new Date(System.currentTimeMillis()));
@@ -203,7 +203,7 @@ public class EntrenadorRepositoryTest {
     public void queNoSePuedaEliminarBoxeadorDeEntrenadorInexistente(){
 
         //setup
-        Entrenador entrenador = new Entrenador("inex",null, new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("inex",null, new ArrayList<>());
 
         Boxeador boxeador = new Boxeador("Laura",92D,null,entrenador,new Date(System.currentTimeMillis()));
 
@@ -228,7 +228,7 @@ public class EntrenadorRepositoryTest {
         categorias.add(cat1);
         categorias.add(cat2);
 
-        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<>());
 
         //execute
         Optional<Entrenador> entrenadorBuscado = this.entrenadorRepository.find(entrenador.getNombre());
@@ -242,7 +242,7 @@ public class EntrenadorRepositoryTest {
     @Test
     public void queNoSePuedaAgregarUnBoxeadorAEntrenadorInexistente(){
         //setup
-        Entrenador entrenador = new Entrenador("Ignacio",null, new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("Ignacio",null, new ArrayList<>());
 
         Boxeador boxeador = new Boxeador("Nahuel",77D,null,null,new Date(System.currentTimeMillis()));
 

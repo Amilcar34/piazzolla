@@ -130,9 +130,11 @@ public class BoxeadorServiceTest {
 
         //execute
 
-        Assertions.assertThrows(NotFoundException.class, () -> {
+        try {
             this.boxeadorServiceImp.actualizar(boxeador.getNombre(), modelMapper.map(boxeadorModificado,BoxeadorDto.class));
-        });
+        }catch (NotFoundException e){
+            assertEquals("El Boxeador Luca no fue encontrado.",e.getMessage());
+        }
 
     }
 
@@ -195,9 +197,11 @@ public class BoxeadorServiceTest {
         Mockito.when(this.boxeadorRepository.find(boxeadorInex.getNombre())).thenReturn(Optional.empty());
 
 
-        assertThrows(NotFoundException.class, () -> {
+        try {
             this.boxeadorServiceImp.eliminar(boxeadorInex.getNombre());
-        });
+        } catch (NotFoundException e) {
+            assertEquals("El boxeador Nicol no fue encontrado.",e.getMessage());
+        }
 
     }
 
@@ -228,9 +232,7 @@ public class BoxeadorServiceTest {
 
 
 
-        Assertions.assertThrows(Exception.class, () -> {
-              this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
-        });
+        assertThrows(Exception.class, () -> this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class)));
 
     }
 }

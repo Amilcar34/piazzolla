@@ -80,11 +80,15 @@ public class BoxeadorServiceImp implements IBoxeadorService {
         Optional<Boxeador> boxeador = Optional.ofNullable(this.boxeadorRepository.find(nombre)
                 .orElseThrow(() -> new NotFoundException("El boxeador " + nombre + " no fue encontrado.")));
 
-        BoxeadorDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorDto.class);
-        EntrenadorDto entrenadorDTO = modelMapper.map(boxeador.get().getEntrenador(), EntrenadorDto.class);
+        if(boxeador.isPresent()) {
+            BoxeadorDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorDto.class);
 
-        this.entrenadorServiceImp.eliminarBoxeador(entrenadorDTO,boxeadorDTO);
+            EntrenadorDto entrenadorDTO = modelMapper.map(boxeador.get().getEntrenador(), EntrenadorDto.class);
 
-        return this.boxeadorRepository.delete(boxeador.get());
+            this.entrenadorServiceImp.eliminarBoxeador(entrenadorDTO, boxeadorDTO);
+
+            return this.boxeadorRepository.delete(boxeador.get());
+        }
+        return false;
     }
 }

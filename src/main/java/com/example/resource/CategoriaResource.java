@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.resource;
 
 import com.example.model.Categoria;
 import com.example.service.CategoriaServiceImp;

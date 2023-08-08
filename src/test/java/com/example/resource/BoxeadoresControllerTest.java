@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.resource;
 
 
 import com.example.dto.BoxeadorCreateDto;
@@ -8,14 +8,11 @@ import com.example.model.Categoria;
 import com.example.model.Entrenador;
 import com.example.service.BoxeadorServiceImp;
 import com.example.service.LogErrorService;
-import io.quarkus.hibernate.validator.runtime.jaxrs.JaxrsEndPointValidated;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.restassured.http.ContentType;
 import jakarta.ws.rs.NotFoundException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 
@@ -101,7 +98,7 @@ public class BoxeadoresControllerTest {
     }
 
     @Test
-    public void queSePuedaActualizarUnBoxeador(){
+    public void queSePuedaActualizarUnBoxeador() {
 
         //setup
         List<Categoria> categorias = new ArrayList<>();
@@ -115,23 +112,23 @@ public class BoxeadoresControllerTest {
         Entrenador entrenador = new Entrenador("Agus", categorias, null);
         Entrenador entrenador1 = new Entrenador("Leo", categorias, null);
 
-        Boxeador boxeador = new Boxeador("Luca",50D,cat1,entrenador,new Date(System.currentTimeMillis()));
-        Boxeador boxeadorModificado = new Boxeador("Lucas",54D,cat2,entrenador1,new Date(116, 5,3));
+        Boxeador boxeador = new Boxeador("Luca", 50D, cat1, entrenador, new Date(System.currentTimeMillis()));
+        Boxeador boxeadorModificado = new Boxeador("Lucas", 54D, cat2, entrenador1, new Date(116, 5, 3));
 
-        BoxeadorDto boxeadorDto = modelMapper.map(boxeadorModificado,BoxeadorDto.class);
+        BoxeadorDto boxeadorDto = modelMapper.map(boxeadorModificado, BoxeadorDto.class);
 
         //Config
-        Mockito.when(boxeadorServiceImp.actualizar(boxeador.getNombre(),boxeadorDto)).thenReturn(Optional.of(boxeadorDto));
+        Mockito.when(boxeadorServiceImp.actualizar(boxeador.getNombre(), boxeadorDto)).thenReturn(Optional.of(boxeadorDto));
 
         given()
                 .contentType(ContentType.JSON)
-                .queryParam("nombre",boxeador.getNombre())
+                .queryParam("nombre", boxeador.getNombre())
                 .body(boxeadorDto)
                 .when()
                 .put("/boxeadores")
                 .then()
                 .statusCode(200)
-                .body(is("{\"nombre\":\"Lucas\",\"peso\":54.0,\"categoria\":{\"_id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525},\"entrenador\":{\"nombre\":\"Leo\",\"categorias\":[{\"_id\":1,\"nombre\":\"Mosca\",\"pesoMin\":48.988,\"pesoMax\":50.802},{\"_id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}]},\"fechaIngreso\":\"2016-06-03\"}"));
+                .body(is("{\"nombre\":\"Lucas\",\"peso\":54.0,\"categoria\":{\"id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525},\"entrenador\":{\"nombre\":\"Leo\",\"categorias\":[{\"id\":1,\"nombre\":\"Mosca\",\"pesoMin\":48.988,\"pesoMax\":50.802},{\"id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}]},\"fechaIngreso\":\"2016-06-03\"}"));
     }
 
     @Test
