@@ -4,7 +4,10 @@ package com.example.controller;
 import com.example.dto.BoxeadorCreateDto;
 import com.example.dto.BoxeadorDto;
 import com.example.model.Boxeador;
+import com.example.model.Categoria;
+import com.example.model.Entrenador;
 import com.example.service.BoxeadorServiceImp;
+import com.example.service.LogErrorService;
 import io.quarkus.hibernate.validator.runtime.jaxrs.JaxrsEndPointValidated;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
@@ -16,8 +19,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 
+import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
@@ -28,6 +34,8 @@ public class BoxeadoresControllerTest {
 
     @InjectMock
     BoxeadorServiceImp boxeadorServiceImp;
+    @InjectMock
+    LogErrorService logErrorService;
     ModelMapper modelMapper = new ModelMapper();
 
     @Test
@@ -90,6 +98,74 @@ public class BoxeadoresControllerTest {
                 .then()
                 .statusCode(402) // Verifica que la respuesta sea un código 402 (u otro código de error que esperes)
                 .body(is("El entrenador ha alcanzado el límite de boxeadores (5)."));// Verifica el mensaje de error esperado
+    }
+
+    @Test
+    public void queSePuedaActualizarUnBoxeador(){
+
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(1L, "Mosca", 48.988, 50.802);
+        Categoria cat2 = new Categoria(2L, "Gallo", 52.163, 53.525);
+
+        categorias.add(cat1);
+        categorias.add(cat2);
+
+        Entrenador entrenador = new Entrenador("Agus", categorias, null);
+        Entrenador entrenador1 = new Entrenador("Leo", categorias, null);
+
+        Boxeador boxeador = new Boxeador("Luca",50D,cat1,entrenador,new Date(System.currentTimeMillis()));
+        Boxeador boxeadorModificado = new Boxeador("Lucas",54D,cat2,entrenador1,new Date(116, 5,3));
+
+        BoxeadorDto boxeadorDto = modelMapper.map(boxeadorModificado,BoxeadorDto.class);
+
+        //Config
+        Mockito.when(boxeadorServiceImp.actualizar(boxeador.getNombre(),boxeadorDto)).thenReturn(Optional.of(boxeadorDto));
+
+        given()
+                .contentType(ContentType.JSON)
+                .queryParam("nombre",boxeador.getNombre())
+                .body(boxeadorDto)
+                .when()
+                .put("/boxeadores")
+                .then()
+                .statusCode(200)
+                .body(is("{\"nombre\":\"Lucas\",\"peso\":54.0,\"categoria\":{\"_id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525},\"entrenador\":{\"nombre\":\"Leo\",\"categorias\":[{\"_id\":1,\"nombre\":\"Mosca\",\"pesoMin\":48.988,\"pesoMax\":50.802},{\"_id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}]},\"fechaIngreso\":\"2016-06-03\"}"));
+    }
+
+    @Test
+    public void queNoSePuedaActualizarUnaCategoriaInexistente() throws IOException {
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(1L, "Mosca", 48.988, 50.802);
+        Categoria cat2 = new Categoria(2L, "Gallo", 52.163, 53.525);
+
+        categorias.add(cat1);
+        categorias.add(cat2);
+
+        Entrenador entrenador = new Entrenador("Agus", categorias, null);
+        Entrenador entrenador1 = new Entrenador("Leo", categorias, null);
+
+        Boxeador boxeador = new Boxeador("Luca",50D,cat1,entrenador,new Date(System.currentTimeMillis()));
+        Boxeador boxeadorModificado = new Boxeador("Lucas",54D,cat2,entrenador1,new Date(116, 5,3));
+
+        BoxeadorDto boxeadorDto = modelMapper.map(boxeadorModificado,BoxeadorDto.class);
+
+        //Config
+        Mockito.when(boxeadorServiceImp.actualizar(boxeador.getNombre(),boxeadorDto)).thenThrow(new NotFoundException("El boxeador no fue encontrado."));
+        Mockito.when(logErrorService.grabarError(new NotFoundException("La categoría no fue encontrada."),this.getClass().getName())).thenReturn(true);
+
+        given()
+                .contentType(ContentType.JSON)
+                .queryParam("nombre",boxeador.getNombre())
+                .body(boxeadorDto)
+                .when().put("/boxeadores")
+                .then()
+                .statusCode(404)
+                .body(is("El boxeador no fue encontrado."));
+
     }
 
     @Test

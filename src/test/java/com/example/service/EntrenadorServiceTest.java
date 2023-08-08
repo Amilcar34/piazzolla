@@ -11,6 +11,7 @@ import com.example.repository.EntrenadorRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -18,8 +19,11 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -145,6 +149,136 @@ public class EntrenadorServiceTest {
             assertFalse(result);
             assertNotEquals(2,categorias.size());
         });
+    }
+
+    @Test
+    public void queSePuedaEliminarEntrenador(){
+        //setup
+        List<Entrenador> entrenadors = new ArrayList<>();
+
+        Entrenador entrenador = new Entrenador("Agus", null, null);
+
+        entrenadors.add(entrenador);
+
+        //config
+        Mockito.when(this.entrenadorRepository.getAll()).thenReturn(entrenadors);
+        Mockito.when(this.entrenadorRepository.find(entrenador.getNombre())).thenReturn(Optional.of(entrenador));
+        Mockito.when(this.entrenadorRepository.delete(entrenador)).thenReturn(true);
+
+        //execute
+        var valor = this.entrenadorServiceImp.eliminarEntrenador(entrenador.getNombre());
+
+        //verify
+        assertTrue(valor);
+    }
+
+    @Test
+    public void queNoSePuedaEliminarEntrenador(){
+        //setup
+        List<Entrenador> entrenadores = new ArrayList<>();
+
+        Entrenador entrenador = new Entrenador("Agus", null, null);
+
+        entrenadores.add(entrenador);
+        //config
+        Mockito.when(this.entrenadorRepository.getAll()).thenReturn(entrenadores);
+        Mockito.when(this.entrenadorRepository.find(entrenador.getNombre())).thenReturn(Optional.ofNullable(entrenador));
+        Mockito.when(this.entrenadorRepository.delete(entrenador)).thenReturn(false);
+
+        //execute
+        var valor = this.entrenadorServiceImp.eliminarEntrenador(entrenador.getNombre());
+
+        //verify
+        assertFalse(valor);
+    }
+
+    @Test
+    public void queNoSePuedaEliminarEntrenadorInexistente(){
+        //setup
+        List<Entrenador> entrenadores = new ArrayList<>();
+
+        Entrenador entrenador = new Entrenador("Pedro",null,new ArrayList<Boxeador>());
+
+        entrenadores.add(entrenador);
+
+        //config
+        Mockito.when(this.entrenadorRepository.getAll()).thenReturn(entrenadores);
+        Mockito.when(this.entrenadorRepository.find(entrenador.getNombre())).thenReturn(Optional.empty());
+
+
+        assertThrows(NotFoundException.class, () -> {
+            this.entrenadorServiceImp.eliminarEntrenador(entrenador.getNombre());
+        });
+
+    }
+
+    @Test
+    public void actualizarEntrenador(){
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(1L, "Mosca", 48.988, 50.802);
+        Categoria cat2 = new Categoria(2L, "Gallo", 52.163, 53.525);
+
+        categorias.add(cat1);
+        categorias.add(cat2);
+
+        List<Boxeador> boxeadors = new ArrayList<>();
+
+        Boxeador boxeador = new Boxeador("Nico", 57D, null, null, null);
+        Boxeador boxeador2 = new Boxeador("Nicol", 50D, null, null, null);
+
+        boxeadors.add(boxeador);
+        boxeadors.add(boxeador2);
+
+        Entrenador entrenador = new Entrenador("Agus", categorias, boxeadors);
+        categorias.remove(cat1);
+        boxeadors.remove(boxeador);
+        Entrenador entrenadorModificado = new Entrenador("Agustina", categorias, boxeadors);
+
+        //config
+        Mockito.when(this.entrenadorRepository.find(entrenador.getNombre())).thenReturn(Optional.of(entrenador));
+
+        //execute
+        Optional<EntrenadorDto> entrenadorActualizado = this.entrenadorServiceImp.actualizarEntrenador(entrenador.getNombre(),modelMapper.map(entrenadorModificado,EntrenadorDto.class));
+
+        //verify
+        assertNotNull(entrenadorActualizado);
+        assertTrue(entrenadorActualizado.isPresent());
+
+        EntrenadorDto entrenadorDto = entrenadorActualizado.get();
+        List<Boxeador> boxeadorActualizado = entrenadorDto.getBoxeadores().stream().map(b -> modelMapper.map(b,Boxeador.class)).collect(Collectors.toList());
+
+        assertEquals(entrenadorModificado.getNombre(), entrenadorDto.getNombre());
+        assertEquals(entrenadorModificado.getCategorias(), entrenadorDto.getCategorias());
+        assertEquals(entrenadorModificado.getBoxeadores(),boxeadorActualizado );
+
+    }
+
+    @Test
+    public void queNoSePuedaModificarBoxeadorInexistente(){
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(1L, "Mosca", 48.988, 50.802);
+        Categoria cat2 = new Categoria(2L, "Gallo", 52.163, 53.525);
+
+        categorias.add(cat1);
+        categorias.add(cat2);
+
+        Entrenador entrenador = new Entrenador("Agus", categorias, null);
+        categorias.remove(cat1);
+        Entrenador entrenadorModificado = new Entrenador("Agustina", categorias, new ArrayList<Boxeador>());
+
+        //config
+        Mockito.when(this.entrenadorRepository.find(entrenador.getNombre())).thenReturn(Optional.empty());
+
+        //execute
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            this.entrenadorServiceImp.actualizarEntrenador(entrenador.getNombre(), modelMapper.map(entrenadorModificado,EntrenadorDto.class));
+        });
+
     }
 
     @Test
