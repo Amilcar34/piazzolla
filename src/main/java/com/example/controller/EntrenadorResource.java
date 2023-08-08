@@ -1,8 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.BoxeadorDto;
 import com.example.dto.EntrenadorDto;
-import com.example.model.Entrenador;
 import com.example.service.EntrenadorServiceImp;
 import com.example.service.LogErrorService;
 import jakarta.inject.Inject;

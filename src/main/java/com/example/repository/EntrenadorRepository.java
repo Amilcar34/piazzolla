@@ -19,32 +19,30 @@ public class EntrenadorRepository implements IDAORepository<Entrenador , String 
 
 
     public EntrenadorRepository(){
-        //todo las cat deberian venir del repo de categoria
-        //todo ver como cambiar esto
         List<Categoria> cat1 = new ArrayList<>();
 
         cat1.add(new Categoria(1L,"Mosca",48.988,50.802));
         cat1.add(new Categoria(2L,"Gallo",52.163 ,53.525));
-        this.create(new Entrenador("Agus",cat1,new ArrayList<Boxeador>()));
+        this.create(new Entrenador("Agus",cat1,new ArrayList<>()));
 
         List<Categoria> cat2 = new ArrayList<>();
 
         cat2.add(new Categoria(3L,"Pluma",55.338,57.152));
         cat2.add(new Categoria(4L,"Ligero",58.967,61.237));
-        this.create(new Entrenador("Pablo",cat2,new ArrayList<Boxeador>()));
+        this.create(new Entrenador("Pablo",cat2,new ArrayList<>()));
 
         List<Categoria> cat3 = new ArrayList<>();
 
         cat3.add(new Categoria(5L,"Welter",63.503,66.678));
         cat3.add(new Categoria(6L,"Mediano",69.853,72.562));
-        this.create(new Entrenador("Flor",cat3,new ArrayList<Boxeador>()));
+        this.create(new Entrenador("Flor",cat3,new ArrayList<>()));
 
         List<Categoria> cat4 = new ArrayList<>();
 
 
         cat4.add(new Categoria(7L,"Mediopesado",76.205,79.378));
         cat4.add(new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE));
-        this.create(new Entrenador("Juan",cat4,new ArrayList<Boxeador>()));
+        this.create(new Entrenador("Juan",cat4,new ArrayList<>()));
 
     }
 
@@ -61,8 +59,7 @@ public class EntrenadorRepository implements IDAORepository<Entrenador , String 
 
     @Override
     public Optional<Entrenador> find(String nombre) {
-        Optional<Entrenador> entrenador = this.entrenadores.stream().filter(e -> Objects.equals(e.getNombre(), nombre)).findFirst();
-        return entrenador;
+        return this.entrenadores.stream().filter(e -> Objects.equals(e.getNombre(), nombre)).findFirst();
     }
 
     @Override

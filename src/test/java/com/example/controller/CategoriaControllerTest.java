@@ -76,12 +76,12 @@ public class CategoriaControllerTest {
         Categoria modificada = new Categoria(1L,"MOSQUITA",49D,51D);
 
         //Config
-        Mockito.when(categoriaServiceImp.actualizarCategoria(categoria.get_id(),modificada)).thenReturn(Optional.of(modificada));
+        Mockito.when(categoriaServiceImp.actualizarCategoria(categoria.getId(),modificada)).thenReturn(Optional.of(modificada));
 
         given()
                 .contentType(ContentType.JSON)
                 .body(modificada)
-                .when().put("/categorias/{id}",categoria.get_id())
+                .when().put("/categorias/{id}",categoria.getId())
                 .then()
                 .statusCode(200)
                 .body(is("{\"_id\":1,\"nombre\":\"MOSQUITA\",\"pesoMin\":49.0,\"pesoMax\":51.0}"));
@@ -95,13 +95,13 @@ public class CategoriaControllerTest {
         Categoria modificada = new Categoria(9L,"Nueva Categoria Mosca",100D,120D);
 
         //Config
-        Mockito.when(categoriaServiceImp.actualizarCategoria(categoria.get_id(),modificada)).thenThrow(new NotFoundException("La categoría no fue encontrada."));
+        Mockito.when(categoriaServiceImp.actualizarCategoria(categoria.getId(),modificada)).thenThrow(new NotFoundException("La categoría no fue encontrada."));
         Mockito.when(logErrorService.grabarError(new NotFoundException("La categoría no fue encontrada."),this.getClass().getName())).thenReturn(true);
 
             given()
                     .contentType(ContentType.JSON)
                     .body(modificada)
-                    .when().put("/categorias/{id}", categoria.get_id())
+                    .when().put("/categorias/{id}", categoria.getId())
                     .then()
                     .statusCode(404)
                     .body(is("La categoría no fue encontrada."));

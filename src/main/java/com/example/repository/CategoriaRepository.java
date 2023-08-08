@@ -34,8 +34,7 @@ public class CategoriaRepository implements IDAORepository<Categoria, Long> {
 
     @Override
     public Optional<Categoria> find(Long idCategoria) {
-        Optional<Categoria> categoriaExist = this.categorias.stream().filter(c -> Objects.equals(c.get_id(), idCategoria)).findFirst();
-        return categoriaExist;
+        return this.categorias.stream().filter(c -> Objects.equals(c.getId(), idCategoria)).findFirst();
     }
 
     @Override

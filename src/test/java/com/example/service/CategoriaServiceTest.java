@@ -90,10 +90,10 @@ public class CategoriaServiceTest {
         Categoria modificaciones = new Categoria(9L,"Categoria Modificada",130D,140D);
 
         //config
-        Mockito.when(categoriaRepository.find(categoria.get_id())).thenReturn(Optional.of(categoria));
+        Mockito.when(categoriaRepository.find(categoria.getId())).thenReturn(Optional.of(categoria));
 
         //execute
-        Optional<Categoria> categoriActualizada = this.categoriaServiceImp.actualizarCategoria(categoria.get_id(),modificaciones);
+        Optional<Categoria> categoriActualizada = this.categoriaServiceImp.actualizarCategoria(categoria.getId(),modificaciones);
 
         //verify
         assertNotNull(categoriActualizada);
@@ -112,12 +112,12 @@ public class CategoriaServiceTest {
         Categoria modificaciones = new Categoria(9L,"Categoria Modificada",100D,120D);
 
         //config
-        Mockito.when(categoriaRepository.find(categoria.get_id())).thenReturn(Optional.empty());
+        Mockito.when(categoriaRepository.find(categoria.getId())).thenReturn(Optional.empty());
 
         //execute
 
         Assertions.assertThrows(NotFoundException.class, () -> {
-            this.categoriaServiceImp.actualizarCategoria(categoria.get_id(), modificaciones);
+            this.categoriaServiceImp.actualizarCategoria(categoria.getId(), modificaciones);
         });
 
     }

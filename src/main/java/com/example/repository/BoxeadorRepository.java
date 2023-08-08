@@ -28,8 +28,7 @@ public class BoxeadorRepository implements IDAORepository<Boxeador , String>{
 
     @Override
     public Optional<Boxeador> find(String nombre) {
-        Optional<Boxeador> boxExiste = this.boxeadores.stream().filter(b -> Objects.equals(b.getNombre(), nombre)).findFirst();
-        return boxExiste;
+        return this.boxeadores.stream().filter(b -> Objects.equals(b.getNombre(), nombre)).findFirst();
     }
 
     @Override
@@ -50,10 +49,10 @@ public class BoxeadorRepository implements IDAORepository<Boxeador , String>{
 
     public Integer cantBoxeadoresPorDia() {
 
-        List<Boxeador> boxeadores = this.boxeadores.stream().filter(b -> (
+        List<Boxeador> boxeadorList = this.boxeadores.stream().filter(b -> (
                 b.getFechaIngreso().toLocalDate().equals(new Date(System.currentTimeMillis()).toLocalDate())))
                 .collect(Collectors.toList());
 
-        return boxeadores.size();
+        return boxeadorList.size();
     }
 }

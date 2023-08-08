@@ -2,7 +2,6 @@ package com.example.controller;
 
 import com.example.dto.BoxeadorCreateDto;
 import com.example.dto.BoxeadorDto;
-import com.example.model.Categoria;
 import com.example.service.BoxeadorServiceImp;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;

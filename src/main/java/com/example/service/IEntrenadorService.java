@@ -4,7 +4,6 @@ import com.example.dto.BoxeadorDto;
 import com.example.dto.BoxeadorSinEntreDto;
 import com.example.dto.EntrenadorDto;
 import com.example.model.Categoria;
-import com.example.model.Entrenador;
 
 import java.util.List;
 import java.util.Optional;

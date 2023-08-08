@@ -28,10 +28,9 @@ public class EntrenadorServiceImp implements IEntrenadorService {
 
     @Override
     public List<EntrenadorDto> getAllEntrenadores() {
-        List<EntrenadorDto> entrenadorDtos = this.entrenadorRepository.getAll()
+        return this.entrenadorRepository.getAll()
                                           .stream().map(e -> modelMapper.map(e, EntrenadorDto.class))
                                           .collect(Collectors.toList());
-        return entrenadorDtos;
     }
 
     @Override

@@ -30,10 +30,10 @@ public class BoxeadorServiceImp implements IBoxeadorService {
 
     @Override
     public List<BoxeadorDto> getAllBoxeadores() {
-        List<BoxeadorDto> boxeadorDtos = this.boxeadorRepository.getAll()
+        return this.boxeadorRepository.getAll()
                 .stream().map(b -> modelMapper.map(b, BoxeadorDto.class))
                 .collect(Collectors.toList());
-        return boxeadorDtos;
+
     }
 
     /** create
@@ -64,11 +64,13 @@ public class BoxeadorServiceImp implements IBoxeadorService {
         Optional<Boxeador> boxeador = Optional.ofNullable(this.boxeadorRepository.find(nombre)
                 .orElseThrow(() -> new NotFoundException("El Boxeador " + nombre + " no fue encontrado.")));
 
-        boxeador.get().setNombre(boxeadorDto.getNombre());
-        boxeador.get().setPeso(boxeadorDto.getPeso());
-        boxeador.get().setCategoria(boxeadorDto.getCategoria());
-        boxeador.get().setEntrenador(modelMapper.map(boxeadorDto.getEntrenador(),Entrenador.class));
-        boxeador.get().setFechaIngreso(boxeadorDto.getFechaIngreso());
+        if(boxeador.isPresent()) {
+            boxeador.get().setNombre(boxeadorDto.getNombre());
+            boxeador.get().setPeso(boxeadorDto.getPeso());
+            boxeador.get().setCategoria(boxeadorDto.getCategoria());
+            boxeador.get().setEntrenador(modelMapper.map(boxeadorDto.getEntrenador(), Entrenador.class));
+            boxeador.get().setFechaIngreso(boxeadorDto.getFechaIngreso());
+        }
 
         return Optional.of(modelMapper.map(boxeador, BoxeadorDto.class));
     }

@@ -1,6 +1,5 @@
 package com.example.service;
 
-import com.example.model.Boxeador;
 import com.example.model.Categoria;
 
 import java.util.List;
