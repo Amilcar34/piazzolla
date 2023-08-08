@@ -64,15 +64,13 @@ public class BoxeadorServiceImp implements IBoxeadorService {
         Optional<Boxeador> boxeador = Optional.ofNullable(this.boxeadorRepository.find(nombre)
                 .orElseThrow(() -> new NotFoundException("El Boxeador " + nombre + " no fue encontrado.")));
 
-        if(boxeador.isPresent()) {
             boxeador.get().setNombre(boxeadorDto.getNombre());
             boxeador.get().setPeso(boxeadorDto.getPeso());
             boxeador.get().setCategoria(boxeadorDto.getCategoria());
             boxeador.get().setEntrenador(modelMapper.map(boxeadorDto.getEntrenador(), Entrenador.class));
             boxeador.get().setFechaIngreso(boxeadorDto.getFechaIngreso());
-        }
 
-        return Optional.of(modelMapper.map(boxeador, BoxeadorDto.class));
+            return Optional.of(modelMapper.map(boxeador, BoxeadorDto.class));
     }
 
     @Override
@@ -80,7 +78,6 @@ public class BoxeadorServiceImp implements IBoxeadorService {
         Optional<Boxeador> boxeador = Optional.ofNullable(this.boxeadorRepository.find(nombre)
                 .orElseThrow(() -> new NotFoundException("El boxeador " + nombre + " no fue encontrado.")));
 
-        if(boxeador.isPresent()) {
             BoxeadorDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorDto.class);
 
             EntrenadorDto entrenadorDTO = modelMapper.map(boxeador.get().getEntrenador(), EntrenadorDto.class);
@@ -88,7 +85,5 @@ public class BoxeadorServiceImp implements IBoxeadorService {
             this.entrenadorServiceImp.eliminarBoxeador(entrenadorDTO, boxeadorDTO);
 
             return this.boxeadorRepository.delete(boxeador.get());
-        }
-        return false;
     }
 }

@@ -51,11 +51,8 @@ public class EntrenadorServiceImp implements IEntrenadorService {
         Optional<Entrenador> entrenador = Optional.ofNullable(this.entrenadorRepository.find(nombre)
                 .orElseThrow(() -> new NotFoundException("El entrenador " + nombre + " no fue encontrado.")));
 
-        if(entrenador.isPresent()) {
             this.boxeadorRepository.eliminarEntrenador(entrenador.get());
             return this.entrenadorRepository.delete(entrenador.get());
-        }
-        return false;
     }
 
     @Override
@@ -63,13 +60,11 @@ public class EntrenadorServiceImp implements IEntrenadorService {
         Optional<Entrenador> entrenador = Optional.ofNullable(this.entrenadorRepository.find(nombre)
                 .orElseThrow(() -> new NotFoundException("El entrenador " + nombre + " no fue encontrado.")));
 
-        if(entrenador.isPresent()) {
             entrenador.get().setNombre(entrenadorDto.getNombre());
             entrenador.get().setCategorias(entrenadorDto.getCategorias());
             entrenador.get().setBoxeadores(entrenadorDto.getBoxeadores().stream().map(b -> modelMapper.map(b, Boxeador.class)).collect(Collectors.toList()));
-        }
 
-        return Optional.of(modelMapper.map(entrenador, EntrenadorDto.class));
+            return Optional.of(modelMapper.map(entrenador, EntrenadorDto.class));
     }
 
     @Override
