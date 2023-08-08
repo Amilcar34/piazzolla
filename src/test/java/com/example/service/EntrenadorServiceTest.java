@@ -232,9 +232,19 @@ public class EntrenadorServiceTest {
         boxeadors.add(boxeador2);
 
         Entrenador entrenador = new Entrenador("Agus", categorias, boxeadors);
-        categorias.remove(cat1);
-        boxeadors.remove(boxeador);
-        Entrenador entrenadorModificado = new Entrenador("Agustina", categorias, boxeadors);
+
+        //setup modificacion
+        List<Categoria> categoriaModificada = new ArrayList<>();
+
+        Categoria cat3 = new Categoria(3L,"Mediopesado",76.205,79.378);
+        List<Boxeador> boxeadores = new ArrayList<>();
+
+        Boxeador boxeador3 = new Boxeador("Anto", 57D, null, null, null);
+
+        boxeadores.add(boxeador3);
+        categoriaModificada.add(cat3);
+
+        Entrenador entrenadorModificado = new Entrenador("Agustina", categoriaModificada, boxeadores);
 
         //config
         Mockito.when(this.entrenadorRepository.find(entrenador.getNombre())).thenReturn(Optional.of(entrenador));

@@ -141,9 +141,10 @@ public class BoxeadorRepositoryTest {
         this.boxeadorRepository.create(boxeador);
 
         //execute
-        this.boxeadorRepository.eliminarEntrenador(entrenador);
+        Boolean valor = this.boxeadorRepository.eliminarEntrenador(entrenador);
 
         //verify
+        assertTrue(valor);
         assertNull(boxeador.getEntrenador());
     }
 

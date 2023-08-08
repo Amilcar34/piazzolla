@@ -69,6 +69,24 @@ public class EntrenadorRepositoryTest {
         Boolean valor = this.entrenadorRepository.delete(entrenador);
 
         assertTrue(valor);
+        assertFalse(entrenadors.contains(entrenador));
+    }
+
+    @Test
+    public void queNoSePuedaEliminarEntrenador(){
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(9L,"nueva",76.205,79.378);
+
+        categorias.add(cat1);
+
+        Entrenador entrenador = new Entrenador("inex",categorias, new ArrayList<Boxeador>());
+
+        //execute
+        Boolean valor = this.entrenadorRepository.delete(entrenador);
+
+        assertFalse(valor);
     }
 
     @Test
