@@ -42,6 +42,16 @@ public class CategoriaRepositoryTest {
         assertTrue(categorias.contains(categoria));
     }
 
+    @Test
+    public void queSePuedaEliminarCategoria(){
+       Categoria categoria = new Categoria(1L, "Mosca", 48.988, 50.802);
+
+       Boolean valor = this.categoriaRepository.delete(categoria);
+
+       assertTrue(valor);
+       assertFalse(this.categoriaRepository.getAll().contains(categoria));
+    }
+
 
     @Test
     public void obtenerCategoriaPorId(){

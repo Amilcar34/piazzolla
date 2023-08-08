@@ -83,6 +83,60 @@ public class BoxeadorServiceTest {
     }
 
     @Test
+    public void actualizarBoxeador(){
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(1L, "Mosca", 48.988, 50.802);
+        Categoria cat2 = new Categoria(2L, "Gallo", 52.163, 53.525);
+
+        categorias.add(cat1);
+        categorias.add(cat2);
+
+        Entrenador entrenador = new Entrenador("Agus", categorias, null);
+        Entrenador entrenador1 = new Entrenador("Leo", categorias, null);
+
+        Boxeador boxeador = new Boxeador("Luca",50D,cat1,entrenador,new Date(System.currentTimeMillis()));
+        Boxeador boxeadorModificado = new Boxeador("Lucas",54D,cat2,entrenador1,new Date(116, 5,3));
+
+
+        //config
+        Mockito.when(this.boxeadorRepository.find(boxeador.getNombre())).thenReturn(Optional.of(boxeador));
+
+        //execute
+        Optional<BoxeadorDto> boxeadorActualizado = this.boxeadorServiceImp.actualizar(boxeador.getNombre(),modelMapper.map(boxeadorModificado,BoxeadorDto.class));
+
+        //verify
+        assertNotNull(boxeadorActualizado);
+        assertTrue(boxeadorActualizado.isPresent()); // Ensure the Optional is not empty
+
+        BoxeadorDto boxeadorActualizadoObj = boxeadorActualizado.get();
+        assertEquals(boxeadorModificado.getNombre(), boxeadorActualizadoObj.getNombre());
+        assertEquals(boxeadorModificado.getPeso(), boxeadorActualizadoObj.getPeso());
+        assertEquals(boxeadorModificado.getCategoria(), boxeadorActualizadoObj.getCategoria());
+        assertEquals(boxeadorModificado.getEntrenador().getNombre(), boxeadorActualizadoObj.getEntrenador().getNombre());
+        assertEquals(boxeadorModificado.getFechaIngreso(), boxeadorActualizadoObj.getFechaIngreso());
+
+    }
+
+    @Test
+    public void queNoSePuedaModificarBoxeadorInexistente(){
+        //setup
+        Boxeador boxeador = new Boxeador("Luca",50D,null,null,new Date(System.currentTimeMillis()));
+        Boxeador boxeadorModificado = new Boxeador("Lucas",54D,null,null,new Date(116, 5,3));
+
+        //config
+        Mockito.when(this.boxeadorRepository.find(boxeador.getNombre())).thenReturn(Optional.empty());
+
+        //execute
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            this.boxeadorServiceImp.actualizar(boxeador.getNombre(), modelMapper.map(boxeadorModificado,BoxeadorDto.class));
+        });
+
+    }
+
+    @Test
     public void queSePuedaEliminarBoxeador(){
         //setup
         List<Boxeador> boxeadores = new ArrayList<>();

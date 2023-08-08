@@ -7,11 +7,13 @@ import com.example.model.Categoria;
 import com.example.model.Entrenador;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IEntrenadorService {
     List<EntrenadorDto> getAllEntrenadores();
-
     Boolean crearEntrenador(EntrenadorDto entrenadorDto) throws Exception;
+    Boolean eliminarEntrenador(String nombre);
+    Optional<EntrenadorDto> actualizarEntrenador(String nombre, EntrenadorDto entrenadorDto);
     EntrenadorDto obtenerEntrenadorPorCategoria(Categoria categoria);
 
     EntrenadorDto addBoxeador(EntrenadorDto entrenadorDTO, BoxeadorSinEntreDto boxeadorDTO) throws Exception;

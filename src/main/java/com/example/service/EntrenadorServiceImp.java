@@ -3,21 +3,26 @@ package com.example.service;
 import com.example.dto.BoxeadorDto;
 import com.example.dto.BoxeadorSinEntreDto;
 import com.example.dto.EntrenadorDto;
+import com.example.repository.BoxeadorRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import com.example.model.Boxeador;
 import com.example.model.Categoria;
 import com.example.model.Entrenador;
+import jakarta.ws.rs.NotFoundException;
 import org.modelmapper.ModelMapper;
 import com.example.repository.EntrenadorRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class EntrenadorServiceImp implements IEntrenadorService {
     @Inject
     EntrenadorRepository entrenadorRepository;
+    @Inject
+    BoxeadorRepository boxeadorRepository;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -40,6 +45,27 @@ public class EntrenadorServiceImp implements IEntrenadorService {
             throw new Exception("No puede haber 2 entrenadores con la misma categoria");
         }
         throw new Exception("El entrenador no puede tener más de 2 categorias");
+    }
+
+    @Override
+    public Boolean eliminarEntrenador(String nombre) {
+        Optional<Entrenador> entrenador = Optional.ofNullable(this.entrenadorRepository.find(nombre)
+                .orElseThrow(() -> new NotFoundException("El entrenador " + nombre + " no fue encontrado.")));
+
+        this.boxeadorRepository.eliminarEntrenador(entrenador.get());
+        return this.entrenadorRepository.delete(entrenador.get());
+    }
+
+    @Override
+    public Optional<EntrenadorDto> actualizarEntrenador(String nombre, EntrenadorDto entrenadorDto) {
+        Optional<Entrenador> entrenador = Optional.ofNullable(this.entrenadorRepository.find(nombre)
+                .orElseThrow(() -> new NotFoundException("El entrenador " + nombre + " no fue encontrado.")));
+
+        entrenador.get().setNombre(entrenadorDto.getNombre());
+        entrenador.get().setCategorias(entrenadorDto.getCategorias());
+        entrenador.get().setBoxeadores(entrenadorDto.getBoxeadores().stream().map(b -> modelMapper.map(b, Boxeador.class)).collect(Collectors.toList()));
+
+        return Optional.of(modelMapper.map(entrenador, EntrenadorDto.class));
     }
 
     @Override

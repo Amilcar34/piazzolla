@@ -1,5 +1,6 @@
 package com.example.repository;
 
+import com.example.model.Entrenador;
 import jakarta.enterprise.context.ApplicationScoped;
 import com.example.model.Boxeador;
 
@@ -31,6 +32,21 @@ public class BoxeadorRepository implements IDAORepository<Boxeador , String>{
         return boxExiste;
     }
 
+    @Override
+    public Boolean delete(Boxeador boxeador){
+        return this.boxeadores.remove(boxeador);
+    }
+
+    public Boolean eliminarEntrenador(Entrenador entrenador){
+        for (Boxeador box: this.boxeadores) {
+            if(box.getEntrenador().getNombre().equals(entrenador.getNombre())){
+                box.setEntrenador(null);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public Integer cantBoxeadoresPorDia() {
 
@@ -39,9 +55,5 @@ public class BoxeadorRepository implements IDAORepository<Boxeador , String>{
                 .collect(Collectors.toList());
 
         return boxeadores.size();
-    }
-
-    public Boolean delete(Boxeador boxeador){
-       return this.boxeadores.remove(boxeador);
     }
 }

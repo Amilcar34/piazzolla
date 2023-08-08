@@ -4,9 +4,8 @@ import com.example.dto.EntrenadorDto;
 import com.example.model.Entrenador;
 import com.example.service.EntrenadorServiceImp;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class EntrenadorResource {
     }
 
     @POST
-    public Response crear(EntrenadorDto entrenadorDto) {
+    public Response crear(@Valid EntrenadorDto entrenadorDto) {
         try {
             this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
             return Response.status(Response.Status.CREATED).entity(entrenadorDto).build();
@@ -31,6 +30,15 @@ public class EntrenadorResource {
         }catch (Exception e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
+    }
 
+    @DELETE
+    public Response eliminar(@QueryParam("nombre") String nombre){
+        try{
+            this.entrenadorServiceImp.eliminarEntrenador(nombre);
+            return Response.ok().entity("Entrenador eliminado con exito").build();
+        }catch (NotFoundException e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
 }

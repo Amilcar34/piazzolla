@@ -6,8 +6,10 @@ import jakarta.ws.rs.NotFoundException;
 import com.example.model.Categoria;
 import com.example.repository.CategoriaRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class CategoriaServiceImp implements ICategoriaService{
@@ -39,7 +41,9 @@ public class CategoriaServiceImp implements ICategoriaService{
 
     @Override
     public Categoria obtenerCategoriaPorPeso(Double peso){
-        List<Categoria> categorias = this.categoriaRepository.getAll();
+        List<Categoria> categorias = this.categoriaRepository.getAll().stream()
+                                     .sorted((Comparator.comparingDouble(Categoria::getPesoMin)))
+                                     .collect(Collectors.toList());
 
             for (Categoria categoria : categorias) {
 

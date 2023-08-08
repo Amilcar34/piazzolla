@@ -1,12 +1,15 @@
 package com.example.repository;
 
 import com.example.model.Boxeador;
+import com.example.model.Categoria;
+import com.example.model.Entrenador;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,6 +121,55 @@ public class BoxeadorRepositoryTest {
         Boolean valor = this.boxeadorRepository.delete(boxeador3);
 
         assertFalse(valor);
+    }
+
+    @Test
+    public void queSePuedaEliminarEntrenador(){
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(7L,"Mediopesado",76.205,79.378);
+        Categoria cat2 = new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE);
+
+        categorias.add(cat1);
+        categorias.add(cat2);
+
+        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<Boxeador>());
+
+        Boxeador boxeador = new Boxeador("Karina", 77D, cat1, entrenador, new Date(System.currentTimeMillis()));
+
+        this.boxeadorRepository.create(boxeador);
+
+        //execute
+        this.boxeadorRepository.eliminarEntrenador(entrenador);
+
+        //verify
+        assertNull(boxeador.getEntrenador());
+    }
+
+    @Test
+    public void queNoSePuedaEliminarEntrenadorInexistente(){
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(7L,"Mediopesado",76.205,79.378);
+        Categoria cat2 = new Categoria(8L,"Pesado",91D,Categoria.SIN_LIMITE);
+
+        categorias.add(cat1);
+        categorias.add(cat2);
+
+        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<Boxeador>());
+        Entrenador entrenadorInex = new Entrenador("nuevo",null, new ArrayList<Boxeador>());
+
+        Boxeador boxeador = new Boxeador("Karina", 77D, cat1, entrenador, new Date(System.currentTimeMillis()));
+
+        this.boxeadorRepository.create(boxeador);
+
+        //execute
+        var resp = this.boxeadorRepository.eliminarEntrenador(entrenadorInex);
+
+        //verify
+        assertFalse(resp);
     }
 
     @Test

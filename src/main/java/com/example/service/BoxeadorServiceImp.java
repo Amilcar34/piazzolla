@@ -2,6 +2,7 @@ package com.example.service;
 
 
 import com.example.dto.*;
+import com.example.model.Entrenador;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import com.example.model.Boxeador;
@@ -56,6 +57,20 @@ public class BoxeadorServiceImp implements IBoxeadorService {
         this.entrenadorServiceImp.addBoxeador(entrenadorDTO, boxeadorSinEntreDTO);
 
         return boxeadorDTO;
+    }
+
+    @Override
+    public Optional<BoxeadorDto> actualizar(String nombre, BoxeadorDto boxeadorDto) {
+        Optional<Boxeador> boxeador = Optional.ofNullable(this.boxeadorRepository.find(nombre)
+                .orElseThrow(() -> new NotFoundException("El Boxeador " + nombre + " no fue encontrado.")));
+
+        boxeador.get().setNombre(boxeadorDto.getNombre());
+        boxeador.get().setPeso(boxeadorDto.getPeso());
+        boxeador.get().setCategoria(boxeadorDto.getCategoria());
+        boxeador.get().setEntrenador(modelMapper.map(boxeadorDto.getEntrenador(),Entrenador.class));
+        boxeador.get().setFechaIngreso(boxeadorDto.getFechaIngreso());
+
+        return Optional.of(modelMapper.map(boxeador, BoxeadorDto.class));
     }
 
     @Override

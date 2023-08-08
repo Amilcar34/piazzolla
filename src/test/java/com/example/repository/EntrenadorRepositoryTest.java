@@ -51,6 +51,27 @@ public class EntrenadorRepositoryTest {
     }
 
     @Test
+    public void queSePuedaEliminarEntrenador(){
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(9L,"nueva",76.205,79.378);
+
+        categorias.add(cat1);
+
+        Entrenador entrenador = new Entrenador("nuevo",categorias, new ArrayList<Boxeador>());
+
+        this.entrenadorRepository.create(entrenador);
+
+        List<Entrenador> entrenadors = this.entrenadorRepository.getAll();
+
+        //execute
+        Boolean valor = this.entrenadorRepository.delete(entrenador);
+
+        assertTrue(valor);
+    }
+
+    @Test
     public void obtenerEntrenadorPorCategoria(){
 
         //setup

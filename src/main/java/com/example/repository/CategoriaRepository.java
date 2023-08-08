@@ -38,5 +38,10 @@ public class CategoriaRepository implements IDAORepository<Categoria, Long> {
         return categoriaExist;
     }
 
+    @Override
+    public Boolean delete(Categoria categoria) {
+        return this.categorias.remove(categoria);
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.dto.BoxeadorCreateDto;
 import com.example.dto.BoxeadorDto;
+import com.example.model.Categoria;
 import com.example.service.BoxeadorServiceImp;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -35,15 +36,27 @@ public class BoxeadorResource {
             this.logErrorService.grabarError(e,this.getClass().getName());
             return Response.status(402).entity(e.getMessage()).build();
         }
+    }
+
+    @PUT
+    public Response update(@QueryParam("nombre") String nombre, BoxeadorDto boxeadorDto) throws IOException {
+        try {
+            this.boxeadorServiceImp.actualizar(nombre,boxeadorDto);
+            return Response.ok().entity(boxeadorDto).build();
+        }catch (NotFoundException e){
+            logErrorService.grabarError(e,this.getClass().getName());
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
 
     }
 
     @DELETE
-    public Response eliminarBoxeador(@QueryParam("nombre") String nombre){
+    public Response eliminarBoxeador(@QueryParam("nombre") String nombre) throws IOException {
         try {
             this.boxeadorServiceImp.eliminar(nombre);
             return Response.ok().entity("Boxeador eliminado con exito").build();
         }catch (NotFoundException e){
+            logErrorService.grabarError(e,this.getClass().getName());
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }

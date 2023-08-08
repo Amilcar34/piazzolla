@@ -65,6 +65,11 @@ public class EntrenadorRepository implements IDAORepository<Entrenador , String 
         return entrenador;
     }
 
+    @Override
+    public Boolean delete(Entrenador entrenador) {
+      return this.entrenadores.remove(entrenador);
+    }
+
     public Entrenador addBoxeador(Entrenador entrenador, Boxeador boxeador) {
         for (Entrenador en: this.entrenadores) {
             if(entrenador.getNombre().equals(en.getNombre())){
