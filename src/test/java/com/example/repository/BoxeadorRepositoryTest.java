@@ -156,11 +156,24 @@ public class BoxeadorRepositoryTest {
         categorias.add(cat1);
         categorias.add(cat2);
 
-        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("Juan",categorias, new ArrayList<>());
 
         Boxeador boxeador = new Boxeador("Karina", 77D, cat1, entrenador, new Date(System.currentTimeMillis()));
 
+        List<Categoria> categorias1 = new ArrayList<>();
+
+        Categoria cat3 = new Categoria(1L,"Mosca",48.988,50.802);
+        Categoria cat4 = new Categoria(2L,"Gallo",52.163 ,53.525);
+
+        categorias1.add(cat3);
+        categorias1.add(cat4);
+
+        Entrenador entrenador1 = new Entrenador("Agus",categorias1,new ArrayList<>());
+
+        Boxeador boxeador1 = new Boxeador("Joaquin", 50D, cat1, entrenador1, new Date(System.currentTimeMillis()));
+
         this.boxeadorRepository.create(boxeador);
+        this.boxeadorRepository.create(boxeador1);
 
         //execute
         Boolean valor = this.boxeadorRepository.eliminarEntrenador(entrenador);
@@ -168,6 +181,7 @@ public class BoxeadorRepositoryTest {
         //verify
         assertTrue(valor);
         assertNull(boxeador.getEntrenador());
+        assertNotNull(boxeador1.getEntrenador());
     }
 
     @Test
