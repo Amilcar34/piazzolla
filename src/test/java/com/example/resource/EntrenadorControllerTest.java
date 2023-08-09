@@ -58,7 +58,7 @@ public class EntrenadorControllerTest {
                 .when().get("/entrenadores")
                 .then()
                 .statusCode(200)
-                .body(is("[{\"nombre\":\"Agus\",\"categorias\":[{\"id\":1,\"nombre\":\"Mosca\",\"pesoMin\":48.988,\"pesoMax\":50.802},{\"id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}],\"boxeadores\":[]}]"));
+                .body(is("[{\"nombre\":\"Agus\",\"categorias\":[{\"id\":1,\"categoria\":\"Mosca\",\"pesoMin\":48.988,\"pesoMax\":50.802},{\"id\":2,\"categoria\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}],\"boxeadores\":[]}]"));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class EntrenadorControllerTest {
                 .when().post("/entrenadores")
                 .then()
                 .statusCode(201)
-                .body(is("{\"nombre\":\"Nuevo entrenador\",\"categorias\":[{\"id\":9,\"nombre\":\"Nueva\",\"pesoMin\":51.0,\"pesoMax\":52.0}],\"boxeadores\":null}"));
+                .body(is("{\"nombre\":\"Nuevo entrenador\",\"categorias\":[{\"id\":9,\"categoria\":\"Nueva\",\"pesoMin\":51.0,\"pesoMax\":52.0}],\"boxeadores\":null}"));
     }
 
     @Test
@@ -147,7 +147,7 @@ public class EntrenadorControllerTest {
                 .put("/entrenadores")
                 .then()
                 .statusCode(200)
-                .body(is("{\"nombre\":\"Agustina\",\"categorias\":[{\"id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}],\"boxeadores\":[{\"nombre\":\"Nicol\",\"peso\":50.0,\"categoria\":null,\"fechaIngreso\":null}]}"));
+                .body(is("{\"nombre\":\"Agustina\",\"categorias\":[{\"id\":2,\"categoria\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}],\"boxeadores\":[{\"nombre\":\"Nicol\",\"peso\":50.0,\"categoria\":null,\"fechaIngreso\":null}]}"));
     }
 
     @Test

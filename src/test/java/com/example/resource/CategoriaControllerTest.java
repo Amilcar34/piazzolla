@@ -42,7 +42,7 @@ public class CategoriaControllerTest {
                 .when().post("/categorias")
                 .then()
                 .statusCode(201)
-                .body("nombre", equalTo("Nueva Categoria"));
+                .body("categoria", equalTo("Nueva Categoria"));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class CategoriaControllerTest {
                 .when().get("/categorias")
                 .then()
                 .statusCode(200)
-                .body(is("[{\"id\":9,\"nombre\":\"Nueva Categoria\",\"pesoMin\":100.0,\"pesoMax\":120.0},{\"id\":10,\"nombre\":\"Nueva Categoria 1\",\"pesoMin\":130.0,\"pesoMax\":14.0}]"));
+                .body(is("[{\"id\":9,\"categoria\":\"Nueva Categoria\",\"pesoMin\":100.0,\"pesoMax\":120.0},{\"id\":10,\"categoria\":\"Nueva Categoria 1\",\"pesoMin\":130.0,\"pesoMax\":14.0}]"));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class CategoriaControllerTest {
                 .when().put("/categorias/{id}",categoria.getId())
                 .then()
                 .statusCode(200)
-                .body(is("{\"id\":1,\"nombre\":\"MOSQUITA\",\"pesoMin\":49.0,\"pesoMax\":51.0}"));
+                .body(is("{\"id\":1,\"categoria\":\"MOSQUITA\",\"pesoMin\":49.0,\"pesoMax\":51.0}"));
     }
 
     @Test

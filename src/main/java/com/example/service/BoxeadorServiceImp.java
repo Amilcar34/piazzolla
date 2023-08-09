@@ -36,9 +36,7 @@ public class BoxeadorServiceImp implements IBoxeadorService {
 
     }
 
-    /** create
-     *
-     **/
+
     @Override
     public BoxeadorDto create(BoxeadorCreateDto boxeadorCreateDto) throws Exception {
 

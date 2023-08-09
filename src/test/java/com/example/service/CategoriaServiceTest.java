@@ -100,7 +100,7 @@ public class CategoriaServiceTest {
         assertTrue(categoriActualizada.isPresent()); // Ensure the Optional is not empty
 
         Categoria categoriaActualizadaObj = categoriActualizada.get();
-        assertEquals(modificaciones.getNombre(), categoriaActualizadaObj.getNombre()); // Verify modified name
+        assertEquals(modificaciones.getCategoria(), categoriaActualizadaObj.getCategoria()); // Verify modified name
         assertEquals(modificaciones.getPesoMin(), categoriaActualizadaObj.getPesoMin()); // Verify modified min weight
         assertEquals(modificaciones.getPesoMax(), categoriaActualizadaObj.getPesoMax()); // Verify modified max weight
     }

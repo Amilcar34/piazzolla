@@ -32,7 +32,7 @@ public class CategoriaServiceImp implements ICategoriaService{
         Optional<Categoria> categoriaExist = Optional.ofNullable(this.categoriaRepository.find(idCategoria)
                 .orElseThrow(() -> new NotFoundException("La categoría " + idCategoria + " no fue encontrada.")));
 
-            categoriaExist.get().setNombre(categoria.getNombre());
+            categoriaExist.get().setCategoria(categoria.getCategoria());
             categoriaExist.get().setPesoMax(categoria.getPesoMax());
             categoriaExist.get().setPesoMin(categoria.getPesoMin());
 

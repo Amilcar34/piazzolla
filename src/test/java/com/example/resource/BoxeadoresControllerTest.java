@@ -128,7 +128,7 @@ public class BoxeadoresControllerTest {
                 .put("/boxeadores")
                 .then()
                 .statusCode(200)
-                .body(is("{\"nombre\":\"Lucas\",\"peso\":54.0,\"categoria\":{\"id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525},\"entrenador\":{\"nombre\":\"Leo\",\"categorias\":[{\"id\":1,\"nombre\":\"Mosca\",\"pesoMin\":48.988,\"pesoMax\":50.802},{\"id\":2,\"nombre\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}]},\"fechaIngreso\":\"2016-06-03\"}"));
+                .body(is("{\"nombre\":\"Lucas\",\"peso\":54.0,\"categoria\":{\"id\":2,\"categoria\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525},\"entrenador\":{\"nombre\":\"Leo\",\"categorias\":[{\"id\":1,\"categoria\":\"Mosca\",\"pesoMin\":48.988,\"pesoMax\":50.802},{\"id\":2,\"categoria\":\"Gallo\",\"pesoMin\":52.163,\"pesoMax\":53.525}]},\"fechaIngreso\":\"2016-06-03\"}"));
     }
 
     @Test
