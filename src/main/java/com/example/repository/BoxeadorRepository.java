@@ -41,10 +41,9 @@ public class BoxeadorRepository implements IDAORepository<Boxeador , String>{
         for (Boxeador box: this.boxeadores) {
             if(box.getEntrenador().getNombre().equals(entrenador.getNombre())){
                 box.setEntrenador(null);
-                return true;
             }
         }
-        return false;
+        return true;
     }
 
 
