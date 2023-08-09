@@ -4,7 +4,7 @@ import com.example.dto.EntrenadorDto;
 import com.example.model.Boxeador;
 import com.example.model.Categoria;
 import com.example.model.Entrenador;
-import com.example.service.EntrenadorServiceImp;
+import com.example.service.IEntrenadorService;
 import com.example.service.LogErrorService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
@@ -17,7 +17,6 @@ import org.modelmapper.ModelMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
@@ -27,7 +26,7 @@ import static org.hamcrest.Matchers.is;
 public class EntrenadorControllerTest {
 
     @InjectMock
-    EntrenadorServiceImp entrenadorServiceImp;
+    IEntrenadorService entrenadorService;
 
     @InjectMock
     LogErrorService logErrorService;
@@ -50,7 +49,7 @@ public class EntrenadorControllerTest {
                                             .collect(Collectors.toList());
 
         //Config
-        Mockito.when(entrenadorServiceImp.getAllEntrenadores()).thenReturn(entrenadorDtos);
+        Mockito.when(entrenadorService.getAllEntrenadores()).thenReturn(entrenadorDtos);
 
         given()
                 .contentType(ContentType.JSON)
@@ -74,7 +73,7 @@ public class EntrenadorControllerTest {
 
 
         //Config
-        Mockito.when(entrenadorServiceImp.crearEntrenador(entrenadorDto)).thenReturn(entrenadorDto);
+        Mockito.when(entrenadorService.crearEntrenador(entrenadorDto)).thenReturn(entrenadorDto);
 
         given()
                 .contentType(ContentType.JSON)
@@ -98,7 +97,7 @@ public class EntrenadorControllerTest {
         EntrenadorDto entrenadorDto = new EntrenadorDto("Nuevo entrenador",cat1,null);
 
         //Config
-        Mockito.when(entrenadorServiceImp.crearEntrenador(entrenadorDto)).thenThrow(new Exception("El entrenador no puede tener más de 2 categorias"));
+        Mockito.when(entrenadorService.crearEntrenador(entrenadorDto)).thenThrow(new Exception("El entrenador no puede tener más de 2 categorias"));
 
         given()
                 .contentType(ContentType.JSON)
@@ -137,7 +136,7 @@ public class EntrenadorControllerTest {
         EntrenadorDto entrenadorDto = modelMapper.map(entrenadorModificado,EntrenadorDto.class);
 
         //Config
-        Mockito.when(this.entrenadorServiceImp.actualizarEntrenador(entrenador.getNombre(),entrenadorDto)).thenReturn(entrenadorDto);
+        Mockito.when(this.entrenadorService.actualizarEntrenador(entrenador.getNombre(),entrenadorDto)).thenReturn(entrenadorDto);
 
         given()
                 .contentType(ContentType.JSON)
@@ -177,7 +176,7 @@ public class EntrenadorControllerTest {
         EntrenadorDto entrenadorDto = modelMapper.map(entrenadorModificado,EntrenadorDto.class);
 
         //Config
-        Mockito.when(entrenadorServiceImp.actualizarEntrenador(entrenador.getNombre(),entrenadorDto)).thenThrow(new NotFoundException("El entrenador no fue encontrado."));
+        Mockito.when(entrenadorService.actualizarEntrenador(entrenador.getNombre(),entrenadorDto)).thenThrow(new NotFoundException("El entrenador no fue encontrado."));
         Mockito.when(logErrorService.grabarError(new NotFoundException("El entrenador no fue encontrado."),this.getClass().getName())).thenReturn(true);
 
         given()
@@ -201,7 +200,7 @@ public class EntrenadorControllerTest {
         cat1.add(new Categoria(2L,"Gallo",52.163 ,53.525));
         Entrenador entrenador = new Entrenador("Agus",cat1,new ArrayList<Boxeador>());
 
-        Mockito.when(this.entrenadorServiceImp.eliminarEntrenador(entrenador.getNombre())).thenReturn(true);
+        Mockito.when(this.entrenadorService.eliminarEntrenador(entrenador.getNombre())).thenReturn(true);
 
         given()
                 .contentType(ContentType.JSON)
@@ -218,7 +217,7 @@ public class EntrenadorControllerTest {
 
         EntrenadorDto entrenadorDto = new EntrenadorDto("Nuevo entrenador",null,null);
 
-        Mockito.when(this.entrenadorServiceImp.eliminarEntrenador(entrenadorDto.getNombre())).thenThrow(new NotFoundException("El entrenador " + entrenadorDto.getNombre() + " no fue encontrado."));
+        Mockito.when(this.entrenadorService.eliminarEntrenador(entrenadorDto.getNombre())).thenThrow(new NotFoundException("El entrenador " + entrenadorDto.getNombre() + " no fue encontrado."));
 
         given()
                 .contentType(ContentType.JSON)

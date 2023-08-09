@@ -2,7 +2,7 @@ package com.example.resource;
 
 
 import com.example.model.Categoria;
-import com.example.service.CategoriaServiceImp;
+import com.example.service.ICategoriaService;
 import com.example.service.LogErrorService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -24,7 +23,7 @@ import static org.mockito.Mockito.verify;
 public class CategoriaControllerTest {
 
     @InjectMock
-    CategoriaServiceImp categoriaServiceImp;
+    ICategoriaService categoriaService;
 
     @InjectMock
     LogErrorService logErrorService;
@@ -57,7 +56,7 @@ public class CategoriaControllerTest {
         categoriasList.add(categoria1);
 
         //Config
-        Mockito.when(categoriaServiceImp.obtenerCategorias()).thenReturn(categoriasList);
+        Mockito.when(categoriaService.obtenerCategorias()).thenReturn(categoriasList);
 
         given()
                 .contentType(ContentType.JSON)
@@ -76,7 +75,7 @@ public class CategoriaControllerTest {
         Categoria modificada = new Categoria(1L,"MOSQUITA",49D,51D);
 
         //Config
-        Mockito.when(categoriaServiceImp.actualizarCategoria(categoria.getId(),modificada)).thenReturn((modificada));
+        Mockito.when(categoriaService.actualizarCategoria(categoria.getId(),modificada)).thenReturn((modificada));
 
         given()
                 .contentType(ContentType.JSON)
@@ -95,7 +94,7 @@ public class CategoriaControllerTest {
         Categoria modificada = new Categoria(9L,"Nueva Categoria Mosca",100D,120D);
 
         //Config
-        Mockito.when(categoriaServiceImp.actualizarCategoria(categoria.getId(),modificada)).thenThrow(new NotFoundException("La categoría no fue encontrada."));
+        Mockito.when(categoriaService.actualizarCategoria(categoria.getId(),modificada)).thenThrow(new NotFoundException("La categoría no fue encontrada."));
         Mockito.when(logErrorService.grabarError(new NotFoundException("La categoría no fue encontrada."),this.getClass().getName())).thenReturn(true);
 
             given()

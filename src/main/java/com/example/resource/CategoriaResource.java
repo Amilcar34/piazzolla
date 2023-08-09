@@ -1,7 +1,7 @@
 package com.example.resource;
 
 import com.example.model.Categoria;
-import com.example.service.CategoriaServiceImp;
+import com.example.service.ICategoriaService;
 import com.example.service.LogErrorService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -13,19 +13,19 @@ import java.util.List;
 @Path("/categorias")
 public class CategoriaResource {
     @Inject
-    CategoriaServiceImp categoriaServiceImp;
+    ICategoriaService categoriaService;
 
     @Inject
     LogErrorService logErrorService;
 
     @GET
     public List<Categoria> list() {
-        return this.categoriaServiceImp.obtenerCategorias();
+        return this.categoriaService.obtenerCategorias();
     }
 
     @POST
     public Response create(Categoria categoria){
-        this.categoriaServiceImp.crearCategoria(categoria);
+        this.categoriaService.crearCategoria(categoria);
         return Response.status(Response.Status.CREATED).entity(categoria).build();
     }
 
@@ -33,7 +33,7 @@ public class CategoriaResource {
     @Path("/{id}")
     public Response update( Long id, Categoria categoria) throws IOException {
         try {
-            this.categoriaServiceImp.actualizarCategoria(id,categoria);
+            this.categoriaService.actualizarCategoria(id,categoria);
             return Response.ok().entity(categoria).build();
         }catch (NotFoundException e){
             logErrorService.grabarError(e,this.getClass().getName());

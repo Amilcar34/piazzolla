@@ -1,7 +1,7 @@
 package com.example.resource;
 
 import com.example.dto.EntrenadorDto;
-import com.example.service.EntrenadorServiceImp;
+import com.example.service.IEntrenadorService;
 import com.example.service.LogErrorService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -15,20 +15,20 @@ import java.util.List;
 public class EntrenadorResource {
 
     @Inject
-    EntrenadorServiceImp entrenadorServiceImp;
+    IEntrenadorService entrenadorService;
 
     @Inject
     LogErrorService logErrorService;
 
     @GET
     public List<EntrenadorDto> list() {
-        return this.entrenadorServiceImp.getAllEntrenadores();
+        return this.entrenadorService.getAllEntrenadores();
     }
 
     @POST
     public Response crear(@Valid EntrenadorDto entrenadorDto) {
         try {
-            this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
+            this.entrenadorService.crearEntrenador(entrenadorDto);
             return Response.status(Response.Status.CREATED).entity(entrenadorDto).build();
 
         }catch (Exception e){
@@ -39,7 +39,7 @@ public class EntrenadorResource {
     @PUT
     public Response update(@QueryParam("nombre") String nombre, EntrenadorDto entrenadorDto) throws IOException {
         try {
-            this.entrenadorServiceImp.actualizarEntrenador(nombre,entrenadorDto);
+            this.entrenadorService.actualizarEntrenador(nombre,entrenadorDto);
             return Response.ok().entity(entrenadorDto).build();
         }catch (NotFoundException e){
             logErrorService.grabarError(e,this.getClass().getName());
@@ -51,7 +51,7 @@ public class EntrenadorResource {
     @DELETE
     public Response eliminar(@QueryParam("nombre") String nombre){
         try{
-            this.entrenadorServiceImp.eliminarEntrenador(nombre);
+            this.entrenadorService.eliminarEntrenador(nombre);
             return Response.ok().entity("Entrenador eliminado con exito").build();
         }catch (NotFoundException e){
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();

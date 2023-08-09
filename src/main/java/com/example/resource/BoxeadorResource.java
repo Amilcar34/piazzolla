@@ -2,7 +2,7 @@ package com.example.resource;
 
 import com.example.dto.BoxeadorCreateDto;
 import com.example.dto.BoxeadorDto;
-import com.example.service.BoxeadorServiceImp;
+import com.example.service.IBoxeadorService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -15,20 +15,20 @@ import java.util.List;
 @Path("/boxeadores")
 public class BoxeadorResource {
     @Inject
-    BoxeadorServiceImp boxeadorServiceImp;
+    IBoxeadorService boxeadorService;
 
     @Inject
     LogErrorService logErrorService;
 
     @GET
     public List<BoxeadorDto> list(){
-        return this.boxeadorServiceImp.getAllBoxeadores();
+        return this.boxeadorService.getAllBoxeadores();
     }
 
     @POST
     public Response create(@Valid BoxeadorCreateDto boxeadorCreateDto) throws IOException {
         try {
-            BoxeadorDto boxeador = this.boxeadorServiceImp.create(boxeadorCreateDto);
+            BoxeadorDto boxeador = this.boxeadorService.create(boxeadorCreateDto);
             return Response.status(Response.Status.CREATED).entity(boxeador).build();
         }
         catch (Exception e){
@@ -40,7 +40,7 @@ public class BoxeadorResource {
     @PUT
     public Response update(@QueryParam("nombre") String nombre, BoxeadorDto boxeadorDto) throws IOException {
         try {
-            this.boxeadorServiceImp.actualizar(nombre,boxeadorDto);
+            this.boxeadorService.actualizar(nombre,boxeadorDto);
             return Response.ok().entity(boxeadorDto).build();
         }catch (NotFoundException e){
             logErrorService.grabarError(e,this.getClass().getName());
@@ -52,7 +52,7 @@ public class BoxeadorResource {
     @DELETE
     public Response eliminarBoxeador(@QueryParam("nombre") String nombre) throws IOException {
         try {
-            this.boxeadorServiceImp.eliminar(nombre);
+            this.boxeadorService.eliminar(nombre);
             return Response.ok().entity("Boxeador eliminado con exito").build();
         }catch (NotFoundException e){
             logErrorService.grabarError(e,this.getClass().getName());

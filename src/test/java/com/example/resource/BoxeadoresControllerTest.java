@@ -6,7 +6,7 @@ import com.example.dto.BoxeadorDto;
 import com.example.model.Boxeador;
 import com.example.model.Categoria;
 import com.example.model.Entrenador;
-import com.example.service.BoxeadorServiceImp;
+import com.example.service.IBoxeadorService;
 import com.example.service.LogErrorService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
@@ -30,7 +29,7 @@ import static org.hamcrest.Matchers.is;
 public class BoxeadoresControllerTest {
 
     @InjectMock
-    BoxeadorServiceImp boxeadorServiceImp;
+    IBoxeadorService boxeadorService;
     @InjectMock
     LogErrorService logErrorService;
     ModelMapper modelMapper = new ModelMapper();
@@ -47,7 +46,7 @@ public class BoxeadoresControllerTest {
         List<BoxeadorDto> boxeadorDtos = boxeadors.stream().map(b -> modelMapper.map( b, BoxeadorDto.class))
                 .collect(Collectors.toList());
 
-        Mockito.when(this.boxeadorServiceImp.getAllBoxeadores()).thenReturn(boxeadorDtos);
+        Mockito.when(this.boxeadorService.getAllBoxeadores()).thenReturn(boxeadorDtos);
 
         given()
                 .contentType(ContentType.JSON)
@@ -65,7 +64,7 @@ public class BoxeadoresControllerTest {
 
         BoxeadorDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorDto.class);
 
-        Mockito.when(this.boxeadorServiceImp.create(Mockito.any(BoxeadorCreateDto.class))).thenReturn(boxeadorDTO);
+        Mockito.when(this.boxeadorService.create(Mockito.any(BoxeadorCreateDto.class))).thenReturn(boxeadorDTO);
 
         given()
                 .contentType(ContentType.JSON)
@@ -83,7 +82,7 @@ public class BoxeadoresControllerTest {
 
         BoxeadorDto boxeadorDTO = modelMapper.map(boxeador, BoxeadorDto.class);
 
-        Mockito.when(this.boxeadorServiceImp.create(Mockito.any(BoxeadorCreateDto.class))).thenThrow(new Exception("El entrenador ha alcanzado el límite de boxeadores (5)."));
+        Mockito.when(this.boxeadorService.create(Mockito.any(BoxeadorCreateDto.class))).thenThrow(new Exception("El entrenador ha alcanzado el límite de boxeadores (5)."));
 
 
 
@@ -118,7 +117,7 @@ public class BoxeadoresControllerTest {
         BoxeadorDto boxeadorDto = modelMapper.map(boxeadorModificado, BoxeadorDto.class);
 
         //Config
-        Mockito.when(boxeadorServiceImp.actualizar(boxeador.getNombre(), boxeadorDto)).thenReturn(boxeadorDto);
+        Mockito.when(boxeadorService.actualizar(boxeador.getNombre(), boxeadorDto)).thenReturn(boxeadorDto);
 
         given()
                 .contentType(ContentType.JSON)
@@ -151,7 +150,7 @@ public class BoxeadoresControllerTest {
         BoxeadorDto boxeadorDto = modelMapper.map(boxeadorModificado,BoxeadorDto.class);
 
         //Config
-        Mockito.when(boxeadorServiceImp.actualizar(boxeador.getNombre(),boxeadorDto)).thenThrow(new NotFoundException("El boxeador no fue encontrado."));
+        Mockito.when(boxeadorService.actualizar(boxeador.getNombre(),boxeadorDto)).thenThrow(new NotFoundException("El boxeador no fue encontrado."));
         Mockito.when(logErrorService.grabarError(new NotFoundException("La categoría no fue encontrada."),this.getClass().getName())).thenReturn(true);
 
         given()
@@ -170,7 +169,7 @@ public class BoxeadoresControllerTest {
 
         Boxeador boxeador = new Boxeador("Lautaro",40D,null,null,null);
 
-        Mockito.when(this.boxeadorServiceImp.eliminar(boxeador.getNombre())).thenReturn(true);
+        Mockito.when(this.boxeadorService.eliminar(boxeador.getNombre())).thenReturn(true);
 
         given()
                 .contentType(ContentType.JSON)
@@ -187,7 +186,7 @@ public class BoxeadoresControllerTest {
 
         Boxeador boxeador = new Boxeador("Camila",50D,null,null,null);
 
-        Mockito.when(this.boxeadorServiceImp.eliminar(boxeador.getNombre())).thenThrow(new NotFoundException("El boxeador " + boxeador.getNombre() + " no fue encontrado."));
+        Mockito.when(this.boxeadorService.eliminar(boxeador.getNombre())).thenThrow(new NotFoundException("El boxeador " + boxeador.getNombre() + " no fue encontrado."));
 
         given()
                 .contentType(ContentType.JSON)
