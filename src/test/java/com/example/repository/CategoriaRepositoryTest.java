@@ -1,5 +1,6 @@
 package com.example.repository;
 
+import com.example.model.Boxeador;
 import com.example.model.Categoria;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -49,6 +50,17 @@ public class CategoriaRepositoryTest {
 
        assertTrue(valor);
        assertFalse(this.categoriaRepository.getAll().contains(categoria));
+    }
+
+    @Test
+    public void queNoSePuedaEliminarCategoriaInexistente(){
+        //setup
+        Categoria categoriaNueva = new Categoria(9L, "nueva", 51.0, 52.0);
+
+        //execute
+        Boolean valor = this.categoriaRepository.delete(categoriaNueva);
+
+        assertFalse(valor);
     }
 
 
