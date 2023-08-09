@@ -34,11 +34,12 @@ public class EntrenadorServiceImp implements IEntrenadorService {
     }
 
     @Override
-    public Boolean crearEntrenador(EntrenadorDto entrenadorDto) throws Exception {
+    public EntrenadorDto crearEntrenador(EntrenadorDto entrenadorDto) throws Exception {
         if(entrenadorDto.getCategorias().size() <= 2) {
             for (Categoria c: entrenadorDto.getCategorias()) {
                 if(this.obtenerEntrenadorPorCategoria(c) == null){
-                    return this.entrenadorRepository.create(modelMapper.map(entrenadorDto, Entrenador.class));
+                    Entrenador entrenador = modelMapper.map(entrenadorDto, Entrenador.class);
+                    return modelMapper.map(this.entrenadorRepository.create(entrenador),EntrenadorDto.class);
                 }
             }
             throw new Exception("No puede haber 2 entrenadores con la misma categoria");

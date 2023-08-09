@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public interface IDAORepository<K,T>{
     List<K> getAll();
-    Boolean create(K k);
+    K create(K k);
     Optional<K> find(T t);
     Boolean delete(K k);
 }

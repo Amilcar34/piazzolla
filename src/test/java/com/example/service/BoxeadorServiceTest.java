@@ -10,10 +10,9 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.NotFoundException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
+import org.mockito.Mockito;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class BoxeadorServiceTest {
     }
 
     @Test
-    public void crearBoxeador() throws Exception {
+    void crearBoxeador() throws Exception {
 
         //setup
         List<Categoria> categorias = new ArrayList<>();
@@ -67,12 +66,15 @@ public class BoxeadorServiceTest {
         categorias.add(cat2);
 
         Entrenador entrenador = new Entrenador("Pablo", categorias, null);
-        Boxeador boxeador = new Boxeador("Nico", 57D, null, null, null);
+        Boxeador boxeador = new Boxeador("Nico", 57D, cat1, entrenador, new Date(System.currentTimeMillis()));
 
-        //config
-        Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(true);
+        //Config
+        Mockito.when(boxeadorRepository.create(boxeador)).thenReturn(boxeador);
 
-        BoxeadorDto boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
+        //execute
+        BoxeadorCreateDto boxeadorCreateDto = modelMapper.map(boxeador,BoxeadorCreateDto.class);
+
+        BoxeadorDto boxeadorDTO = this.boxeadorServiceImp.create(boxeadorCreateDto);
 
         //assertions
         assertEquals(cat1, boxeadorDTO.getCategoria());
@@ -208,23 +210,21 @@ public class BoxeadorServiceTest {
     @Test
     public void queNoSePuedaCrearMasDe5BoxeadoresPorEntrenador() throws Exception {
 
+        //setup
         List<Categoria> categorias = new ArrayList<>();
 
-        Categoria cat1 = new Categoria(1L, "Mosca", 48.988, 50.802);
-        Categoria cat2 = new Categoria(2L, "Gallo", 52.163, 53.525);
+        Categoria cat1 = new Categoria(5L,"Welter",63.503,66.678);
+        Categoria cat2 = new Categoria(6L,"Mediano",69.853,72.562);
 
         categorias.add(cat1);
         categorias.add(cat2);
 
-        Entrenador entrenador = new Entrenador("Agus", categorias, null);
+        Entrenador entrenador = new Entrenador("Flor",categorias,null);
+        Boxeador boxeador = new Boxeador("Nico", 64D, cat1, entrenador, new Date(System.currentTimeMillis()));
 
-        Boxeador boxeador = new Boxeador("Nicol", 50D, cat1, entrenador, new Date(System.currentTimeMillis()));
+        Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(boxeador);
 
-        Mockito.when(this.boxeadorRepository.create(boxeador)).thenReturn(true);
-
-
-        BoxeadorDto boxeadorDTO;
-        boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
+        BoxeadorDto boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
         boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
         boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));
         boxeadorDTO = this.boxeadorServiceImp.create(modelMapper.map(boxeador, BoxeadorCreateDto.class));

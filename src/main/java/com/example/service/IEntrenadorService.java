@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface IEntrenadorService {
     List<EntrenadorDto> getAllEntrenadores();
-    Boolean crearEntrenador(EntrenadorDto entrenadorDto) throws Exception;
+    EntrenadorDto crearEntrenador(EntrenadorDto entrenadorDto) throws Exception;
     Boolean eliminarEntrenador(String nombre);
     Optional<EntrenadorDto> actualizarEntrenador(String nombre, EntrenadorDto entrenadorDto);
     EntrenadorDto obtenerEntrenadorPorCategoria(Categoria categoria);

@@ -23,8 +23,8 @@ public class CategoriaServiceImp implements ICategoriaService{
     }
 
     @Override
-    public Boolean crearCategoria(Categoria categoria) {
-      return this.categoriaRepository.create(categoria);
+    public Categoria crearCategoria(Categoria categoria) {
+        return this.categoriaRepository.create(categoria);
     }
 
     @Override

@@ -53,8 +53,9 @@ public class EntrenadorRepository implements IDAORepository<Entrenador , String 
 
 
     @Override
-    public Boolean create(Entrenador entrenador) {
-       return this.entrenadores.add(entrenador);
+    public Entrenador create(Entrenador entrenador) {
+         this.entrenadores.add(entrenador);
+         return entrenador;
     }
 
     @Override

@@ -42,10 +42,10 @@ public class EntrenadorRepositoryTest {
         Entrenador entrenador = new Entrenador("nuevo",categorias, new ArrayList<>());
 
         //execute
-        Boolean valor = this.entrenadorRepository.create(entrenador);
+        var entrenadorCreado = this.entrenadorRepository.create(entrenador);
 
         //verify
-        assertTrue(valor);
+        assertEquals(entrenador,entrenadorCreado);
         assertTrue(this.entrenadorRepository.getAll().contains(entrenador));
         assertEquals(entrenador,this.entrenadorRepository.obtenerEntrenadorPorCategoria(cat1));
     }

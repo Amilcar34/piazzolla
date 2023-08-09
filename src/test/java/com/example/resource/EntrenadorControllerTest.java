@@ -74,7 +74,7 @@ public class EntrenadorControllerTest {
 
 
         //Config
-        Mockito.when(entrenadorServiceImp.crearEntrenador(entrenadorDto)).thenReturn(true);
+        Mockito.when(entrenadorServiceImp.crearEntrenador(entrenadorDto)).thenReturn(entrenadorDto);
 
         given()
                 .contentType(ContentType.JSON)

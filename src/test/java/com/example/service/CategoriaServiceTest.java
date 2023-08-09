@@ -62,12 +62,12 @@ public class CategoriaServiceTest {
         categorias.add(categoria);
 
         //Config
-        Mockito.when(categoriaRepository.create(categoria)).thenReturn(true);
+        Mockito.when(categoriaRepository.create(categoria)).thenReturn(categoria);
         //execute
-        Boolean valor = categoriaServiceImp.crearCategoria(categoria);
+        var categoriaCreada = categoriaServiceImp.crearCategoria(categoria);
 
         //verify
-        assertTrue(valor);
+        assertEquals(categoria,categoriaCreada);
     }
 
     @Test
@@ -75,12 +75,12 @@ public class CategoriaServiceTest {
         // setup
         Categoria categoria = new Categoria(9L, "Nueva Categoria", 100D, 120D);
 
-        Mockito.when(categoriaRepository.create(categoria)).thenReturn(false);
+        Mockito.when(categoriaRepository.create(categoria)).thenReturn(null);
 
         // execute
-        Boolean valor = categoriaServiceImp.crearCategoria(categoria);
+        var categoriaSinCrear = categoriaServiceImp.crearCategoria(categoria);
 
-        assertFalse(valor);
+        assertNull(categoriaSinCrear);
     }
 
     @Test

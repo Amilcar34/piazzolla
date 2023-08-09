@@ -68,16 +68,16 @@ public class EntrenadorServiceTest {
 
         categorias.add(categoria);
 
-        Entrenador entrenador = new Entrenador("Pedro",categorias,new ArrayList<Boxeador>());
+        Entrenador entrenador = new Entrenador("Pedro",categorias,new ArrayList<>());
 
         //config
-        Mockito.when(this.entrenadorRepository.create(entrenador)).thenReturn(true);
+        Mockito.when(this.entrenadorRepository.create(entrenador)).thenReturn(entrenador);
 
         EntrenadorDto entrenadorDto = modelMapper.map(entrenador,EntrenadorDto.class);
 
-        var result = this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
+        var entrenadorObtenido = this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
 
-        assertTrue(result);
+        assertEquals(entrenador,modelMapper.map(entrenadorObtenido,Entrenador.class));
     }
 
     @Test
@@ -93,13 +93,13 @@ public class EntrenadorServiceTest {
         Entrenador entrenador = new Entrenador("Pedro",categorias,new ArrayList<Boxeador>());
 
         //config
-        Mockito.when(this.entrenadorRepository.create(entrenador)).thenReturn(true);
+        Mockito.when(this.entrenadorRepository.create(entrenador)).thenReturn(entrenador);
 
         EntrenadorDto entrenadorDto = modelMapper.map(entrenador,EntrenadorDto.class);
 
-        var result = this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
+        var entrenadorObtenido = this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
 
-        assertTrue(result);
+        assertEquals(entrenador,modelMapper.map(entrenadorObtenido,Entrenador.class));
         assertEquals(2,categorias.size());
     }
 
@@ -114,7 +114,7 @@ public class EntrenadorServiceTest {
         Entrenador entrenador = new Entrenador("Pedro",categorias,new ArrayList<Boxeador>());
 
         //config
-        Mockito.when(this.entrenadorRepository.create(entrenador)).thenReturn(false);
+        Mockito.when(this.entrenadorRepository.create(entrenador)).thenReturn(null);
         Mockito.when(this.entrenadorRepository.obtenerEntrenadorPorCategoria(cat1)).thenReturn(entrenadorExist);
 
         EntrenadorDto entrenadorDto = modelMapper.map(entrenador,EntrenadorDto.class);
@@ -140,13 +140,13 @@ public class EntrenadorServiceTest {
         Entrenador entrenador = new Entrenador("Pedro",categorias,new ArrayList<Boxeador>());
 
         //config
-        Mockito.when(this.entrenadorRepository.create(entrenador)).thenReturn(false);
+        Mockito.when(this.entrenadorRepository.create(entrenador)).thenReturn(null);
 
         EntrenadorDto entrenadorDto = modelMapper.map(entrenador,EntrenadorDto.class);
 
         assertThrows(Exception.class, () ->{
             var result = this.entrenadorServiceImp.crearEntrenador(entrenadorDto);
-            assertFalse(result);
+            assertNull(result);
             assertNotEquals(2,categorias.size());
         });
     }

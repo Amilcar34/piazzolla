@@ -22,8 +22,9 @@ public class BoxeadorRepository implements IDAORepository<Boxeador , String>{
 
 
     @Override
-    public Boolean create(Boxeador boxeador) {
-       return this.boxeadores.add(boxeador);
+    public Boxeador create(Boxeador boxeador) {
+         this.boxeadores.add(boxeador);
+         return boxeador;
     }
 
     @Override
