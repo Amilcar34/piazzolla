@@ -33,6 +33,18 @@ public class BoxeadorRepository implements IDAORepository<Boxeador , String>{
     }
 
     @Override
+    public Boxeador update(Boxeador existente, Boxeador modificada) {
+
+        existente.setNombre(modificada.getNombre());
+        existente.setPeso(modificada.getPeso());
+        existente.setCategoria(modificada.getCategoria());
+        existente.setEntrenador(modificada.getEntrenador());
+        existente.setFechaIngreso(modificada.getFechaIngreso());
+
+        return existente;
+    }
+
+    @Override
     public Boolean delete(Boxeador boxeador){
         return this.boxeadores.remove(boxeador);
     }

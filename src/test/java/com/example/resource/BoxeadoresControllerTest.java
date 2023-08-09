@@ -118,7 +118,7 @@ public class BoxeadoresControllerTest {
         BoxeadorDto boxeadorDto = modelMapper.map(boxeadorModificado, BoxeadorDto.class);
 
         //Config
-        Mockito.when(boxeadorServiceImp.actualizar(boxeador.getNombre(), boxeadorDto)).thenReturn(Optional.of(boxeadorDto));
+        Mockito.when(boxeadorServiceImp.actualizar(boxeador.getNombre(), boxeadorDto)).thenReturn(boxeadorDto);
 
         given()
                 .contentType(ContentType.JSON)

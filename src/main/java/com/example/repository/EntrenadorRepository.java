@@ -64,6 +64,17 @@ public class EntrenadorRepository implements IDAORepository<Entrenador , String 
     }
 
     @Override
+    public Entrenador update(Entrenador existente, Entrenador modificada) {
+
+        existente.setNombre(modificada.getNombre());
+        existente.setCategorias(modificada.getCategorias());
+        existente.setBoxeadores(modificada.getBoxeadores());
+
+        return existente;
+    }
+
+
+    @Override
     public Boolean delete(Entrenador entrenador) {
       return this.entrenadores.remove(entrenador);
     }

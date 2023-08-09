@@ -39,6 +39,16 @@ public class CategoriaRepository implements IDAORepository<Categoria, Long> {
     }
 
     @Override
+    public Categoria update(Categoria existente, Categoria modificada) {
+
+        existente.setCategoria(modificada.getCategoria());
+        existente.setPesoMax(modificada.getPesoMax());
+        existente.setPesoMin(modificada.getPesoMin());
+
+        return existente;
+    }
+
+    @Override
     public Boolean delete(Categoria categoria) {
         return this.categorias.remove(categoria);
     }

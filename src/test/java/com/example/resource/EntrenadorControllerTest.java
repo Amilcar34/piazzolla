@@ -137,7 +137,7 @@ public class EntrenadorControllerTest {
         EntrenadorDto entrenadorDto = modelMapper.map(entrenadorModificado,EntrenadorDto.class);
 
         //Config
-        Mockito.when(this.entrenadorServiceImp.actualizarEntrenador(entrenador.getNombre(),entrenadorDto)).thenReturn(Optional.of(entrenadorDto));
+        Mockito.when(this.entrenadorServiceImp.actualizarEntrenador(entrenador.getNombre(),entrenadorDto)).thenReturn(entrenadorDto);
 
         given()
                 .contentType(ContentType.JSON)

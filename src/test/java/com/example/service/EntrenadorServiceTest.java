@@ -248,19 +248,18 @@ public class EntrenadorServiceTest {
 
         //config
         Mockito.when(this.entrenadorRepository.find(entrenador.getNombre())).thenReturn(Optional.of(entrenador));
+        Mockito.when(this.entrenadorRepository.update(entrenador,entrenadorModificado)).thenReturn(entrenadorModificado);
 
         //execute
-        Optional<EntrenadorDto> entrenadorActualizado = this.entrenadorServiceImp.actualizarEntrenador(entrenador.getNombre(),modelMapper.map(entrenadorModificado,EntrenadorDto.class));
+       EntrenadorDto entrenadorActualizado = this.entrenadorServiceImp.actualizarEntrenador(entrenador.getNombre(),modelMapper.map(entrenadorModificado,EntrenadorDto.class));
 
         //verify
         assertNotNull(entrenadorActualizado);
-        assertTrue(entrenadorActualizado.isPresent());
 
-        EntrenadorDto entrenadorDto = entrenadorActualizado.get();
-        List<Boxeador> boxeadorActualizado = entrenadorDto.getBoxeadores().stream().map(b -> modelMapper.map(b,Boxeador.class)).collect(Collectors.toList());
+        List<Boxeador> boxeadorActualizado = entrenadorActualizado.getBoxeadores().stream().map(b -> modelMapper.map(b,Boxeador.class)).collect(Collectors.toList());
 
-        assertEquals(entrenadorModificado.getNombre(), entrenadorDto.getNombre());
-        assertEquals(entrenadorModificado.getCategorias(), entrenadorDto.getCategorias());
+        assertEquals(entrenadorModificado.getNombre(), entrenadorActualizado.getNombre());
+        assertEquals(entrenadorModificado.getCategorias(), entrenadorActualizado.getCategorias());
         assertEquals(entrenadorModificado.getBoxeadores(),boxeadorActualizado );
 
     }

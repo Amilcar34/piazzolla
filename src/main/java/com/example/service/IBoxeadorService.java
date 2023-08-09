@@ -11,7 +11,7 @@ public interface IBoxeadorService {
 
     BoxeadorDto create(BoxeadorCreateDto boxeador) throws Exception;
 
-    Optional<BoxeadorDto> actualizar(String nombre, BoxeadorDto boxeadorDto);
+    BoxeadorDto actualizar(String nombre, BoxeadorDto boxeadorDto);
 
     Boolean eliminar(String nombre);
 }

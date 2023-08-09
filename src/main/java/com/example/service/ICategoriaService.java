@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface ICategoriaService {
     List<Categoria> obtenerCategorias();
     Categoria crearCategoria(Categoria categoria);
-    Optional<Categoria> actualizarCategoria(Long idCategoria, Categoria categoria);
+    Categoria actualizarCategoria(Long idCategoria, Categoria categoria);
     Categoria obtenerCategoriaPorPeso(Double peso);
 }

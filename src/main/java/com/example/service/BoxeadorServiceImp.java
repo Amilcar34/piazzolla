@@ -59,17 +59,13 @@ public class BoxeadorServiceImp implements IBoxeadorService {
     }
 
     @Override
-    public Optional<BoxeadorDto> actualizar(String nombre, BoxeadorDto boxeadorDto) {
+    public BoxeadorDto actualizar(String nombre, BoxeadorDto boxeadorDto) {
         Optional<Boxeador> boxeador = Optional.ofNullable(this.boxeadorRepository.find(nombre)
                 .orElseThrow(() -> new NotFoundException("El Boxeador " + nombre + " no fue encontrado.")));
+        
+          Boxeador boxeadorModificado = modelMapper.map(boxeadorDto,Boxeador.class);
 
-            boxeador.get().setNombre(boxeadorDto.getNombre());
-            boxeador.get().setPeso(boxeadorDto.getPeso());
-            boxeador.get().setCategoria(boxeadorDto.getCategoria());
-            boxeador.get().setEntrenador(modelMapper.map(boxeadorDto.getEntrenador(), Entrenador.class));
-            boxeador.get().setFechaIngreso(boxeadorDto.getFechaIngreso());
-
-            return Optional.of(modelMapper.map(boxeador, BoxeadorDto.class));
+          return modelMapper.map(this.boxeadorRepository.update(boxeador.get(),boxeadorModificado),BoxeadorDto.class);
     }
 
     @Override

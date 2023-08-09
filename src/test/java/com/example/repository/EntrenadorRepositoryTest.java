@@ -51,6 +51,24 @@ public class EntrenadorRepositoryTest {
     }
 
     @Test
+    public void actualizarEntrenador(){
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(9L,"nueva",76.205,79.378);
+
+        categorias.add(cat1);
+
+        Entrenador entrenador = new Entrenador("nuevo",categorias, new ArrayList<>());
+        Entrenador actualizacion = new Entrenador("nuevo entrenador",null, null);
+
+        //execute
+        var entrenadorActualizado = this.entrenadorRepository.update(entrenador,actualizacion);
+
+        assertEquals(actualizacion,entrenadorActualizado);
+    }
+
+    @Test
     public void queSePuedaEliminarEntrenador(){
         //setup
         List<Categoria> categorias = new ArrayList<>();

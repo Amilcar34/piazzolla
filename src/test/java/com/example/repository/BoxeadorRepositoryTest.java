@@ -53,6 +53,30 @@ public class BoxeadorRepositoryTest {
     }
 
     @Test
+    public void actualizarBoxeador(){
+
+        //setup
+        List<Categoria> categorias = new ArrayList<>();
+
+        Categoria cat1 = new Categoria(1L, "Mosca", 48.988, 50.802);
+        Categoria cat2 = new Categoria(2L, "Gallo", 52.163, 53.525);
+
+        categorias.add(cat1);
+        categorias.add(cat2);
+
+        Entrenador entrenador = new Entrenador("Agus", categorias, null);
+        Entrenador entrenador1 = new Entrenador("Leo", categorias, null);
+
+        Boxeador boxeador = new Boxeador("Luca",50D,cat1,entrenador,new Date(System.currentTimeMillis()));
+        Boxeador actualizacion = new Boxeador("Lucas",54D,cat2,entrenador1,new Date(116, 5,3));
+
+        //execute
+        var boxeadorActualizado = this.boxeadorRepository.update(boxeador,actualizacion);
+
+        assertEquals(actualizacion,boxeadorActualizado);
+    }
+
+    @Test
     public void obtenerBoxeadorPorNombre(){
 
         //setup

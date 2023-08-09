@@ -57,15 +57,13 @@ public class EntrenadorServiceImp implements IEntrenadorService {
     }
 
     @Override
-    public Optional<EntrenadorDto> actualizarEntrenador(String nombre, EntrenadorDto entrenadorDto) {
+    public EntrenadorDto actualizarEntrenador(String nombre, EntrenadorDto entrenadorDto) {
         Optional<Entrenador> entrenador = Optional.ofNullable(this.entrenadorRepository.find(nombre)
                 .orElseThrow(() -> new NotFoundException("El entrenador " + nombre + " no fue encontrado.")));
 
-            entrenador.get().setNombre(entrenadorDto.getNombre());
-            entrenador.get().setCategorias(entrenadorDto.getCategorias());
-            entrenador.get().setBoxeadores(entrenadorDto.getBoxeadores().stream().map(b -> modelMapper.map(b, Boxeador.class)).collect(Collectors.toList()));
+        Entrenador entrenadorModificado = modelMapper.map(entrenadorDto,Entrenador.class);
 
-            return Optional.of(modelMapper.map(entrenador, EntrenadorDto.class));
+        return modelMapper.map(this.entrenadorRepository.update(entrenador.get(),entrenadorModificado), EntrenadorDto.class);
     }
 
     @Override

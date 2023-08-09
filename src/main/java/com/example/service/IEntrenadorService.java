@@ -12,7 +12,7 @@ public interface IEntrenadorService {
     List<EntrenadorDto> getAllEntrenadores();
     EntrenadorDto crearEntrenador(EntrenadorDto entrenadorDto) throws Exception;
     Boolean eliminarEntrenador(String nombre);
-    Optional<EntrenadorDto> actualizarEntrenador(String nombre, EntrenadorDto entrenadorDto);
+    EntrenadorDto actualizarEntrenador(String nombre, EntrenadorDto entrenadorDto);
     EntrenadorDto obtenerEntrenadorPorCategoria(Categoria categoria);
 
     EntrenadorDto addBoxeador(EntrenadorDto entrenadorDTO, BoxeadorSinEntreDto boxeadorDTO) throws Exception;

@@ -91,18 +91,17 @@ public class CategoriaServiceTest {
 
         //config
         Mockito.when(categoriaRepository.find(categoria.getId())).thenReturn(Optional.of(categoria));
+        Mockito.when(categoriaRepository.update(categoria,modificaciones)).thenReturn(modificaciones);
 
         //execute
-        Optional<Categoria> categoriActualizada = this.categoriaServiceImp.actualizarCategoria(categoria.getId(),modificaciones);
+        Categoria categoriActualizada = this.categoriaServiceImp.actualizarCategoria(categoria.getId(),modificaciones);
 
         //verify
         assertNotNull(categoriActualizada);
-        assertTrue(categoriActualizada.isPresent()); // Ensure the Optional is not empty
 
-        Categoria categoriaActualizadaObj = categoriActualizada.get();
-        assertEquals(modificaciones.getCategoria(), categoriaActualizadaObj.getCategoria()); // Verify modified name
-        assertEquals(modificaciones.getPesoMin(), categoriaActualizadaObj.getPesoMin()); // Verify modified min weight
-        assertEquals(modificaciones.getPesoMax(), categoriaActualizadaObj.getPesoMax()); // Verify modified max weight
+        assertEquals(modificaciones.getCategoria(), categoriActualizada.getCategoria()); // Verify modified name
+        assertEquals(modificaciones.getPesoMin(), categoriActualizada.getPesoMin()); // Verify modified min weight
+        assertEquals(modificaciones.getPesoMax(), categoriActualizada.getPesoMax()); // Verify modified max weight
     }
 
     @Test

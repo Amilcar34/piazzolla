@@ -16,5 +16,6 @@ public interface IDAORepository<K,T>{
     List<K> getAll();
     K create(K k);
     Optional<K> find(T t);
+    K update(K existente, K modificada);
     Boolean delete(K k);
 }

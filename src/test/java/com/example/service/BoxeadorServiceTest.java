@@ -104,20 +104,19 @@ public class BoxeadorServiceTest {
 
         //config
         Mockito.when(this.boxeadorRepository.find(boxeador.getNombre())).thenReturn(Optional.of(boxeador));
+        Mockito.when(this.boxeadorRepository.update(boxeador,boxeadorModificado)).thenReturn(boxeadorModificado);
 
         //execute
-        Optional<BoxeadorDto> boxeadorActualizado = this.boxeadorServiceImp.actualizar(boxeador.getNombre(),modelMapper.map(boxeadorModificado,BoxeadorDto.class));
+        BoxeadorDto boxeadorActualizado = this.boxeadorServiceImp.actualizar(boxeador.getNombre(),modelMapper.map(boxeadorModificado,BoxeadorDto.class));
 
         //verify
         assertNotNull(boxeadorActualizado);
-        assertTrue(boxeadorActualizado.isPresent()); // Ensure the Optional is not empty
 
-        BoxeadorDto boxeadorActualizadoObj = boxeadorActualizado.get();
-        assertEquals(boxeadorModificado.getNombre(), boxeadorActualizadoObj.getNombre());
-        assertEquals(boxeadorModificado.getPeso(), boxeadorActualizadoObj.getPeso());
-        assertEquals(boxeadorModificado.getCategoria(), boxeadorActualizadoObj.getCategoria());
-        assertEquals(boxeadorModificado.getEntrenador().getNombre(), boxeadorActualizadoObj.getEntrenador().getNombre());
-        assertEquals(boxeadorModificado.getFechaIngreso(), boxeadorActualizadoObj.getFechaIngreso());
+        assertEquals(boxeadorModificado.getNombre(), boxeadorActualizado.getNombre());
+        assertEquals(boxeadorModificado.getPeso(), boxeadorActualizado.getPeso());
+        assertEquals(boxeadorModificado.getCategoria(), boxeadorActualizado.getCategoria());
+        assertEquals(boxeadorModificado.getEntrenador().getNombre(), boxeadorActualizado.getEntrenador().getNombre());
+        assertEquals(boxeadorModificado.getFechaIngreso(), boxeadorActualizado.getFechaIngreso());
 
     }
 

@@ -28,15 +28,11 @@ public class CategoriaServiceImp implements ICategoriaService{
     }
 
     @Override
-    public Optional<Categoria> actualizarCategoria(Long idCategoria, Categoria categoria) {
+    public Categoria actualizarCategoria(Long idCategoria, Categoria categoria) {
         Optional<Categoria> categoriaExist = Optional.ofNullable(this.categoriaRepository.find(idCategoria)
                 .orElseThrow(() -> new NotFoundException("La categoría " + idCategoria + " no fue encontrada.")));
 
-            categoriaExist.get().setCategoria(categoria.getCategoria());
-            categoriaExist.get().setPesoMax(categoria.getPesoMax());
-            categoriaExist.get().setPesoMin(categoria.getPesoMin());
-
-            return categoriaExist;
+            return this.categoriaRepository.update(categoriaExist.get(),categoria);
     }
 
     @Override

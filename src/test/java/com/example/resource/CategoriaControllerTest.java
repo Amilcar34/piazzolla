@@ -76,7 +76,7 @@ public class CategoriaControllerTest {
         Categoria modificada = new Categoria(1L,"MOSQUITA",49D,51D);
 
         //Config
-        Mockito.when(categoriaServiceImp.actualizarCategoria(categoria.getId(),modificada)).thenReturn(Optional.of(modificada));
+        Mockito.when(categoriaServiceImp.actualizarCategoria(categoria.getId(),modificada)).thenReturn((modificada));
 
         given()
                 .contentType(ContentType.JSON)

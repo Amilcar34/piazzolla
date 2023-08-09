@@ -43,6 +43,20 @@ public class CategoriaRepositoryTest {
     }
 
     @Test
+    public void actualizarCategoria(){
+
+        // Setup
+        Categoria categoria = new Categoria(9L,"Nueva Categoria",100D,120D);
+
+        Categoria actualizacion = new Categoria(9L,"Nueva Modificacion",105D,110D);
+
+        //execute
+        var categoriaActualizada = this.categoriaRepository.update(categoria,actualizacion);
+
+        assertEquals(actualizacion,categoriaActualizada);
+    }
+
+    @Test
     public void queSePuedaEliminarCategoria(){
        Categoria categoria = new Categoria(1L, "Mosca", 48.988, 50.802);
 
